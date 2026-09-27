@@ -929,6 +929,149 @@ html, body {
         font-size: 8px;
     }
 }
+
+
+/* =========================================================
+   FINITIONS TÉLÉPHONE PAYSAGE — ÉCRAN JOUER
+   Conserve tout le fonctionnement existant.
+   ========================================================= */
+
+@media (orientation: landscape) and (max-height: 500px) {
+    /* Écran de choix des niveaux : bloc recentré verticalement */
+    .contenu-niveaux {
+        align-items: center;
+        justify-content: center;
+    }
+
+    /* Partie en cours : tout doit tenir dans la hauteur disponible */
+    html,
+    body {
+        height: 100%;
+        overflow: hidden;
+    }
+
+    .page {
+        height: 100dvh;
+        min-height: 0;
+        overflow: hidden;
+    }
+
+    .entete {
+        height: 54px;
+        min-height: 54px;
+        padding: 5px 10px;
+        grid-template-columns: 120px 1fr 120px;
+    }
+
+    .titre-entete h1 {
+        font-size: 19px;
+        white-space: nowrap;
+    }
+
+    .titre-entete p {
+        margin-top: 1px;
+        font-size: 10px;
+    }
+
+    .bouton-retour {
+        min-height: 30px;
+        padding: 4px 10px;
+        font-size: 11px;
+    }
+
+    .contenu {
+        flex: 1;
+        min-height: 0;
+        grid-template-columns: minmax(0, 1fr) minmax(280px, 330px);
+        gap: 8px;
+        padding: 8px 10px;
+        overflow: hidden;
+    }
+
+    .zone-carte {
+        height: 100%;
+        min-height: 0;
+        overflow: hidden;
+    }
+
+    .cadre-carte {
+        max-height: 100%;
+    }
+
+    .carte {
+        max-height: calc(100dvh - 70px);
+    }
+
+    .panneau {
+        height: 100%;
+        min-height: 0;
+        padding: 10px;
+        border-radius: 13px;
+        overflow-y: auto;
+    }
+
+    .panneau h2 {
+        font-size: 18px;
+    }
+
+    .badge-niveau {
+        margin-top: 5px;
+        margin-bottom: 6px;
+        padding: 4px 8px;
+        font-size: 10px;
+    }
+
+    .texte-aide {
+        margin: 4px 0 7px;
+        font-size: 10px;
+        line-height: 1.25;
+    }
+
+    .stats {
+        gap: 5px;
+        margin-bottom: 7px;
+    }
+
+    .stat {
+        padding: 5px 3px;
+        border-radius: 8px;
+    }
+
+    .stat-valeur {
+        font-size: 16px;
+    }
+
+    .stat-label {
+        margin-top: 1px;
+        font-size: 8px;
+    }
+
+    .carte-question {
+        padding: 7px 8px;
+        border-radius: 10px;
+    }
+
+    .question-label {
+        margin-bottom: 2px;
+        font-size: 9px;
+    }
+
+    .nom-a-trouver {
+        font-size: 19px;
+    }
+
+    .message {
+        min-height: 32px;
+        margin-top: 6px;
+        padding: 6px;
+        font-size: 10px;
+    }
+
+    .progression {
+        height: 6px;
+        margin-top: 6px;
+    }
+}
 </style>
 </head>
 
