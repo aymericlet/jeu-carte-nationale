@@ -1199,7 +1199,107 @@
 
         }
 
-    </style>
+    
+
+/* =========================================================
+   AJUSTEMENTS RESPONSIVE TÉLÉPHONE
+   Aucun changement des fonctions de la carte.
+   ========================================================= */
+
+@media (max-width: 760px) {
+    .titre-entete h1 { font-size: 23px; }
+    .titre-entete p { font-size: 11px; }
+
+    .bouton-retour {
+        min-height: 34px;
+        padding: 5px 12px;
+        font-size: 12px;
+    }
+}
+
+@media (orientation: landscape) and (max-height: 500px) {
+    html,
+    body {
+        height: 100%;
+        overflow: hidden;
+    }
+
+    .page {
+        height: 100dvh;
+        min-height: 0;
+        overflow: hidden;
+    }
+
+    .entete {
+        height: 54px;
+        min-height: 54px;
+        padding: 5px 10px;
+        grid-template-columns: 120px 1fr 120px;
+        gap: 0;
+    }
+
+    .titre-entete {
+        grid-row: auto;
+    }
+
+    .zone-retour {
+        grid-row: auto;
+        justify-content: flex-start;
+    }
+
+    .titre-entete h1 {
+        font-size: 19px;
+        white-space: nowrap;
+    }
+
+    .titre-entete p {
+        margin-top: 1px;
+        font-size: 10px;
+        line-height: 1.1;
+    }
+
+    .bouton-retour {
+        min-height: 30px;
+        padding: 4px 10px;
+        font-size: 11px;
+    }
+
+    .contenu {
+        flex: 1;
+        min-height: 0;
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) minmax(260px, 320px);
+        gap: 8px;
+        padding: 8px 10px;
+        overflow: hidden;
+    }
+
+    .zone-carte {
+        height: 100%;
+        min-height: 0;
+        overflow: hidden;
+    }
+
+    .cadre-carte {
+        width: auto;
+        max-width: 100%;
+        max-height: 100%;
+    }
+
+    .carte {
+        width: auto;
+        height: auto;
+        max-width: 100%;
+        max-height: calc(100dvh - 70px);
+    }
+
+    .panneau {
+        height: 100%;
+        min-height: 0;
+        overflow-y: auto;
+    }
+}
+</style>
 
 </head>
 

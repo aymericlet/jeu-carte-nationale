@@ -365,6 +365,183 @@ button { font: inherit; }
     .panneau { padding: 13px; }
     .nom-ville { font-size: 21px; }
 }
+
+
+/* =========================================================
+   AJUSTEMENTS RESPONSIVE TÉLÉPHONE
+   Le mode examen et ses règles restent inchangés.
+   ========================================================= */
+
+@media (max-width: 520px) {
+    .entete {
+        height: auto;
+        min-height: 0;
+        padding: 8px 10px;
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+    }
+
+    .titre-entete {
+        position: static;
+        left: auto;
+        transform: none;
+        width: 100%;
+        max-width: none;
+        order: 1;
+        text-align: center;
+    }
+
+    .entete > div:first-child {
+        order: 2;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+    }
+
+    .entete > div:last-child { display: none; }
+
+    .titre-entete h1 {
+        font-size: 21px;
+        line-height: 1.1;
+        white-space: normal;
+    }
+
+    .titre-entete p { display: none; }
+
+    .bouton-retour {
+        min-height: 34px;
+        padding: 5px 12px;
+        font-size: 12px;
+    }
+
+    .contenu {
+        padding: 7px;
+        gap: 7px;
+    }
+
+    .panneau {
+        padding: 11px;
+    }
+
+    .panneau h2 { font-size: 18px; }
+    .texte-intro,
+    .regles,
+    .instruction { font-size: 12px; }
+    .nom-ville { font-size: 20px; }
+}
+
+/* Téléphone tenu en paysage */
+@media (orientation: landscape) and (max-height: 500px) {
+    .page {
+        min-height: 100dvh;
+    }
+
+    .entete {
+        height: 54px;
+        min-height: 54px;
+        padding: 5px 10px;
+        display: grid;
+        grid-template-columns: 120px 1fr 120px;
+        align-items: center;
+    }
+
+    .titre-entete {
+        position: static;
+        left: auto;
+        transform: none;
+        width: auto;
+        max-width: none;
+        grid-column: 2;
+        grid-row: 1;
+    }
+
+    .entete > div:first-child {
+        grid-column: 1;
+        grid-row: 1;
+        display: block;
+        width: auto;
+    }
+
+    .entete > div:last-child {
+        display: block;
+        grid-column: 3;
+        grid-row: 1;
+    }
+
+    .titre-entete h1 {
+        font-size: 18px;
+        line-height: 1;
+        white-space: nowrap;
+    }
+
+    .titre-entete p { display: none; }
+
+    .bouton-retour {
+        min-height: 30px;
+        padding: 4px 10px;
+        font-size: 11px;
+    }
+
+    .contenu {
+        grid-template-columns: minmax(0, 1fr) minmax(250px, 310px);
+        grid-template-rows: 1fr;
+        gap: 8px;
+        padding: 8px;
+        overflow: hidden;
+    }
+
+    .zone-carte {
+        min-height: 0;
+    }
+
+    .cadre-carte,
+    .carte {
+        max-height: calc(100dvh - 70px);
+    }
+
+    .panneau {
+        min-height: 0;
+        max-height: calc(100dvh - 70px);
+        overflow-y: auto;
+        padding: 10px;
+    }
+
+    .badge-examen {
+        margin-bottom: 6px;
+        padding: 4px 8px;
+        font-size: 10px;
+    }
+
+    .panneau h2 {
+        margin-bottom: 5px;
+        font-size: 16px;
+    }
+
+    .texte-intro {
+        margin-bottom: 7px;
+        font-size: 10px;
+        line-height: 1.3;
+    }
+
+    .regles {
+        margin: 7px 0;
+        padding: 7px;
+        font-size: 10px;
+        line-height: 1.35;
+    }
+
+    .bouton-principal {
+        min-height: 34px;
+        padding: 6px 9px;
+        font-size: 11px;
+    }
+
+    .nom-ville {
+        margin: 5px 0 9px;
+        font-size: 19px;
+    }
+}
 </style>
 </head>
 
