@@ -1,628 +1,812 @@
 <!DOCTYPE html>
 <html lang="fr">
-
 <head>
-
-    <meta charset="UTF-8">
-
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
-
-    <title>Carte Nationale</title>
-
-    <style>
-
-        /* =========================================================
-           RÉGLAGES GÉNÉRAUX
-           ========================================================= */
-
-        * {
-            box-sizing: border-box;
-        }
-
-        html,
-        body {
-            margin: 0;
-            padding: 0;
-
-            width: 100%;
-            min-height: 100%;
-
-            font-family:
-                Arial,
-                Helvetica,
-                sans-serif;
-
-            background: #f5f6f8;
-
-            color: #333333;
-        }
-
-
-        body {
-            min-height: 100vh;
-        }
-
-
-        /* =========================================================
-           PAGE D'ACCUEIL
-           ========================================================= */
-
-        .page-accueil {
-            width: 100%;
-            min-height: 100vh;
-
-            display: flex;
-            flex-direction: column;
-        }
-
-
-        /* =========================================================
-           EN-TÊTE
-           ========================================================= */
-
-        .entete {
-            width: 100%;
-
-            padding:
-                32px
-                20px
-                18px;
-
-            text-align: center;
-        }
-
-
-        .entete h1 {
-            margin: 0;
-
-            color: #94163a;
-
-            font-size: clamp(
-                42px,
-                4vw,
-                68px
-            );
-
-            font-weight: 700;
-
-            line-height: 1.05;
-        }
-
-
-        .entete p {
-            margin:
-                14px
-                0
-                0;
-
-            color: #444444;
-
-            font-size: clamp(
-                18px,
-                1.5vw,
-                26px
-            );
-
-            line-height: 1.3;
-        }
-
-
-        /* =========================================================
-           CONTENU PRINCIPAL
-           ========================================================= */
-
-        .contenu {
-            width: 100%;
-
-            flex: 1;
-
-            display: grid;
-
-            grid-template-columns:
-                minmax(0, 1fr)
-                minmax(420px, 0.75fr);
-
-            align-items: center;
-
-            gap: clamp(
-                30px,
-                5vw,
-                90px
-            );
-
-            padding:
-                10px
-                clamp(30px, 5vw, 90px)
-                35px;
-        }
-
-
-        /* =========================================================
-           ZONE DE LA CARTE
-           ========================================================= */
-
-        .zone-carte {
-            width: 100%;
-            height: 100%;
-
-            min-width: 0;
-
-            display: flex;
-
-            justify-content: center;
-            align-items: center;
-        }
-
-
-        .carte-france {
-            display: block;
-
-            width: auto;
-
-            height: min(
-                67vh,
-                680px
-            );
-
-            max-width: 100%;
-
-            object-fit: contain;
-
-            user-select: none;
-
-            -webkit-user-drag: none;
-
-            filter:
-                drop-shadow(
-                    0 12px 20px
-                    rgba(0, 0, 0, 0.08)
-                );
-        }
-
-
-        /* =========================================================
-           MENU
-           ========================================================= */
-
-        .zone-menu {
-            width: 100%;
-
-            display: flex;
-
-            justify-content: center;
-            align-items: center;
-        }
-
-
-        .menu {
-            width: min(
-                100%,
-                520px
-            );
-
-            display: flex;
-
-            flex-direction: column;
-
-            gap: 20px;
-        }
-
-
-        /* =========================================================
-           BOUTONS
-           ========================================================= */
-
-        .bouton-menu {
-            width: 100%;
-
-            min-height: 82px;
-
-            border: none;
-
-            border-radius: 17px;
-
-            background: #94163a;
-
-            color: #ffffff;
-
-            display: flex;
-
-            justify-content: center;
-            align-items: center;
-
-            gap: 10px;
-
-            padding:
-                18px
-                25px;
-
-            font-size: clamp(
-                18px,
-                1.35vw,
-                24px
-            );
-
-            font-weight: 700;
-
-            cursor: pointer;
-
-            box-shadow:
-                0 6px 16px
-                rgba(148, 22, 58, 0.10);
-
-            transition:
-                transform 0.15s ease,
-                box-shadow 0.15s ease,
-                background 0.15s ease;
-        }
-
-
-        .bouton-menu:hover {
-            background: #7f1130;
-
-            transform:
-                translateY(-2px);
-
-            box-shadow:
-                0 9px 20px
-                rgba(148, 22, 58, 0.18);
-        }
-
-
-        .bouton-menu:active {
-            transform:
-                translateY(0);
-        }
-
-
-        .icone-bouton {
-            display: inline-flex;
-
-            justify-content: center;
-            align-items: center;
-
-            min-width: 28px;
-
-            font-size: 22px;
-        }
-
-
-        /* =========================================================
-           TABLETTES
-           ========================================================= */
-
-        @media (max-width: 1050px) {
-
-            .contenu {
-                grid-template-columns:
-                    minmax(0, 1fr)
-                    minmax(330px, 0.75fr);
-
-                gap: 30px;
-
-                padding-left: 25px;
-                padding-right: 25px;
-            }
-
-
-            .carte-france {
-                height: min(
-                    60vh,
-                    600px
-                );
-            }
-
-
-            .bouton-menu {
-                min-height: 72px;
-            }
-
-        }
-
-
-        /* =========================================================
-           TÉLÉPHONES / PETITS ÉCRANS
-           ========================================================= */
-
-        @media (max-width: 760px) {
-
-            .entete {
-                padding:
-                    24px
-                    15px
-                    10px;
-            }
-
-
-            .entete h1 {
-                font-size: 38px;
-            }
-
-
-            .entete p {
-                font-size: 17px;
-            }
-
-
-            .contenu {
-                display: flex;
-
-                flex-direction: column;
-
-                gap: 25px;
-
-                padding:
-                    15px
-                    18px
-                    30px;
-            }
-
-
-            .zone-carte {
-                width: 100%;
-            }
-
-
-            .carte-france {
-                width: 100%;
-
-                height: auto;
-
-                max-height: 58vh;
-            }
-
-
-            .zone-menu {
-                width: 100%;
-            }
-
-
-            .menu {
-                width: 100%;
-
-                gap: 14px;
-            }
-
-
-            .bouton-menu {
-                min-height: 65px;
-
-                border-radius: 14px;
-
-                font-size: 18px;
-            }
-
-        }
-
-
-        /* =========================================================
-           TRÈS PETITS TÉLÉPHONES
-           ========================================================= */
-
-        @media (max-width: 420px) {
-
-            .entete h1 {
-                font-size: 32px;
-            }
-
-
-            .entete p {
-                font-size: 16px;
-            }
-
-
-            .contenu {
-                padding-left: 12px;
-                padding-right: 12px;
-            }
-
-
-            .bouton-menu {
-                min-height: 60px;
-
-                padding:
-                    14px
-                    15px;
-            }
-
-        }
-
-    </style>
-
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GéoRail - Révise en jouant</title>
+
+<style>
+* { box-sizing: border-box; }
+
+html, body {
+    margin: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    font-family: Arial, Helvetica, sans-serif;
+    background: #f5f6f8;
+    color: #333;
+}
+
+body {
+    height: 100vh;
+}
+
+button {
+    font: inherit;
+}
+
+.page {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.entete {
+    padding: 24px 20px 18px;
+    background: #fff;
+    border-bottom: 1px solid #ddd;
+    text-align: center;
+}
+
+.entete h1 {
+    margin: 0;
+    color: #94163a;
+    font-size: clamp(32px, 4vw, 48px);
+    line-height: 1;
+}
+
+.entete p {
+    margin: 9px 0 0;
+    color: #666;
+    font-size: 15px;
+}
+
+.contenu {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 28px;
+}
+
+.bloc-choix {
+    width: min(1050px, 100%);
+}
+
+.titre-choix {
+    margin: 0 0 22px;
+    color: #333;
+    font-size: 25px;
+    text-align: center;
+}
+
+.grille-cartes {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 24px;
+}
+
+.carte-choix {
+    min-width: 0;
+    height: 100%;
+    padding: 0;
+    overflow: hidden;
+    display: grid;
+    grid-template-rows: 340px 1fr;
+    border: 1px solid #dedede;
+    border-radius: 20px;
+    background: #fff;
+    box-shadow: 0 10px 28px rgba(0,0,0,.07);
+    cursor: pointer;
+    text-align: left;
+    transition:
+        transform .15s ease,
+        box-shadow .15s ease,
+        border-color .15s ease;
+}
+
+.carte-choix:hover {
+    transform: translateY(-4px);
+    border-color: #94163a;
+    box-shadow: 0 15px 34px rgba(0,0,0,.11);
+}
+
+.zone-image {
+    height: 100%;
+    padding: 22px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #fafafa;
+    border-bottom: 1px solid #eee;
+}
+
+.zone-image img {
+    display: block;
+    max-width: 100%;
+    max-height: 100%;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    user-select: none;
+    -webkit-user-drag: none;
+}
+
+.infos {
+    display: flex;
+    flex-direction: column;
+    min-height: 164px;
+    padding: 20px 22px 30px;
+}
+
+.nom-carte {
+    display: block;
+    margin-bottom: 7px;
+    color: #94163a;
+    font-size: 24px;
+    font-weight: 800;
+}
+
+.description {
+    display: block;
+    color: #666;
+    font-size: 14px;
+    line-height: 1.45;
+}
+
+.action {
+    display: inline-block;
+    margin-top: auto;
+    padding-top: 15px;
+    color: #94163a;
+    font-size: 13px;
+    font-weight: 800;
+}
+
+.ecran-modes {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100vh;
+    z-index: 100;
+    display: none;
+    flex-direction: column;
+    overflow: hidden;
+    background: #f5f6f8;
+}
+
+.ecran-modes.visible {
+    display: flex;
+}
+
+.entete-modes {
+    min-height: 76px;
+    padding: 10px 28px;
+    display: grid;
+    grid-template-columns: 180px 1fr 180px;
+    align-items: center;
+    background: #fff;
+    border-bottom: 1px solid #ddd;
+}
+
+.zone-retour {
+    display: flex;
+    justify-content: flex-start;
+}
+
+.btn-retour {
+    min-height: 42px;
+    padding: 8px 18px;
+    border: 0;
+    border-radius: 11px;
+    background: #94163a;
+    color: #fff;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.btn-retour:hover {
+    background: #7f1130;
+}
+
+.titre-mode {
+    text-align: center;
+}
+
+.titre-mode h1 {
+    margin: 0;
+    color: #94163a;
+    font-size: clamp(26px, 2.5vw, 38px);
+}
+
+.titre-mode p {
+    margin: 5px 0 0;
+    color: #666;
+    font-size: 14px;
+}
+
+.contenu-modes {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 28px;
+}
+
+
+/* =========================================================
+   ÉCRAN DE SÉLECTION DES RÉGIONS
+   Permet d'afficher et de faire défiler toutes les cartes.
+   ========================================================= */
+#ecranRegions {
+    overflow: hidden;
+}
+
+#ecranRegions .entete-modes {
+    flex: 0 0 76px;
+    min-height: 76px;
+}
+
+#ecranRegions .contenu-modes {
+    flex: 1 1 auto;
+    min-height: 0;
+    align-items: flex-start;
+    overflow-x: hidden;
+    overflow-y: auto;
+    padding-bottom: 40px;
+}
+
+#ecranRegions .bloc-choix {
+    margin: 0 auto;
+    padding-bottom: 12px;
+}
+
+.selection-mode {
+    width: min(900px, 100%);
+    padding: 28px;
+    border: 1px solid #e1e1e1;
+    border-radius: 20px;
+    background: #fff;
+    box-shadow: 0 12px 32px rgba(0,0,0,.08);
+}
+
+.apercu-carte {
+    height: 230px;
+    margin-bottom: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.apercu-carte img {
+    display: block;
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    user-select: none;
+    -webkit-user-drag: none;
+}
+
+.grille-modes {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+}
+
+.bouton-mode {
+    min-height: 120px;
+    padding: 18px;
+    border: 1px solid #e1e1e1;
+    border-radius: 15px;
+    background: #fff;
+    cursor: pointer;
+    text-align: center;
+    transition:
+        transform .12s ease,
+        box-shadow .12s ease,
+        border-color .12s ease;
+}
+
+.bouton-mode:hover {
+    transform: translateY(-2px);
+    border-color: #94163a;
+    box-shadow: 0 8px 20px rgba(0,0,0,.08);
+}
+
+.icone-mode {
+    display: block;
+    margin-bottom: 9px;
+    font-size: 30px;
+}
+
+.nom-mode {
+    display: block;
+    color: #94163a;
+    font-size: 19px;
+    font-weight: 800;
+}
+
+.texte-mode {
+    display: block;
+    margin-top: 6px;
+    color: #666;
+    font-size: 12px;
+    line-height: 1.4;
+}
+
+
+/* CARTOUCHES DES FUTURES CARTES RÉGIONALES */
+.carte-region-a-venir {
+    min-width: 0;
+    min-height: 504px;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+    border: 2px dashed #d8d8d8;
+    border-radius: 20px;
+    background: rgba(255,255,255,.55);
+    color: #aaa;
+    text-align: center;
+    cursor: default;
+}
+
+.icone-region-a-venir {
+    font-size: 46px;
+    line-height: 1;
+    filter: grayscale(1);
+    opacity: .65;
+}
+
+.texte-region-a-venir {
+    font-size: 22px;
+    font-weight: 800;
+    line-height: 1.2;
+}
+
+
+@media (max-width: 760px) {
+    .entete {
+        padding: 18px 12px 14px;
+    }
+
+    .entete h1 {
+        font-size: 34px;
+    }
+
+    .contenu {
+        align-items: flex-start;
+        padding: 16px 12px 24px;
+    }
+
+    .titre-choix {
+        margin-bottom: 15px;
+        font-size: 21px;
+    }
+
+    .grille-cartes {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+
+    .carte-choix {
+        grid-template-rows: 230px auto;
+    }
+
+    .zone-image {
+        height: 100%;
+    }
+
+    .infos {
+        min-height: 0;
+        padding: 16px 18px 26px;
+    }
+
+    .nom-carte {
+        font-size: 21px;
+    }
+
+    .ecran-modes {
+        position: fixed;
+        height: 100vh;
+        min-height: 0;
+    }
+
+    .entete-modes {
+        grid-template-columns: 1fr;
+        gap: 8px;
+        padding: 10px 12px;
+    }
+
+    .titre-mode {
+        grid-row: 1;
+    }
+
+    .zone-retour {
+        grid-row: 2;
+        justify-content: center;
+    }
+
+    .contenu-modes {
+        align-items: flex-start;
+        padding: 12px;
+    }
+
+    .selection-mode {
+        padding: 18px;
+    }
+
+    .apercu-carte {
+        height: 180px;
+        margin-bottom: 16px;
+    }
+
+    .grille-modes {
+        grid-template-columns: 1fr;
+    }
+
+    .bouton-mode {
+        min-height: 100px;
+    }
+}
+</style>
 </head>
-
 
 <body>
 
+<main class="page">
+    <header class="entete">
+        <h1>🚆 GéoRail</h1>
+        <p>Apprends et teste tes connaissances du réseau ferroviaire.</p>
+    </header>
 
-    <main class="page-accueil">
+    <section class="contenu">
+        <div class="bloc-choix">
+            <h2 class="titre-choix">Choisis ta carte</h2>
 
+            <div class="grille-cartes">
 
-        <!-- =====================================================
-             TITRE
-             ===================================================== -->
+                <button id="btnCarteNationale" class="carte-choix" type="button">
+                    <span class="zone-image">
+                        <img
+                            src="images/carte-nationale-FINALE-transparente.png"
+                            alt="Carte nationale du réseau ferroviaire"
+                            draggable="false"
+                        >
+                    </span>
 
-        <header class="entete">
+                    <span class="infos">
+                        <span class="nom-carte">🇫🇷 Carte nationale</span>
+                        <span class="description">
+                            Entraîne-toi sur l'ensemble de la carte nationale.
+                        </span>
+                        <span class="action">Choisir cette carte →</span>
+                    </span>
+                </button>
 
-            <h1>
-                Carte Nationale
-            </h1>
+                <button id="btnCartesRegionales" class="carte-choix" type="button">
+                    <span class="zone-image">
+                        <img
+                            src="images/carte-france-regions.png"
+                            alt="Carte de France découpée en régions"
+                            draggable="false"
+                        >
+                    </span>
 
-            <p>
-                Apprends à situer les villes du réseau ferroviaire.
-            </p>
-
-        </header>
-
-
-        <!-- =====================================================
-             CARTE + MENU
-             ===================================================== -->
-
-        <section class="contenu">
-
-
-            <!-- CARTE -->
-
-            <div class="zone-carte">
-
-                <img
-                    src="images/carte-nationale-FINALE-transparente.png"
-                    alt="Carte nationale du réseau ferroviaire"
-                    class="carte-france"
-                    draggable="false"
-                >
+                    <span class="infos">
+                        <span class="nom-carte">🗺️ Cartes régionales</span>
+                        <span class="description">
+                            Entraîne-toi sur les différentes cartes régionales.
+                        </span>
+                        <span class="action">Voir les cartes régionales →</span>
+                    </span>
+                </button>
 
             </div>
+        </div>
+    </section>
+</main>
 
+<div id="ecranRegions" class="ecran-modes">
+    <header class="entete-modes">
+        <div class="zone-retour">
+            <button id="btnRetourAccueilRegions" class="btn-retour" type="button">
+                ← Retour
+            </button>
+        </div>
 
-            <!-- MENU -->
+        <div class="titre-mode">
+            <h1>Choisis ta carte régionale</h1>
+            <p>Sélectionne une région.</p>
+        </div>
 
-            <div class="zone-menu">
+        <div></div>
+    </header>
 
-                <div class="menu">
+    <section class="contenu-modes">
+        <div class="bloc-choix">
+            <div class="grille-cartes">
 
+                <button id="btnRegionRhoneAlpes" class="carte-choix" type="button">
+                    <span class="zone-image">
+                        <img
+                            src="images/Carte-Rhone-Alpes.png"
+                            alt="Carte Rhône-Alpes du réseau ferroviaire"
+                            draggable="false"
+                        >
+                    </span>
 
-                    <!-- MODE APPRENTISSAGE -->
-
-                    <button
-                        id="btnApprendre"
-                        class="bouton-menu"
-                        type="button"
-                    >
-
-                        <span class="icone-bouton">
-                            🎓
+                    <span class="infos">
+                        <span class="nom-carte">🏔️ Rhône-Alpes</span>
+                        <span class="description">
+                            Entraîne-toi sur les 82 villes de la carte Rhône-Alpes.
                         </span>
+                        <span class="action">Choisir cette carte →</span>
+                    </span>
+                </button>
 
-                        <span>
-                            Apprendre
-                        </span>
+                <div class="carte-region-a-venir" aria-label="Autre région à venir">
+                    <span class="icone-region-a-venir">📍</span>
+                    <span class="texte-region-a-venir">Autre région<br>à venir</span>
+                </div>
 
-                    </button>
+                <div class="carte-region-a-venir" aria-label="Autre région à venir">
+                    <span class="icone-region-a-venir">📍</span>
+                    <span class="texte-region-a-venir">Autre région<br>à venir</span>
+                </div>
 
-
-                    <!-- MODE JEU -->
-
-                    <button
-                        id="btnJouer"
-                        class="bouton-menu"
-                        type="button"
-                    >
-
-                        <span class="icone-bouton">
-                            🎮
-                        </span>
-
-                        <span>
-                            Jouer
-                        </span>
-
-                    </button>
-
-
-                    <!-- MODE EXAMEN -->
-
-                    <button
-                        id="btnExamen"
-                        class="bouton-menu"
-                        type="button"
-                    >
-
-                        <span class="icone-bouton">
-                            🏆
-                        </span>
-
-                        <span>
-                            Mode Examen
-                        </span>
-
-                    </button>
-
-
+                <div class="carte-region-a-venir" aria-label="Autre région à venir">
+                    <span class="icone-region-a-venir">📍</span>
+                    <span class="texte-region-a-venir">Autre région<br>à venir</span>
                 </div>
 
             </div>
+        </div>
+    </section>
+</div>
 
+<div id="ecranModes" class="ecran-modes">
+    <header class="entete-modes">
+        <div class="zone-retour">
+            <button id="btnRetourCartes" class="btn-retour" type="button">
+                ← Cartes
+            </button>
+        </div>
 
-        </section>
+        <div class="titre-mode">
+            <h1 id="titreCarteSelectionnee">Carte</h1>
+            <p>Choisis ton mode.</p>
+        </div>
 
+        <div></div>
+    </header>
 
-    </main>
+    <section class="contenu-modes">
+        <div class="selection-mode">
 
+            <div class="apercu-carte">
+                <img id="imageCarteSelectionnee" src="" alt="" draggable="false">
+            </div>
 
-    <script>
+            <div class="grille-modes">
 
-        /* =========================================================
-           BOUTONS DE L'ACCUEIL
-           ========================================================= */
+                <button id="btnApprendre" class="bouton-mode" type="button">
+                    <span class="icone-mode">🎓</span>
+                    <span class="nom-mode">Apprendre</span>
+                    <span class="texte-mode">
+                        Découvre les villes et entraîne-toi à les reconnaître.
+                    </span>
+                </button>
 
+                <button id="btnJouer" class="bouton-mode" type="button">
+                    <span class="icone-mode">🎮</span>
+                    <span class="nom-mode">Jouer</span>
+                    <span class="texte-mode">
+                        Retrouve les villes sur la carte avec plusieurs niveaux.
+                    </span>
+                </button>
 
-        const btnApprendre =
-            document.getElementById(
-                "btnApprendre"
-            );
+                <button id="btnExamen" class="bouton-mode" type="button">
+                    <span class="icone-mode">🏆</span>
+                    <span class="nom-mode">Mode Examen</span>
+                    <span class="texte-mode">
+                        Teste tes connaissances sur 21 villes aléatoires.
+                    </span>
+                </button>
 
+            </div>
+        </div>
+    </section>
+</div>
 
-        const btnJouer =
-            document.getElementById(
-                "btnJouer"
-            );
+<script>
+const btnCarteNationale =
+    document.getElementById("btnCarteNationale");
 
+const btnCartesRegionales =
+    document.getElementById("btnCartesRegionales");
 
-        const btnExamen =
-            document.getElementById(
-                "btnExamen"
-            );
+const ecranRegions =
+    document.getElementById("ecranRegions");
 
+const btnRetourAccueilRegions =
+    document.getElementById("btnRetourAccueilRegions");
 
-        /* ---------------------------------------------------------
-           APPRENDRE
-           --------------------------------------------------------- */
+const btnRegionRhoneAlpes =
+    document.getElementById("btnRegionRhoneAlpes");
 
-        btnApprendre.addEventListener(
-            "click",
-            function() {
+const ecranModes =
+    document.getElementById("ecranModes");
 
-                window.location.href = "apprendre.html";
+const btnRetourCartes =
+    document.getElementById("btnRetourCartes");
 
-            }
-        );
+const titreCarteSelectionnee =
+    document.getElementById("titreCarteSelectionnee");
 
+const imageCarteSelectionnee =
+    document.getElementById("imageCarteSelectionnee");
 
-        /* ---------------------------------------------------------
-           JOUER
-           --------------------------------------------------------- */
+const btnApprendre =
+    document.getElementById("btnApprendre");
 
-        btnJouer.addEventListener(
-            "click",
-            function() {
+const btnJouer =
+    document.getElementById("btnJouer");
 
-                window.location.href = "jouer.html";
+const btnExamen =
+    document.getElementById("btnExamen");
 
-            }
-        );
+let carteSelectionnee = null;
 
+const CONFIG_CARTES = {
+    nationale: {
+        titre: "🇫🇷 Carte nationale",
+        image: "images/carte-nationale-FINALE-transparente.png",
+        alt: "Carte nationale du réseau ferroviaire",
+        apprendre: "national/apprendre-national.html",
+        jouer: "national/jouer-national.html",
+        examen: "national/examen-national.html"
+    },
 
-        /* ---------------------------------------------------------
-           EXAMEN
-           --------------------------------------------------------- */
+    rhoneAlpes: {
+        titre: "🏔️ Rhône-Alpes",
+        image: "images/Carte-Rhone-Alpes.png",
+        alt: "Carte Rhône-Alpes du réseau ferroviaire",
+        apprendre: "rhone-alpes/apprendre-rhone-alpes.html",
+        jouer: "rhone-alpes/jouer-rhone-alpes.html",
+        examen: "rhone-alpes/examen-rhone-alpes.html"
+    }
+};
 
-        btnExamen.addEventListener(
-            "click",
-            function() {
+function ouvrirChoixModes(cleCarte) {
+    const configuration = CONFIG_CARTES[cleCarte];
 
-                window.location.href = "examen.html";
+    if (!configuration) return;
 
-            }
-        );
+    carteSelectionnee = cleCarte;
 
-    </script>
+    titreCarteSelectionnee.textContent =
+        configuration.titre;
 
+    imageCarteSelectionnee.src =
+        configuration.image;
+
+    imageCarteSelectionnee.alt =
+        configuration.alt;
+
+    ecranModes.classList.add("visible");
+}
+
+function fermerChoixModes() {
+    ecranModes.classList.remove("visible");
+    carteSelectionnee = null;
+}
+
+function ouvrirMode(nomMode) {
+    if (!carteSelectionnee) return;
+
+    const configuration =
+        CONFIG_CARTES[carteSelectionnee];
+
+    const destination =
+        configuration[nomMode];
+
+    if (!destination) return;
+
+    window.location.href = destination;
+}
+
+btnCarteNationale.addEventListener(
+    "click",
+    function() {
+        ouvrirChoixModes("nationale");
+    }
+);
+
+btnCartesRegionales.addEventListener(
+    "click",
+    function() {
+        ecranRegions.classList.add("visible");
+    }
+);
+
+btnRetourAccueilRegions.addEventListener(
+    "click",
+    function() {
+        ecranRegions.classList.remove("visible");
+    }
+);
+
+btnRegionRhoneAlpes.addEventListener(
+    "click",
+    function() {
+        ecranRegions.classList.remove("visible");
+        ouvrirChoixModes("rhoneAlpes");
+    }
+);
+
+btnRetourCartes.addEventListener(
+    "click",
+    function() {
+        const carteAvantRetour = carteSelectionnee;
+
+        fermerChoixModes();
+
+        if (carteAvantRetour === "rhoneAlpes") {
+            ecranRegions.classList.add("visible");
+        }
+    }
+);
+
+btnApprendre.addEventListener(
+    "click",
+    function() {
+        ouvrirMode("apprendre");
+    }
+);
+
+btnJouer.addEventListener(
+    "click",
+    function() {
+        ouvrirMode("jouer");
+    }
+);
+
+btnExamen.addEventListener(
+    "click",
+    function() {
+        ouvrirMode("examen");
+    }
+);
+
+/* =========================================================
+   OUVERTURE DIRECTE APRÈS UN RETOUR DEPUIS UNE PAGE DE JEU
+   ========================================================= */
+const parametresAdresse = new URLSearchParams(window.location.search);
+const ecranDemande = parametresAdresse.get("ecran");
+const carteDemandee = parametresAdresse.get("carte");
+
+if (ecranDemande === "regions") {
+    ecranRegions.classList.add("visible");
+}
+
+if (
+    ecranDemande === "modes" &&
+    carteDemandee &&
+    CONFIG_CARTES[carteDemandee]
+) {
+    ouvrirChoixModes(carteDemandee);
+}
+
+if (
+    (ecranDemande === "regions" || ecranDemande === "modes") &&
+    window.history &&
+    window.history.replaceState
+) {
+    window.history.replaceState(
+        {},
+        document.title,
+        window.location.pathname + window.location.hash
+    );
+}
+
+</script>
 
 </body>
-
 </html>
