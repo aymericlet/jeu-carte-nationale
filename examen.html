@@ -1,0 +1,783 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mode Examen - Carte Nationale</title>
+
+<style>
+* { box-sizing: border-box; }
+
+html, body {
+    margin: 0;
+    min-height: 100%;
+    font-family: Arial, Helvetica, sans-serif;
+    background: #f4f4f4;
+    color: #222;
+}
+
+button { font: inherit; }
+
+.page {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.entete {
+    display: grid;
+    grid-template-columns: 160px 1fr 160px;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 18px;
+    background: #fff;
+    border-bottom: 1px solid #ddd;
+}
+
+.titre-entete { text-align: center; }
+
+.titre-entete h1 {
+    margin: 0;
+    color: #94163a;
+    font-size: 24px;
+}
+
+.titre-entete p {
+    margin: 3px 0 0;
+    color: #666;
+    font-size: 13px;
+}
+
+.bouton-retour {
+    min-height: 42px;
+    padding: 8px 18px;
+    border: none;
+    border-radius: 11px;
+    background: #94163a;
+    color: #fff;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.bouton-retour:hover { background: #7f1130; }
+
+.contenu {
+    flex: 1;
+    min-height: 0;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 330px;
+    gap: 14px;
+    padding: 14px;
+}
+
+.zone-carte {
+    min-width: 0;
+    min-height: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.cadre-carte {
+    position: relative;
+    display: inline-block;
+    max-width: 100%;
+    max-height: calc(100vh - 105px);
+    line-height: 0;
+    user-select: none;
+}
+
+.carte {
+    display: block;
+    max-width: 100%;
+    max-height: calc(100vh - 105px);
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    user-select: none;
+    -webkit-user-drag: none;
+}
+
+.point-jeu {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    transform: translate(-50%, -50%);
+    border: 0;
+    padding: 0;
+    margin: 0;
+    border-radius: 50%;
+    background: transparent;
+    z-index: 15;
+    pointer-events: none;
+}
+
+.point-jeu::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 12px;
+    height: 12px;
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+    background: transparent;
+    transition: background .12s ease, box-shadow .12s ease, transform .12s ease;
+}
+
+.point-jeu.halo-actif::after {
+    background: rgba(148,22,58,.18);
+    box-shadow: 0 0 0 3px rgba(148,22,58,.12);
+    transform: translate(-50%, -50%) scale(1.15);
+}
+
+.panneau {
+    min-height: 0;
+    overflow: auto;
+    padding: 16px;
+    border: 1px solid #ddd;
+    border-radius: 14px;
+    background: #fff;
+    box-shadow: 0 4px 18px rgba(0,0,0,.06);
+}
+
+.badge-examen {
+    display: inline-block;
+    margin-bottom: 12px;
+    padding: 6px 10px;
+    border-radius: 999px;
+    background: #f7e9ed;
+    color: #94163a;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.panneau h2 {
+    margin: 0 0 8px;
+    color: #94163a;
+    font-size: 19px;
+}
+
+.texte-intro {
+    margin: 0 0 16px;
+    color: #666;
+    font-size: 13px;
+    line-height: 1.5;
+}
+
+.regles {
+    margin: 14px 0;
+    padding: 12px;
+    border-radius: 10px;
+    background: #f8f8f8;
+    color: #555;
+    font-size: 13px;
+    line-height: 1.55;
+}
+
+.regles strong { color: #94163a; }
+
+.bouton-principal {
+    width: 100%;
+    min-height: 44px;
+    padding: 9px 12px;
+    border: 0;
+    border-radius: 10px;
+    background: #94163a;
+    color: #fff;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.zone-examen { display: none; }
+
+.progression-ligne {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 9px;
+    color: #666;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.barre {
+    height: 8px;
+    overflow: hidden;
+    margin-bottom: 22px;
+    border-radius: 999px;
+    background: #eee;
+}
+
+.barre > div {
+    width: 0;
+    height: 100%;
+    background: #94163a;
+    transition: width .2s ease;
+}
+
+.libelle-trouve {
+    margin: 0;
+    color: #777;
+    font-size: 13px;
+    text-align: center;
+}
+
+.nom-ville {
+    margin: 8px 0 18px;
+    color: #94163a;
+    font-size: 24px;
+    font-weight: 800;
+    line-height: 1.15;
+    text-align: center;
+}
+
+.instruction {
+    margin: 0;
+    color: #666;
+    font-size: 13px;
+    line-height: 1.45;
+    text-align: center;
+}
+
+.zone-resultat { display: none; text-align: center; }
+
+.resultat-statut {
+    margin: 8px 0 2px;
+    font-size: 22px;
+    font-weight: 800;
+}
+
+.resultat-statut.reussi { color: #107c10; }
+.resultat-statut.partiel { color: #b65c00; }
+.resultat-statut.echec { color: #94163a; }
+
+.resultat-score {
+    margin: 8px 0;
+    color: #94163a;
+    font-size: 38px;
+    font-weight: 800;
+}
+
+.resultat-pourcentage {
+    margin: 0 0 16px;
+    color: #666;
+    font-size: 15px;
+}
+
+.seuil {
+    margin: 0 0 16px;
+    color: #777;
+    font-size: 12px;
+}
+
+.erreurs {
+    display: none;
+    margin: 16px 0;
+    text-align: left;
+}
+
+.erreurs.visible { display: block; }
+
+.erreurs h3 {
+    margin: 0 0 8px;
+    color: #94163a;
+    font-size: 15px;
+}
+
+.liste-erreurs {
+    display: grid;
+    gap: 7px;
+}
+
+.erreur-ligne {
+    padding: 9px 10px;
+    border: 1px solid #ead8de;
+    border-radius: 9px;
+    background: #fcf7f9;
+    color: #555;
+    font-size: 12px;
+    line-height: 1.4;
+}
+
+.erreur-ligne strong { color: #94163a; }
+
+.bouton-secondaire {
+    width: 100%;
+    min-height: 39px;
+    margin-top: 8px;
+    padding: 8px 10px;
+    border: 1px solid #ccc;
+    border-radius: 9px;
+    background: #fff;
+    color: #555;
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+@media (max-width: 900px) {
+    .entete {
+        grid-template-columns: 110px 1fr 20px;
+        padding: 8px 10px;
+    }
+
+    .titre-entete h1 { font-size: 20px; }
+    .titre-entete p { display: none; }
+
+    .contenu {
+        grid-template-columns: 1fr;
+        grid-template-rows: minmax(300px, 1fr) auto;
+        overflow: visible;
+    }
+
+    .cadre-carte,
+    .carte {
+        max-height: 62vh;
+    }
+
+    .panneau {
+        max-height: none;
+    }
+}
+
+@media (max-width: 520px) {
+    .entete { grid-template-columns: 92px 1fr 0; }
+    .bouton-retour { min-height: 38px; padding: 7px 14px; font-size: 14px; }
+    .titre-entete h1 { font-size: 18px; }
+    .contenu { padding: 8px; gap: 8px; }
+    .panneau { padding: 13px; }
+    .nom-ville { font-size: 21px; }
+}
+</style>
+</head>
+
+<body>
+
+<div class="page">
+<header class="entete">
+    <div>
+        <button id="btnRetour" class="bouton-retour" type="button">← Accueil</button>
+    </div>
+
+    <div class="titre-entete">
+        <h1>🏆 Mode Examen</h1>
+        <p>21 villes aléatoires · évaluation en 3 niveaux</p>
+    </div>
+
+    <div></div>
+</header>
+
+<main class="contenu">
+    <section class="zone-carte">
+        <div id="cadreCarte" class="cadre-carte">
+            <img
+                id="carte"
+                class="carte"
+                src="images/carte-nationale-FINALE-transparente.png"
+                alt="Carte nationale du réseau ferroviaire"
+                draggable="false"
+            >
+        </div>
+    </section>
+
+    <aside class="panneau">
+        <div id="zoneAccueilExamen">
+            <span class="badge-examen">Conditions examen</span>
+            <h2>Prêt pour l'épreuve ?</h2>
+            <p class="texte-intro">
+                Les villes sont choisies aléatoirement parmi toutes les villes configurées de la carte.
+            </p>
+
+            <div class="regles">
+                <strong>21 villes</strong> seront demandées.<br>
+                Tu disposes d'<strong>une seule tentative</strong> par ville.<br>
+                Aucune correction ni score ne sera affiché pendant l'épreuve.<br>
+                Résultat : <strong>Non acquis</strong> de 0 à 7, <strong>Acquis partiellement</strong> de 8 à 14 et <strong>Acquis</strong> de 15 à 21.
+            </div>
+
+            <button id="btnCommencer" class="bouton-principal" type="button">🏆 Commencer l'examen</button>
+        </div>
+
+        <div id="zoneExamen" class="zone-examen">
+            <span class="badge-examen">🏆 Examen en cours</span>
+
+            <div class="progression-ligne">
+                <span id="progressionTexte">Question 1 / 21</span>
+                <span>Score masqué</span>
+            </div>
+
+            <div class="barre">
+                <div id="barreProgression"></div>
+            </div>
+
+            <p class="libelle-trouve">Trouve :</p>
+            <div id="nomATrouver" class="nom-ville">Ville</div>
+            <p class="instruction">
+                Clique une seule fois sur le point correspondant.<br>
+                La question suivante s'affichera automatiquement.
+            </p>
+        </div>
+
+        <div id="zoneResultat" class="zone-resultat">
+            <span class="badge-examen">Résultat final</span>
+            <h2>Examen terminé</h2>
+
+            <div id="resultatStatut" class="resultat-statut"></div>
+            <div id="resultatScore" class="resultat-score">0 / 21</div>
+            <p id="resultatPourcentage" class="resultat-pourcentage"></p>
+            <p class="seuil">0–7 : Non acquis · 8–14 : Acquis partiellement · 15–21 : Acquis</p>
+
+            <div id="zoneErreurs" class="erreurs">
+                <h3>📚 Villes à revoir</h3>
+                <div id="listeErreurs" class="liste-erreurs"></div>
+            </div>
+
+            <button id="btnRecommencer" class="bouton-principal" type="button">↻ Repasser un examen</button>
+            <button id="btnAccueilResultat" class="bouton-secondaire" type="button">🏠 Accueil</button>
+        </div>
+    </aside>
+</main>
+</div>
+
+<script src="js/villes.js"></script>
+<script>
+const NOMBRE_QUESTIONS_EXAMEN = 21;
+const SCORE_REUSSITE_EXAMEN = 17;
+const CLE_VILLES_A_REVOIR = "carteNationaleVillesARevoirV1";
+
+const cadreCarte = document.getElementById("cadreCarte");
+const zoneAccueilExamen = document.getElementById("zoneAccueilExamen");
+const zoneExamen = document.getElementById("zoneExamen");
+const zoneResultat = document.getElementById("zoneResultat");
+const btnCommencer = document.getElementById("btnCommencer");
+const btnRetour = document.getElementById("btnRetour");
+const btnRecommencer = document.getElementById("btnRecommencer");
+const btnAccueilResultat = document.getElementById("btnAccueilResultat");
+const progressionTexte = document.getElementById("progressionTexte");
+const barreProgression = document.getElementById("barreProgression");
+const nomATrouver = document.getElementById("nomATrouver");
+const resultatStatut = document.getElementById("resultatStatut");
+const resultatScore = document.getElementById("resultatScore");
+const resultatPourcentage = document.getElementById("resultatPourcentage");
+const zoneErreurs = document.getElementById("zoneErreurs");
+const listeErreurs = document.getElementById("listeErreurs");
+
+let questions = [];
+let numeroQuestion = 0;
+let score = 0;
+let indexBonneVille = null;
+let examenEnCours = false;
+let reponsesIncorrectes = [];
+
+function villeEstConfiguree(ville) {
+    return ville &&
+        typeof ville.x === "number" &&
+        typeof ville.y === "number" &&
+        Number.isFinite(ville.x) &&
+        Number.isFinite(ville.y);
+}
+
+function melanger(tableau) {
+    const copie = [...tableau];
+
+    for (let i = copie.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [copie[i], copie[j]] = [copie[j], copie[i]];
+    }
+
+    return copie;
+}
+
+function creerPointsCliquables() {
+    cadreCarte.querySelectorAll(".point-jeu").forEach(function(point) {
+        point.remove();
+    });
+
+    villes.forEach(function(ville, index) {
+        if (!villeEstConfiguree(ville)) return;
+
+        const point = document.createElement("div");
+        point.className = "point-jeu";
+        point.dataset.indexVille = index;
+        point.style.left = ville.x + "%";
+        point.style.top = ville.y + "%";
+        cadreCarte.appendChild(point);
+    });
+}
+
+function trouverPointLePlusProche(clientX, clientY, rayonMaximum) {
+    const rect = cadreCarte.getBoundingClientRect();
+    const sourisX = clientX - rect.left;
+    const sourisY = clientY - rect.top;
+
+    let indexLePlusProche = null;
+    let distanceLaPlusCourte = Infinity;
+
+    villes.forEach(function(ville, index) {
+        if (!villeEstConfiguree(ville)) return;
+
+        const pointX = (ville.x / 100) * rect.width;
+        const pointY = (ville.y / 100) * rect.height;
+        const dx = sourisX - pointX;
+        const dy = sourisY - pointY;
+        const distance = Math.sqrt(dx * dx + dy * dy);
+
+        if (distance < distanceLaPlusCourte) {
+            distanceLaPlusCourte = distance;
+            indexLePlusProche = index;
+        }
+    });
+
+    if (distanceLaPlusCourte <= rayonMaximum) {
+        return indexLePlusProche;
+    }
+
+    return null;
+}
+
+function mettreAJourHalo(evenement) {
+    if (!examenEnCours) {
+        retirerTousLesHalos();
+        return;
+    }
+
+    const indexSurvole = trouverPointLePlusProche(
+        evenement.clientX,
+        evenement.clientY,
+        13
+    );
+
+    cadreCarte.querySelectorAll(".point-jeu").forEach(function(point) {
+        point.classList.toggle(
+            "halo-actif",
+            indexSurvole !== null &&
+            Number(point.dataset.indexVille) === indexSurvole
+        );
+    });
+}
+
+function retirerTousLesHalos() {
+    cadreCarte.querySelectorAll(".point-jeu").forEach(function(point) {
+        point.classList.remove("halo-actif");
+    });
+}
+
+function ajouterVillesALaMemoire(indices) {
+    let nomsActuels = [];
+
+    try {
+        const valeur = JSON.parse(localStorage.getItem(CLE_VILLES_A_REVOIR) || "[]");
+        if (Array.isArray(valeur)) {
+            nomsActuels = valeur;
+        }
+    } catch (erreur) {
+        nomsActuels = [];
+    }
+
+    const nouveauxNoms = indices
+        .filter(function(index) {
+            return villes[index] && villeEstConfiguree(villes[index]);
+        })
+        .map(function(index) {
+            return villes[index].nom;
+        });
+
+    const nomsUniques = Array.from(new Set([...nomsActuels, ...nouveauxNoms]));
+    localStorage.setItem(CLE_VILLES_A_REVOIR, JSON.stringify(nomsUniques));
+}
+
+function preparerExamen() {
+    const indicesDisponibles = villes
+        .map(function(ville, index) {
+            return villeEstConfiguree(ville) ? index : null;
+        })
+        .filter(function(index) {
+            return index !== null;
+        });
+
+    questions = melanger(indicesDisponibles).slice(
+        0,
+        Math.min(NOMBRE_QUESTIONS_EXAMEN, indicesDisponibles.length)
+    );
+
+    numeroQuestion = 0;
+    score = 0;
+    indexBonneVille = null;
+    reponsesIncorrectes = [];
+}
+
+function afficherQuestion() {
+    if (numeroQuestion >= questions.length) {
+        terminerExamen();
+        return;
+    }
+
+    indexBonneVille = questions[numeroQuestion];
+    nomATrouver.textContent = villes[indexBonneVille].nom;
+
+    progressionTexte.textContent =
+        "Question " + (numeroQuestion + 1) + " / " + questions.length;
+
+    barreProgression.style.width =
+        ((numeroQuestion / questions.length) * 100) + "%";
+
+    retirerTousLesHalos();
+}
+
+function commencerExamen() {
+    preparerExamen();
+
+    if (questions.length < NOMBRE_QUESTIONS_EXAMEN) {
+        alert("Il faut au moins 21 villes configurées pour lancer le mode Examen.");
+        return;
+    }
+
+    zoneAccueilExamen.style.display = "none";
+    zoneResultat.style.display = "none";
+    zoneExamen.style.display = "block";
+    examenEnCours = true;
+
+    afficherQuestion();
+}
+
+function enregistrerReponse(indexClique) {
+    if (!examenEnCours || indexBonneVille === null) return;
+
+    if (indexClique === indexBonneVille) {
+        score++;
+    } else {
+        reponsesIncorrectes.push({
+            attendu: indexBonneVille,
+            choisi: indexClique
+        });
+    }
+
+    /*
+       Aucun feedback visuel n'est donné ici :
+       ni couleur, ni cartouche, ni indication bonne/mauvaise.
+       On passe directement à la question suivante.
+    */
+    numeroQuestion++;
+    indexBonneVille = null;
+
+    if (numeroQuestion >= questions.length) {
+        terminerExamen();
+    } else {
+        afficherQuestion();
+    }
+}
+
+function gererClicCarte(evenement) {
+    if (!examenEnCours) return;
+
+    const indexLePlusProche = trouverPointLePlusProche(
+        evenement.clientX,
+        evenement.clientY,
+        13
+    );
+
+    if (indexLePlusProche !== null) {
+        enregistrerReponse(indexLePlusProche);
+    }
+}
+
+function terminerExamen() {
+    examenEnCours = false;
+    indexBonneVille = null;
+    retirerTousLesHalos();
+
+    barreProgression.style.width = "100%";
+    zoneExamen.style.display = "none";
+    zoneResultat.style.display = "block";
+
+    const total = questions.length;
+    const pourcentage = total > 0
+        ? Math.round((score / total) * 100)
+        : 0;
+
+    let niveauResultat = "";
+    let encouragement = "";
+    let classeResultat = "";
+
+    if (score <= 7) {
+        niveauResultat = "❌ Non acquis";
+        encouragement = "Continue à t'entraîner : chaque ville révisée te rapproche de l'objectif !";
+        classeResultat = "echec";
+    } else if (score <= 14) {
+        niveauResultat = "🟠 Acquis partiellement";
+        encouragement = "Tu es sur la bonne voie ! Encore quelques révisions pour consolider tes repères.";
+        classeResultat = "partiel";
+    } else {
+        niveauResultat = "✅ Acquis";
+        encouragement = "Bravo ! Tes repères sur la carte sont bien acquis. Continue ainsi !";
+        classeResultat = "reussi";
+    }
+
+    resultatStatut.textContent = niveauResultat;
+    resultatStatut.className = "resultat-statut " + classeResultat;
+
+    resultatScore.textContent = score + " / " + total;
+    resultatPourcentage.textContent =
+        pourcentage + " % de réussite · " + encouragement;
+
+    listeErreurs.innerHTML = "";
+
+    if (reponsesIncorrectes.length > 0) {
+        zoneErreurs.classList.add("visible");
+
+        reponsesIncorrectes.forEach(function(reponse) {
+            const ligne = document.createElement("div");
+            ligne.className = "erreur-ligne";
+
+            const villeAttendue = villes[reponse.attendu].nom;
+            const villeChoisie = villes[reponse.choisi].nom;
+
+            ligne.innerHTML =
+                "<strong>" + echapperHTML(villeAttendue) + "</strong>" +
+                "<br>Point sélectionné : " + echapperHTML(villeChoisie);
+
+            listeErreurs.appendChild(ligne);
+        });
+
+        ajouterVillesALaMemoire(
+            reponsesIncorrectes.map(function(reponse) {
+                return reponse.attendu;
+            })
+        );
+    } else {
+        zoneErreurs.classList.remove("visible");
+    }
+}
+
+function echapperHTML(texte) {
+    return String(texte)
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+}
+
+btnCommencer.addEventListener("click", commencerExamen);
+btnRecommencer.addEventListener("click", commencerExamen);
+
+btnRetour.addEventListener("click", function() {
+    window.location.href = "index.html";
+});
+
+btnAccueilResultat.addEventListener("click", function() {
+    window.location.href = "index.html";
+});
+
+cadreCarte.addEventListener("mousemove", mettreAJourHalo);
+cadreCarte.addEventListener("mouseleave", retirerTousLesHalos);
+cadreCarte.addEventListener("click", gererClicCarte);
+
+creerPointsCliquables();
+</script>
+
+</body>
+</html>
