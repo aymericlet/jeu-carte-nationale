@@ -1697,11 +1697,6 @@ button {
         justify-content: center;
     }
 }
-
-/* Espace sous la dernière rangée = même valeur que l'espace entre les cartouches */
-#ecranRegions .grille-cartes {
-    padding-bottom: 20px !important;
-}
 </style>
 </head>
 <body>
@@ -1804,18 +1799,18 @@ button {
 <span class="action">Choisir cette carte →</span>
 </span>
 </button>
-<div aria-label="Île-de-France - bientôt disponible" class="carte-choix carte-region-indisponible">
+<button class="carte-choix" id="btnRegionIleDeFrance" type="button">
 <span class="zone-image">
 <img alt="Carte Île-de-France du réseau ferroviaire" draggable="false" src="images/carte-ile-de-france-mini.png"/>
 </span>
 <span class="infos">
 <span class="nom-carte">🏙️ Île-de-France</span>
 <span class="description">
-                            Entraîne-toi sur la carte ferroviaire d’Île-de-France.
+                            Entraîne-toi sur les 136 villes et gares de la carte Île-de-France.
                         </span>
-<span class="action action-indisponible">Bientôt disponible</span>
+<span class="action">Choisir cette carte →</span>
 </span>
-</div><div aria-label="Nouvelle carte - à venir" class="carte-choix carte-region-indisponible">
+</button><div aria-label="Nouvelle carte - à venir" class="carte-choix carte-region-indisponible">
 <span class="zone-image">
 
 <span style="font-size:64px; opacity:.42; filter:grayscale(1);">🗺️</span></span>
@@ -2117,6 +2112,9 @@ const btnRegionBourgogne =
 const btnRegionProvenceAlpesCoteDAzur =
     document.getElementById("btnRegionProvenceAlpesCoteDAzur");
 
+const btnRegionIleDeFrance =
+    document.getElementById("btnRegionIleDeFrance");
+
 const ecranModes =
     document.getElementById("ecranModes");
 
@@ -2175,6 +2173,15 @@ const CONFIG_CARTES = {
         apprendre: "provence-alpes-cote-d-azur/apprendre-provence-alpes-cote-d-azur.html",
         jouer: "provence-alpes-cote-d-azur/jouer-provence-alpes-cote-d-azur.html",
         examen: "provence-alpes-cote-d-azur/examen-provence-alpes-cote-d-azur.html"
+    },
+
+    ileDeFrance: {
+        titre: "🏙️ Île-de-France",
+        image: "images/carte-ile-de-france-mini.png",
+        alt: "Carte Île-de-France du réseau ferroviaire",
+        apprendre: "ile-de-france/apprendre-ile-de-france.html",
+        jouer: "ile-de-france/jouer-ile-de-france.html",
+        examen: "ile-de-france/examen-ile-de-france.html"
     }
 };
 
@@ -2261,6 +2268,14 @@ btnRegionProvenceAlpesCoteDAzur.addEventListener(
     }
 );
 
+btnRegionIleDeFrance.addEventListener(
+    "click",
+    function() {
+        ecranRegions.classList.remove("visible");
+        ouvrirChoixModes("ileDeFrance");
+    }
+);
+
 btnRetourCartes.addEventListener(
     "click",
     function() {
@@ -2271,7 +2286,8 @@ btnRetourCartes.addEventListener(
         if (
             carteAvantRetour === "rhoneAlpes" ||
             carteAvantRetour === "bourgogne" ||
-            carteAvantRetour === "provenceAlpesCoteDAzur"
+            carteAvantRetour === "provenceAlpesCoteDAzur" ||
+            carteAvantRetour === "ileDeFrance"
         ) {
             ecranRegions.classList.add("visible");
         }
