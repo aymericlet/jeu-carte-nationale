@@ -1,10 +1,10 @@
 <!DOCTYPE html>
+
 <html lang="fr">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>GéoRail - Révise en jouant</title>
-
 <style>
 * { box-sizing: border-box; }
 
@@ -1662,469 +1662,439 @@ button {
     cursor: not-allowed;
 }
 
+
+/* =========================================================
+   CARTES RÉGIONALES — ÉCRAN LARGE
+   Présentation validée : image à gauche, informations à droite.
+   ========================================================= */
+@media (min-width: 761px) {
+    #ecranRegions .carte-choix {
+        grid-template-columns: 26% minmax(0, 1fr) !important;
+        grid-template-rows: 1fr !important;
+        min-height: 190px;
+        height: 100%;
+    }
+
+    #ecranRegions .carte-choix .zone-image {
+        width: 100%;
+        height: 100%;
+        min-height: 100%;
+        border-right: 1px solid #e7e7e7;
+        border-bottom: 0;
+    }
+
+    #ecranRegions .carte-choix .zone-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+    }
+
+    #ecranRegions .carte-choix .infos {
+        min-width: 0;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+}
+
+/* Espace sous la dernière rangée = même valeur que l'espace entre les cartouches */
+#ecranRegions .grille-cartes {
+    padding-bottom: 20px !important;
+}
 </style>
 </head>
-
 <body>
-
 <main class="page">
-    <header class="entete">
-        <h1>🚆 GéoRail</h1>
-        <p>Apprends et teste tes connaissances du réseau ferroviaire.</p>
-    </header>
-
-    <section class="contenu">
-        <div class="bloc-choix">
-            <h2 class="titre-choix">Choisis ta carte</h2>
-
-            <div class="grille-cartes">
-
-                <button id="btnCarteNationale" class="carte-choix" type="button">
-                    <span class="zone-image">
-                        <img
-                            src="images/carte-nationale-mini.png"
-                            alt="Carte nationale du réseau ferroviaire"
-                            draggable="false"
-                        >
-                    </span>
-
-                    <span class="infos">
-                        <span class="nom-carte">🇫🇷 Carte nationale</span>
-                        <span class="description">
+<header class="entete">
+<h1>🚆 GéoRail</h1>
+<p>Apprends et teste tes connaissances du réseau ferroviaire.</p>
+</header>
+<section class="contenu">
+<div class="bloc-choix">
+<h2 class="titre-choix">Choisis ta carte</h2>
+<div class="grille-cartes">
+<button class="carte-choix" id="btnCarteNationale" type="button">
+<span class="zone-image">
+<img alt="Carte nationale du réseau ferroviaire" draggable="false" src="images/carte-nationale-mini.png"/>
+</span>
+<span class="infos">
+<span class="nom-carte">🇫🇷 Carte nationale</span>
+<span class="description">
                             Entraîne-toi sur l'ensemble de la carte nationale.
                         </span>
-                        <span class="action">Choisir cette carte →</span>
-                    </span>
-                </button>
-
-                <button id="btnCartesRegionales" class="carte-choix" type="button">
-                    <span class="zone-image">
-                        <img
-                            src="images/carte-france-regions-mini.png"
-                            alt="Carte de France découpée en régions"
-                            draggable="false"
-                        >
-                    </span>
-
-                    <span class="infos">
-                        <span class="nom-carte">🗺️ Cartes régionales</span>
-                        <span class="description">
+<span class="action">Choisir cette carte →</span>
+</span>
+</button>
+<button class="carte-choix" id="btnCartesRegionales" type="button">
+<span class="zone-image">
+<img alt="Carte de France découpée en régions" draggable="false" src="images/carte-france-regions-mini.png"/>
+</span>
+<span class="infos">
+<span class="nom-carte">🗺️ Cartes régionales</span>
+<span class="description">
                             Entraîne-toi sur les différentes cartes régionales.
                         </span>
-                        <span class="action">Voir les cartes régionales →</span>
-                    </span>
-                </button>
-
-            </div>
-        </div>
-    </section>
-
-    <footer class="footer-georail">
-        <div class="footer-georail-liens">
-            <button id="btnAPropos" class="footer-georail-lien" type="button">À propos</button>
-            <span class="footer-georail-separateur">•</span>
-            <button id="btnSignalerErreur" class="footer-georail-lien" type="button">Nous contacter</button>
-            <span class="footer-georail-separateur">•</span>
-            <button id="btnMentionsLegales" class="footer-georail-lien" type="button">Mentions légales</button>
-        </div>
-        <p class="footer-georail-version">Version 1.0 • © 2026 GéoRail - Letondeur Aymeric</p>
-    </footer>
+<span class="action">Voir les cartes régionales →</span>
+</span>
+</button>
+</div>
+</div>
+</section>
+<footer class="footer-georail">
+<div class="footer-georail-liens">
+<button class="footer-georail-lien" id="btnAPropos" type="button">À propos</button>
+<span class="footer-georail-separateur">•</span>
+<button class="footer-georail-lien" id="btnSignalerErreur" type="button">Nous contacter</button>
+<span class="footer-georail-separateur">•</span>
+<button class="footer-georail-lien" id="btnMentionsLegales" type="button">Mentions légales</button>
+</div>
+<p class="footer-georail-version">Version 1.0 • © 2026 GéoRail - Letondeur Aymeric</p>
+</footer>
 </main>
-
-<div id="ecranRegions" class="ecran-modes">
-    <header class="entete-modes">
-        <div class="zone-retour">
-            <button id="btnRetourAccueilRegions" class="btn-retour" type="button">
+<div class="ecran-modes" id="ecranRegions">
+<header class="entete-modes">
+<div class="zone-retour">
+<button class="btn-retour" id="btnRetourAccueilRegions" type="button">
                 ← Retour
             </button>
-        </div>
-
-        <div class="titre-mode">
-            <h1>Choisis ta carte régionale</h1>
-            <p>Sélectionne une région.</p>
-        </div>
-
-        <div></div>
-    </header>
-
-    <section class="contenu-modes">
-        <div class="bloc-choix">
-            <div class="grille-cartes">
-
-                <button id="btnRegionRhoneAlpes" class="carte-choix" type="button">
-                    <span class="zone-image">
-                        <img
-                            src="images/carte-rhone-alpes-mini.png"
-                            alt="Carte Rhône-Alpes du réseau ferroviaire"
-                            draggable="false"
-                        >
-                    </span>
-
-                    <span class="infos">
-                        <span class="nom-carte">🏔️ Rhône-Alpes</span>
-                        <span class="description">
+</div>
+<div class="titre-mode">
+<h1>Choisis ta carte régionale</h1>
+<p>Sélectionne une région.</p>
+</div>
+<div></div>
+</header>
+<section class="contenu-modes">
+<div class="bloc-choix">
+<div class="grille-cartes">
+<button class="carte-choix" id="btnRegionRhoneAlpes" type="button">
+<span class="zone-image">
+<img alt="Carte Rhône-Alpes du réseau ferroviaire" draggable="false" src="images/carte-rhone-alpes-mini.png"/>
+</span>
+<span class="infos">
+<span class="nom-carte">🏔️ Rhône-Alpes</span>
+<span class="description">
                             Entraîne-toi sur les 82 villes de la carte Rhône-Alpes.
                         </span>
-                        <span class="action">Choisir cette carte →</span>
-                    </span>
-                </button>
-
-                <button id="btnRegionBourgogne" class="carte-choix" type="button">
-                    <span class="zone-image">
-                        <img
-                            src="images/carte-bourgogne-mini.png"
-                            alt="Carte Bourgogne du réseau ferroviaire"
-                            draggable="false"
-                        >
-                    </span>
-
-                    <span class="infos">
-                        <span class="nom-carte">🍇 Bourgogne</span>
-                        <span class="description">
+<span class="action">Choisir cette carte →</span>
+</span>
+</button>
+<button class="carte-choix" id="btnRegionBourgogne" type="button">
+<span class="zone-image">
+<img alt="Carte Bourgogne du réseau ferroviaire" draggable="false" src="images/carte-bourgogne-mini.png"/>
+</span>
+<span class="infos">
+<span class="nom-carte">🍇 Bourgogne</span>
+<span class="description">
                             Entraîne-toi sur les 79 villes de la carte Bourgogne.
                         </span>
-                        <span class="action">Choisir cette carte →</span>
-                    </span>
-                </button>
-
-                <div class="carte-choix carte-region-indisponible" aria-label="Provence-Alpes-Côte d’Azur - bientôt disponible">
-                    <span class="zone-image">
-                        <img
-                            src="images/carte-provence-alpes-cote-d-azur-mini.png"
-                            alt="Carte Provence-Alpes-Côte d’Azur du réseau ferroviaire"
-                            draggable="false"
-                        >
-                    </span>
-
-                    <span class="infos">
-                        <span class="nom-carte">☀️ Provence-Alpes-Côte d’Azur</span>
-                        <span class="description">
-                            Entraîne-toi sur la carte ferroviaire de Provence-Alpes-Côte d’Azur.
+<span class="action">Choisir cette carte →</span>
+</span>
+</button>
+<button class="carte-choix" id="btnRegionProvenceAlpesCoteDAzur" type="button">
+<span class="zone-image">
+<img alt="Carte Provence-Alpes-Côte d’Azur du réseau ferroviaire" draggable="false" src="images/carte-provence-alpes-cote-d-azur-mini.png"/>
+</span>
+<span class="infos">
+<span class="nom-carte">☀️ Provence-Alpes-Côte d’Azur</span>
+<span class="description">
+                            Entraîne-toi sur les 81 villes de la carte Provence-Alpes-Côte d’Azur.
                         </span>
-                        <span class="action action-indisponible">Bientôt disponible</span>
-                    </span>
-                </div>
-
-                <div class="carte-choix carte-region-indisponible" aria-label="Île-de-France - bientôt disponible">
-                    <span class="zone-image">
-                        <img
-                            src="images/carte-ile-de-france-mini.png"
-                            alt="Carte Île-de-France du réseau ferroviaire"
-                            draggable="false"
-                        >
-                    </span>
-
-                    <span class="infos">
-                        <span class="nom-carte">🏙️ Île-de-France</span>
-                        <span class="description">
+<span class="action">Choisir cette carte →</span>
+</span>
+</button>
+<div aria-label="Île-de-France - bientôt disponible" class="carte-choix carte-region-indisponible">
+<span class="zone-image">
+<img alt="Carte Île-de-France du réseau ferroviaire" draggable="false" src="images/carte-ile-de-france-mini.png"/>
+</span>
+<span class="infos">
+<span class="nom-carte">🏙️ Île-de-France</span>
+<span class="description">
                             Entraîne-toi sur la carte ferroviaire d’Île-de-France.
                         </span>
-                        <span class="action action-indisponible">Bientôt disponible</span>
-                    </span>
-                </div>
+<span class="action action-indisponible">Bientôt disponible</span>
+</span>
+</div><div aria-label="Nouvelle carte - à venir" class="carte-choix carte-region-indisponible">
+<span class="zone-image">
 
-            </div>
-        </div>
-    </section>
+<span style="font-size:64px; opacity:.42; filter:grayscale(1);">🗺️</span></span>
+<span class="infos">
+<span class="nom-carte">🗺️ Nouvelle carte</span>
+<span class="description">Une nouvelle carte régionale rejoindra prochainement GéoRail.</span>
+<span class="action action-indisponible">À venir</span>
+</span>
+</div><div aria-label="Nouvelle carte - à venir" class="carte-choix carte-region-indisponible">
+<span class="zone-image">
+
+<span style="font-size:64px; opacity:.42; filter:grayscale(1);">🗺️</span></span>
+<span class="infos">
+<span class="nom-carte">🗺️ Nouvelle carte</span>
+<span class="description">Une nouvelle carte régionale rejoindra prochainement GéoRail.</span>
+<span class="action action-indisponible">À venir</span>
+</span>
 </div>
 
-<div id="ecranModes" class="ecran-modes">
-    <header class="entete-modes">
-        <div class="zone-retour">
-            <button id="btnRetourCartes" class="btn-retour" type="button">
+
+</div>
+</div>
+</section>
+</div>
+<div class="ecran-modes" id="ecranModes">
+<header class="entete-modes">
+<div class="zone-retour">
+<button class="btn-retour" id="btnRetourCartes" type="button">
                 ← Cartes
             </button>
-        </div>
-
-        <div class="titre-mode">
-            <h1 id="titreCarteSelectionnee">Carte</h1>
-            <p>Choisis ton mode.</p>
-        </div>
-
-        <div></div>
-    </header>
-
-    <section class="contenu-modes">
-        <div class="selection-mode">
-
-            <div class="apercu-carte">
-                <img id="imageCarteSelectionnee" src="" alt="" draggable="false">
-            </div>
-
-            <div class="grille-modes">
-
-                <button id="btnApprendre" class="bouton-mode" type="button">
-                    <span class="icone-mode">🎓</span>
-                    <span class="nom-mode">Apprendre</span>
-                    <span class="texte-mode">
+</div>
+<div class="titre-mode">
+<h1 id="titreCarteSelectionnee">Carte</h1>
+<p>Choisis ton mode.</p>
+</div>
+<div></div>
+</header>
+<section class="contenu-modes">
+<div class="selection-mode">
+<div class="apercu-carte">
+<img alt="" draggable="false" id="imageCarteSelectionnee" src=""/>
+</div>
+<div class="grille-modes">
+<button class="bouton-mode" id="btnApprendre" type="button">
+<span class="icone-mode">🎓</span>
+<span class="nom-mode">Apprendre</span>
+<span class="texte-mode">
                         Découvre les villes et entraîne-toi à les reconnaître.
                     </span>
-                </button>
-
-                <button id="btnJouer" class="bouton-mode" type="button">
-                    <span class="icone-mode">🎮</span>
-                    <span class="nom-mode">Jouer</span>
-                    <span class="texte-mode">
+</button>
+<button class="bouton-mode" id="btnJouer" type="button">
+<span class="icone-mode">🎮</span>
+<span class="nom-mode">Jouer</span>
+<span class="texte-mode">
                         Retrouve les villes sur la carte avec plusieurs niveaux.
                     </span>
-                </button>
-
-                <button id="btnExamen" class="bouton-mode" type="button">
-                    <span class="icone-mode">🏆</span>
-                    <span class="nom-mode">Mode Examen</span>
-                    <span class="texte-mode">
+</button>
+<button class="bouton-mode" id="btnExamen" type="button">
+<span class="icone-mode">🏆</span>
+<span class="nom-mode">Mode Examen</span>
+<span class="texte-mode">
                         Teste tes connaissances sur 21 villes aléatoires.
                     </span>
-                </button>
-
-            </div>
-        </div>
-    </section>
+</button>
 </div>
-
-
-<div id="modaleAPropos" class="modale-footer" aria-hidden="true">
-    <div class="modale-footer-contenu modale-a-propos" role="dialog" aria-modal="true" aria-labelledby="titreAPropos">
-        <div class="modale-footer-entete">
-            <h2 id="titreAPropos">À propos de GéoRail</h2>
-            <button class="modale-footer-fermer" type="button" aria-label="Fermer">×</button>
-        </div>
-
-        <div class="a-propos-intro">
-            <div class="a-propos-logo">🚆</div>
-            <div>
-                <h3>GéoRail</h3>
-                <p>
+</div>
+</section>
+</div>
+<div aria-hidden="true" class="modale-footer" id="modaleAPropos">
+<div aria-labelledby="titreAPropos" aria-modal="true" class="modale-footer-contenu modale-a-propos" role="dialog">
+<div class="modale-footer-entete">
+<h2 id="titreAPropos">À propos de GéoRail</h2>
+<button aria-label="Fermer" class="modale-footer-fermer" type="button">×</button>
+</div>
+<div class="a-propos-intro">
+<div class="a-propos-logo">🚆</div>
+<div>
+<h3>GéoRail</h3>
+<p>
                     GéoRail est un outil d'entraînement à la géographie ferroviaire.
                 </p>
-            </div>
-        </div>
-
-        <p class="a-propos-texte">
+</div>
+</div>
+<p class="a-propos-texte">
             Il permet d'apprendre et de tester ses connaissances grâce à différentes
             cartes, au niveau national comme régional.
         </p>
-
-        <div class="a-propos-modes">
-            <div class="a-propos-mode">
-                <span class="a-propos-mode-icone">🎓</span>
-                <div>
-                    <strong>Apprendre</strong>
-                    <span>Découvrir les villes et leur emplacement sur la carte.</span>
-                </div>
-            </div>
-
-            <div class="a-propos-mode">
-                <span class="a-propos-mode-icone">🎮</span>
-                <div>
-                    <strong>Jouer</strong>
-                    <span>S'entraîner à retrouver les villes avec plusieurs niveaux de difficulté.</span>
-                </div>
-            </div>
-
-            <div class="a-propos-mode">
-                <span class="a-propos-mode-icone">🏆</span>
-                <div>
-                    <strong>Mode Examen</strong>
-                    <span>Tester ses connaissances dans les conditions d'une évaluation.</span>
-                </div>
-            </div>
-        </div>
-
-        <p class="a-propos-compatibilite">
+<div class="a-propos-modes">
+<div class="a-propos-mode">
+<span class="a-propos-mode-icone">🎓</span>
+<div>
+<strong>Apprendre</strong>
+<span>Découvrir les villes et leur emplacement sur la carte.</span>
+</div>
+</div>
+<div class="a-propos-mode">
+<span class="a-propos-mode-icone">🎮</span>
+<div>
+<strong>Jouer</strong>
+<span>S'entraîner à retrouver les villes avec plusieurs niveaux de difficulté.</span>
+</div>
+</div>
+<div class="a-propos-mode">
+<span class="a-propos-mode-icone">🏆</span>
+<div>
+<strong>Mode Examen</strong>
+<span>Tester ses connaissances dans les conditions d'une évaluation.</span>
+</div>
+</div>
+</div>
+<p class="a-propos-compatibilite">
             GéoRail est conçu pour fonctionner sur
             <strong>ordinateur (recommandé), tablette et téléphone</strong>.
         </p>
-
-        <button class="a-propos-btn-fermer" type="button">Fermer</button>
-    </div>
+<button class="a-propos-btn-fermer" type="button">Fermer</button>
 </div>
-
-<div id="modaleSignalerErreur" class="modale-footer" aria-hidden="true">
-    <div class="modale-footer-contenu modale-contact" role="dialog" aria-modal="true" aria-labelledby="titreNousContacter">
-        <div class="modale-footer-entete">
-            <h2 id="titreNousContacter">Nous contacter</h2>
-            <button class="modale-footer-fermer" type="button" aria-label="Fermer">×</button>
-        </div>
-
-        <p class="contact-intro">
+</div>
+<div aria-hidden="true" class="modale-footer" id="modaleSignalerErreur">
+<div aria-labelledby="titreNousContacter" aria-modal="true" class="modale-footer-contenu modale-contact" role="dialog">
+<div class="modale-footer-entete">
+<h2 id="titreNousContacter">Nous contacter</h2>
+<button aria-label="Fermer" class="modale-footer-fermer" type="button">×</button>
+</div>
+<p class="contact-intro">
             Une erreur, un problème, une idée d'amélioration ou simplement une remarque
             concernant GéoRail ? Tu peux nous écrire ici.
         </p>
-
-        <form id="formulaireContact" class="formulaire-contact">
-            <div class="contact-champ">
-                <label for="contactMotif">Motif</label>
-                <select id="contactMotif" name="motif" required>
-                    <option value="">Choisir un motif</option>
-                    <option value="erreur">Signaler une erreur</option>
-                    <option value="probleme">Signaler un problème</option>
-                    <option value="amelioration">Proposer une amélioration</option>
-                    <option value="autre">Autre remarque</option>
-                </select>
-            </div>
-
-            <div class="contact-champ">
-                <label for="contactNom">Nom ou prénom <span>(facultatif)</span></label>
-                <input id="contactNom" name="nom" type="text" maxlength="80" autocomplete="name" placeholder="Ton nom ou prénom">
-            </div>
-
-            <div class="contact-champ">
-                <label for="contactEmail">Adresse e-mail <span>(facultatif)</span></label>
-                <input id="contactEmail" name="email" type="email" maxlength="120" autocomplete="email" placeholder="exemple@domaine.fr">
-                <small>À renseigner si tu souhaites pouvoir être recontacté.</small>
-            </div>
-
-            <div class="contact-champ">
-                <label for="contactMessage">Message</label>
-                <textarea id="contactMessage" name="message" rows="5" maxlength="1500" required placeholder="Décris ta remarque, ton problème ou ton idée..."></textarea>
-                <div class="contact-compteur"><span id="contactNombreCaracteres">0</span> / 1500</div>
-            </div>
-
-            <div class="contact-champ">
-                <label for="contactFichier">Fichier joint <span>(facultatif)</span></label>
-                <input
-                    id="contactFichier"
-                    name="fichier"
-                    type="file"
-                    accept=".jpg,.jpeg,.png,.webp,.pdf"
-                >
-                <small>
+<form class="formulaire-contact" id="formulaireContact">
+<div class="contact-champ">
+<label for="contactMotif">Motif</label>
+<select id="contactMotif" name="motif" required="">
+<option value="">Choisir un motif</option>
+<option value="erreur">Signaler une erreur</option>
+<option value="probleme">Signaler un problème</option>
+<option value="amelioration">Proposer une amélioration</option>
+<option value="autre">Autre remarque</option>
+</select>
+</div>
+<div class="contact-champ">
+<label for="contactNom">Nom ou prénom <span>(facultatif)</span></label>
+<input autocomplete="name" id="contactNom" maxlength="80" name="nom" placeholder="Ton nom ou prénom" type="text"/>
+</div>
+<div class="contact-champ">
+<label for="contactEmail">Adresse e-mail <span>(facultatif)</span></label>
+<input autocomplete="email" id="contactEmail" maxlength="120" name="email" placeholder="exemple@domaine.fr" type="email"/>
+<small>À renseigner si tu souhaites pouvoir être recontacté.</small>
+</div>
+<div class="contact-champ">
+<label for="contactMessage">Message</label>
+<textarea id="contactMessage" maxlength="1500" name="message" placeholder="Décris ta remarque, ton problème ou ton idée..." required="" rows="5"></textarea>
+<div class="contact-compteur"><span id="contactNombreCaracteres">0</span> / 1500</div>
+</div>
+<div class="contact-champ">
+<label for="contactFichier">Fichier joint <span>(facultatif)</span></label>
+<input accept=".jpg,.jpeg,.png,.webp,.pdf" id="contactFichier" name="fichier" type="file"/>
+<small>
                     Capture d'écran, image ou document PDF. Formats acceptés :
                     JPG, PNG, WEBP et PDF.
                 </small>
-                <div id="contactFichierSelectionne" class="contact-fichier-selectionne"></div>
-            </div>
-
-            <p id="contactInformation" class="contact-information" aria-live="polite">
+<div class="contact-fichier-selectionne" id="contactFichierSelectionne"></div>
+</div>
+<p aria-live="polite" class="contact-information" id="contactInformation">
                 Les champs marqués comme obligatoires doivent être renseignés.
             </p>
-
-            <div class="contact-actions">
-                <button id="btnAnnulerContact" class="contact-btn-secondaire" type="button">Annuler</button>
-                <button id="btnEnvoyerContact" class="contact-btn-principal" type="submit">Envoyer</button>
-            </div>
-        </form>
-    </div>
+<div class="contact-actions">
+<button class="contact-btn-secondaire" id="btnAnnulerContact" type="button">Annuler</button>
+<button class="contact-btn-principal" id="btnEnvoyerContact" type="submit">Envoyer</button>
 </div>
-
-<div id="modaleMentionsLegales" class="modale-footer" aria-hidden="true">
-    <div class="modale-footer-contenu modale-mentions" role="dialog" aria-modal="true" aria-labelledby="titreMentionsLegales">
-        <div class="modale-footer-entete">
-            <h2 id="titreMentionsLegales">Mentions légales</h2>
-            <button class="modale-footer-fermer" type="button" aria-label="Fermer">×</button>
-        </div>
-
-        <div class="mentions-sections">
-            <section class="mentions-section">
-                <h3>Éditeur du site</h3>
-                <p>
+</form>
+</div>
+</div>
+<div aria-hidden="true" class="modale-footer" id="modaleMentionsLegales">
+<div aria-labelledby="titreMentionsLegales" aria-modal="true" class="modale-footer-contenu modale-mentions" role="dialog">
+<div class="modale-footer-entete">
+<h2 id="titreMentionsLegales">Mentions légales</h2>
+<button aria-label="Fermer" class="modale-footer-fermer" type="button">×</button>
+</div>
+<div class="mentions-sections">
+<section class="mentions-section">
+<h3>Éditeur du site</h3>
+<p>
                     GéoRail est un projet indépendant réalisé à titre personnel.
                     Pour toute demande concernant le site, le formulaire « Nous contacter » est disponible.
                 </p>
-            </section>
-
-            <section class="mentions-section">
-                <h3>Hébergement</h3>
-                <p>
+</section>
+<section class="mentions-section">
+<h3>Hébergement</h3>
+<p>
                     GéoRail est hébergé à l’aide du service GitHub Pages, proposé par GitHub, Inc.
                 </p>
-                <p>
+<p>
                     L’hébergement du site et son accessibilité peuvent dépendre de la disponibilité de ce service tiers.
                 </p>
-            </section>
-
-            <section class="mentions-section">
-                <h3>Propriété intellectuelle</h3>
-                <p>
+</section>
+<section class="mentions-section">
+<h3>Propriété intellectuelle</h3>
+<p>
                     La conception, l’organisation, l’interface, les fonctionnalités et les contenus spécifiquement créés pour GéoRail sont réalisés dans le cadre de ce projet.
                 </p>
-                <p>
+<p>
                     Les cartes utilisées dans GéoRail ont été retravaillées à l’aide d’outils d’intelligence artificielle, notamment afin d’en améliorer ou d’en adapter la présentation graphique.
                 </p>
-                <p>
+<p>
                     Sauf mention contraire, toute reproduction, représentation, adaptation ou réutilisation des éléments propres à GéoRail, en tout ou partie, est interdite sans autorisation préalable.
                 </p>
-                <p>
+<p>
                     Les noms, marques, logos, données, fonds cartographiques ou autres éléments appartenant à des tiers restent la propriété de leurs titulaires respectifs. Leur présence dans GéoRail ne vaut ni affiliation, ni partenariat, ni approbation de leur part.
                 </p>
-            </section>
-
-            <section class="mentions-section">
-                <h3>Informations et données ferroviaires</h3>
-                <p>
+</section>
+<section class="mentions-section">
+<h3>Informations et données ferroviaires</h3>
+<p>
                     GéoRail est un outil indépendant à vocation pédagogique et d’entraînement. Les cartes, positions de villes et informations proposées sont destinées à l’apprentissage de la géographie ferroviaire.
                 </p>
-                <p>
+<p>
                     Certaines représentations cartographiques ont été retravaillées à l’aide de l’intelligence artificielle. Elles peuvent donc comporter des simplifications, approximations ou différences par rapport aux représentations géographiques ou ferroviaires officielles.
                 </p>
-                <p>
+<p>
                     Malgré le soin apporté à leur réalisation, les informations proposées peuvent contenir des erreurs, des approximations ou devenir obsolètes. Elles ne doivent pas être utilisées comme source officielle pour préparer ou réaliser un déplacement.
                 </p>
-                <p>
+<p>
                     Toute erreur ou suggestion d’amélioration peut être signalée à l’aide du formulaire « Nous contacter ».
                 </p>
-            </section>
-
-            <section class="mentions-section">
-                <h3>Données personnelles</h3>
-                <p>
+</section>
+<section class="mentions-section">
+<h3>Données personnelles</h3>
+<p>
                     GéoRail ne nécessite pas la création d’un compte utilisateur.
                 </p>
-                <p>
+<p>
                     Lors de l’utilisation du formulaire « Nous contacter », certaines informations peuvent être transmises : le motif de la demande, le contenu du message ainsi que, de manière facultative, le nom et prénom, l’adresse e-mail et une pièce jointe.
                 </p>
-                <p>
+<p>
                     Ces informations sont utilisées uniquement afin de prendre connaissance de la demande, d’y répondre lorsque cela est nécessaire et d’assurer le suivi des éventuels signalements concernant GéoRail.
                 </p>
-                <p>
+<p>
                     Les informations transmises par le formulaire ne sont ni vendues, ni utilisées à des fins commerciales ou publicitaires.
                 </p>
-                <p>
+<p>
                     Les données reçues sont conservées uniquement pendant la durée nécessaire au traitement et au suivi de la demande, puis peuvent être supprimées lorsqu’elles ne sont plus utiles.
                 </p>
-                <p>
+<p>
                     Il est recommandé de ne pas transmettre, dans le message ou les pièces jointes, de données personnelles ou confidentielles qui ne seraient pas nécessaires au traitement de la demande.
                 </p>
-                <p>
+<p>
                     Pour toute question concernant les informations transmises via GéoRail, le formulaire « Nous contacter » peut être utilisé.
                 </p>
-            </section>
-
-            <section class="mentions-section">
-                <h3>Cookies et stockage local</h3>
-                <p>
+</section>
+<section class="mentions-section">
+<h3>Cookies et stockage local</h3>
+<p>
                     GéoRail n’utilise pas de cookies publicitaires ni d’outil de suivi publicitaire.
                 </p>
-                <p>
+<p>
                     Certaines fonctionnalités peuvent utiliser le stockage local du navigateur (localStorage) afin de mémoriser localement des informations nécessaires au fonctionnement du jeu, par exemple les villes à réviser.
                 </p>
-                <p>
+<p>
                     Ces informations restent enregistrées dans le navigateur de l’utilisateur et ne sont pas utilisées à des fins publicitaires.
                 </p>
-            </section>
-
-            <section class="mentions-section">
-                <h3>Responsabilité</h3>
-                <p>
+</section>
+<section class="mentions-section">
+<h3>Responsabilité</h3>
+<p>
                     GéoRail est proposé à des fins pédagogiques, d’apprentissage et d’entraînement.
                 </p>
-                <p>
+<p>
                     Malgré le soin apporté au développement du site et à la vérification de son contenu, aucune garantie ne peut être donnée quant à l’exactitude, l’exhaustivité ou l’actualisation permanente des informations présentées.
                 </p>
-                <p>
+<p>
                     GéoRail ne constitue pas un outil officiel d’information voyageurs, de navigation ou d’exploitation ferroviaire. Les informations, cartes et positions proposées ne doivent pas être utilisées pour organiser un déplacement ou prendre une décision opérationnelle.
                 </p>
-                <p>
+<p>
                     L’utilisation de GéoRail s’effectue sous la responsabilité de l’utilisateur. Le fonctionnement du site peut également être interrompu ou perturbé, notamment en raison d’opérations de maintenance, de problèmes techniques ou de services tiers.
                 </p>
-            </section>
-        </div>
-
-        <button class="mentions-btn-fermer" type="button">Fermer</button>
-    </div>
+</section>
 </div>
-
+<button class="mentions-btn-fermer" type="button">Fermer</button>
+</div>
+</div>
 <script>
 const btnCarteNationale =
     document.getElementById("btnCarteNationale");
@@ -2143,6 +2113,9 @@ const btnRegionRhoneAlpes =
 
 const btnRegionBourgogne =
     document.getElementById("btnRegionBourgogne");
+
+const btnRegionProvenceAlpesCoteDAzur =
+    document.getElementById("btnRegionProvenceAlpesCoteDAzur");
 
 const ecranModes =
     document.getElementById("ecranModes");
@@ -2193,6 +2166,15 @@ const CONFIG_CARTES = {
         apprendre: "bourgogne/apprendre-bourgogne.html",
         jouer: "bourgogne/jouer-bourgogne.html",
         examen: "bourgogne/examen-bourgogne.html"
+    },
+
+    provenceAlpesCoteDAzur: {
+        titre: "☀️ Provence-Alpes-Côte d’Azur",
+        image: "images/carte-provence-alpes-cote-d-azur-mini.png",
+        alt: "Carte Provence-Alpes-Côte d’Azur du réseau ferroviaire",
+        apprendre: "provence-alpes-cote-d-azur/apprendre-provence-alpes-cote-d-azur.html",
+        jouer: "provence-alpes-cote-d-azur/jouer-provence-alpes-cote-d-azur.html",
+        examen: "provence-alpes-cote-d-azur/examen-provence-alpes-cote-d-azur.html"
     }
 };
 
@@ -2271,6 +2253,14 @@ btnRegionBourgogne.addEventListener(
     }
 );
 
+btnRegionProvenceAlpesCoteDAzur.addEventListener(
+    "click",
+    function() {
+        ecranRegions.classList.remove("visible");
+        ouvrirChoixModes("provenceAlpesCoteDAzur");
+    }
+);
+
 btnRetourCartes.addEventListener(
     "click",
     function() {
@@ -2280,7 +2270,8 @@ btnRetourCartes.addEventListener(
 
         if (
             carteAvantRetour === "rhoneAlpes" ||
-            carteAvantRetour === "bourgogne"
+            carteAvantRetour === "bourgogne" ||
+            carteAvantRetour === "provenceAlpesCoteDAzur"
         ) {
             ecranRegions.classList.add("visible");
         }
@@ -2559,6 +2550,5 @@ formulaireContact.addEventListener("submit", async function(event) {
 });
 
 </script>
-
 </body>
 </html>
