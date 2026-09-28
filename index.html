@@ -332,6 +332,21 @@ button {
 }
 
 
+/* CARTES RÉGIONALES PRÉSENTÉES MAIS PAS ENCORE DISPONIBLES */
+.carte-region-indisponible {
+    cursor: default;
+}
+
+.carte-region-indisponible:hover {
+    transform: none;
+    border-color: #dedede;
+    box-shadow: 0 10px 28px rgba(0,0,0,.07);
+}
+
+.action-indisponible {
+    color: #888;
+}
+
 /* CARTOUCHES DES FUTURES CARTES RÉGIONALES */
 .carte-region-a-venir {
     min-width: 0;
@@ -1754,19 +1769,58 @@ button {
                     </span>
                 </button>
 
-                <div class="carte-region-a-venir" aria-label="Autre région à venir">
-                    <span class="icone-region-a-venir">📍</span>
-                    <span class="texte-region-a-venir">Autre région <br>à venir</span>
+                <div class="carte-choix carte-region-indisponible" aria-label="Bourgogne - bientôt disponible">
+                    <span class="zone-image">
+                        <img
+                            src="images/carte-bourgogne-mini.png"
+                            alt="Carte Bourgogne du réseau ferroviaire"
+                            draggable="false"
+                        >
+                    </span>
+
+                    <span class="infos">
+                        <span class="nom-carte">🍇 Bourgogne</span>
+                        <span class="description">
+                            Entraîne-toi sur la carte ferroviaire de Bourgogne.
+                        </span>
+                        <span class="action action-indisponible">Bientôt disponible</span>
+                    </span>
                 </div>
 
-                <div class="carte-region-a-venir" aria-label="Autre région à venir">
-                    <span class="icone-region-a-venir">📍</span>
-                    <span class="texte-region-a-venir">Autre région <br>à venir</span>
+                <div class="carte-choix carte-region-indisponible" aria-label="Provence-Alpes-Côte d’Azur - bientôt disponible">
+                    <span class="zone-image">
+                        <img
+                            src="images/carte-provence-alpes-cote-d-azur-mini.png"
+                            alt="Carte Provence-Alpes-Côte d’Azur du réseau ferroviaire"
+                            draggable="false"
+                        >
+                    </span>
+
+                    <span class="infos">
+                        <span class="nom-carte">☀️ Provence-Alpes-Côte d’Azur</span>
+                        <span class="description">
+                            Entraîne-toi sur la carte ferroviaire de Provence-Alpes-Côte d’Azur.
+                        </span>
+                        <span class="action action-indisponible">Bientôt disponible</span>
+                    </span>
                 </div>
 
-                <div class="carte-region-a-venir" aria-label="Autre région à venir">
-                    <span class="icone-region-a-venir">📍</span>
-                    <span class="texte-region-a-venir">Autre région <br>à venir</span>
+                <div class="carte-choix carte-region-indisponible" aria-label="Île-de-France - bientôt disponible">
+                    <span class="zone-image">
+                        <img
+                            src="images/carte-ile-de-france-mini.png"
+                            alt="Carte Île-de-France du réseau ferroviaire"
+                            draggable="false"
+                        >
+                    </span>
+
+                    <span class="infos">
+                        <span class="nom-carte">🏙️ Île-de-France</span>
+                        <span class="description">
+                            Entraîne-toi sur la carte ferroviaire d’Île-de-France.
+                        </span>
+                        <span class="action action-indisponible">Bientôt disponible</span>
+                    </span>
                 </div>
 
             </div>
