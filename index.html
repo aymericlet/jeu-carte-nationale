@@ -55,11 +55,14 @@ button {
 }
 
 .contenu {
-    flex: 1;
+    flex: 1 1 auto;
+    min-height: 0;
     display: flex;
     align-items: center;
     justify-content: center;
     padding: 28px;
+    overflow-x: hidden;
+    overflow-y: auto;
 }
 
 .bloc-choix {
@@ -956,6 +959,563 @@ button {
     .icone-region-a-venir { font-size: 22px; }
     .texte-region-a-venir { font-size: 13px; }
 }
+
+/* ===== PIED DE PAGE GÉORAIL ===== */
+.footer-georail{flex:0 0 auto;padding:8px 20px 7px;border-top:1px solid #ddd;background:#fff;text-align:center}
+.footer-georail-nom{margin:0 0 4px;color:#94163a;font-size:18px;font-weight:800;line-height:1.1}
+.footer-georail-description{margin:3px 0 8px;color:#777;font-size:12px}
+.footer-georail-liens{display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:7px;font-size:12px}
+.footer-georail-lien{padding:0;border:0;background:transparent;color:#555;font:inherit;cursor:pointer}
+.footer-georail-lien:hover{color:#94163a;text-decoration:underline}
+.footer-georail-separateur{color:#bbb}
+.footer-georail-version{margin:4px 0 0;color:#999;font-size:10px;line-height:1.1}
+.modale-footer{position:fixed;inset:0;z-index:300;display:none;align-items:center;justify-content:center;padding:20px;background:rgba(0,0,0,.42)}
+.modale-footer.visible{display:flex}
+.modale-footer-contenu{width:min(520px,100%);max-height:min(650px,calc(100dvh - 40px));overflow-y:auto;padding:24px;border-radius:18px;background:#fff;box-shadow:0 18px 50px rgba(0,0,0,.18)}
+.modale-footer-entete{display:flex;align-items:center;justify-content:space-between;gap:15px;margin-bottom:14px}
+.modale-footer-entete h2{margin:0;color:#94163a;font-size:23px}
+.modale-footer-fermer{width:36px;height:36px;flex:0 0 36px;border:0;border-radius:50%;background:#f1f1f1;color:#555;font-size:20px;font-weight:700;cursor:pointer}
+.modale-footer-texte{margin:0;color:#555;font-size:14px;line-height:1.55}
+@media(max-width:760px){
+.footer-georail{padding:7px 12px 6px}
+.footer-georail-nom{margin-bottom:3px;font-size:15px}
+.footer-georail-description{margin:2px 0 6px;font-size:10px}
+.footer-georail-liens{gap:5px;font-size:10px}
+.footer-georail-version{margin-top:3px;font-size:9px}
+.modale-footer{padding:12px}.modale-footer-contenu{padding:18px;border-radius:15px}
+.modale-footer-entete h2{font-size:20px}.modale-footer-texte{font-size:13px}
+}
+@media(orientation:landscape) and (max-height:500px){
+.footer-georail{padding:4px 10px}.footer-georail-nom{display:none}
+.footer-georail-liens{font-size:9px}.footer-georail-version{margin:3px 0 0;font-size:8px}
+}
+
+
+/* =========================================================
+   ACCUEIL — ADAPTATION AUX ÉCRANS DE FAIBLE HAUTEUR
+   Évite l'ascenseur et garde "Choisis ta carte" entièrement visible.
+   ========================================================= */
+@media (min-width: 761px) and (max-height: 800px) {
+    .contenu {
+        overflow: hidden;
+        padding: 14px 28px;
+    }
+
+    .titre-choix {
+        margin: 0 0 12px;
+        font-size: 23px;
+    }
+
+    .carte-choix {
+        grid-template-rows: minmax(230px, 1fr) auto;
+        height: auto;
+    }
+
+    .zone-image {
+        height: 100%;
+        min-height: 0;
+        padding: 16px;
+    }
+
+    .infos {
+        min-height: 132px;
+        padding: 14px 22px 16px;
+    }
+
+    .nom-carte {
+        margin-bottom: 5px;
+        font-size: 22px;
+    }
+
+    .description {
+        font-size: 13px;
+    }
+
+    .action {
+        padding-top: 10px;
+    }
+
+    .footer-georail {
+        padding: 6px 20px 5px;
+    }
+
+    .footer-georail-liens {
+        font-size: 11px;
+    }
+
+    .footer-georail-version {
+        margin-top: 3px;
+        font-size: 9px;
+    }
+}
+
+
+/* =========================================================
+   ACCUEIL GÉORAIL — RESPONSIVE COMPLET
+   Toute la carte d'accueil reste visible sans ascenseur.
+   ========================================================= */
+@media (min-width: 761px) {
+    .contenu {
+        flex: 1 1 auto;
+        min-height: 0;
+        overflow: hidden;
+        align-items: stretch;
+        padding: clamp(12px, 2.2vh, 28px) 28px;
+    }
+
+    .bloc-choix {
+        height: 100%;
+        min-height: 0;
+        margin: 0 auto;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .titre-choix {
+        flex: 0 0 auto;
+        margin: 0 0 clamp(10px, 1.8vh, 22px);
+        font-size: clamp(21px, 2.6vh, 25px);
+        line-height: 1.15;
+    }
+
+    .grille-cartes {
+        flex: 1 1 auto;
+        min-height: 0;
+        height: 100%;
+    }
+
+    .carte-choix {
+        min-height: 0;
+        height: 100%;
+        grid-template-rows: minmax(0, 1fr) auto;
+    }
+
+    .zone-image {
+        min-height: 0;
+        height: 100%;
+        padding: clamp(12px, 2vh, 22px);
+    }
+
+    .infos {
+        min-height: 0;
+        padding: clamp(12px, 1.8vh, 20px) 22px clamp(14px, 2.2vh, 30px);
+    }
+
+    .nom-carte {
+        margin-bottom: 5px;
+        font-size: clamp(19px, 2.5vh, 24px);
+    }
+
+    .description {
+        font-size: clamp(12px, 1.55vh, 14px);
+    }
+
+    .action {
+        margin-top: clamp(8px, 1.4vh, 15px);
+        padding-top: 0;
+        font-size: clamp(12px, 1.45vh, 13px);
+    }
+
+    .footer-georail {
+        flex: 0 0 auto;
+        padding: 5px 20px 4px;
+    }
+
+    .footer-georail-liens {
+        font-size: 11px;
+    }
+
+    .footer-georail-version {
+        margin-top: 2px;
+        font-size: 9px;
+    }
+}
+
+
+/* =========================================================
+   POPUP À PROPOS
+   ========================================================= */
+.modale-a-propos {
+    width: min(620px, 100%);
+}
+
+.a-propos-intro {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 16px;
+    padding: 14px 16px;
+    border: 1px solid #ececec;
+    border-radius: 14px;
+    background: #fafafa;
+}
+
+.a-propos-logo {
+    flex: 0 0 auto;
+    font-size: 38px;
+    line-height: 1;
+}
+
+.a-propos-intro h3 {
+    margin: 0 0 4px;
+    color: #94163a;
+    font-size: 22px;
+}
+
+.a-propos-intro p {
+    margin: 0;
+    color: #555;
+    font-size: 14px;
+    line-height: 1.4;
+}
+
+.a-propos-texte {
+    margin: 0 0 16px;
+    color: #555;
+    font-size: 14px;
+    line-height: 1.55;
+}
+
+.a-propos-modes {
+    display: grid;
+    gap: 9px;
+    margin-bottom: 16px;
+}
+
+.a-propos-mode {
+    display: grid;
+    grid-template-columns: 42px 1fr;
+    align-items: center;
+    gap: 10px;
+    padding: 11px 13px;
+    border: 1px solid #e7e7e7;
+    border-radius: 12px;
+    background: #fff;
+}
+
+.a-propos-mode-icone {
+    font-size: 25px;
+    text-align: center;
+}
+
+.a-propos-mode strong {
+    display: block;
+    margin-bottom: 2px;
+    color: #94163a;
+    font-size: 15px;
+}
+
+.a-propos-mode span:not(.a-propos-mode-icone) {
+    display: block;
+    color: #666;
+    font-size: 12px;
+    line-height: 1.35;
+}
+
+.a-propos-compatibilite {
+    margin: 0;
+    padding: 12px 14px;
+    border-radius: 11px;
+    background: #f5f6f8;
+    color: #555;
+    font-size: 13px;
+    line-height: 1.45;
+    text-align: center;
+}
+
+.a-propos-bas {
+    margin-top: 14px;
+    padding-top: 11px;
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    border-top: 1px solid #eee;
+    color: #999;
+    font-size: 11px;
+}
+
+.a-propos-btn-fermer {
+    width: 100%;
+    min-height: 42px;
+    margin-top: 14px;
+    border: 0;
+    border-radius: 11px;
+    background: #94163a;
+    color: #fff;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.a-propos-btn-fermer:hover {
+    background: #7f1130;
+}
+
+@media (max-width: 760px) {
+    .a-propos-intro {
+        padding: 11px 12px;
+    }
+
+    .a-propos-logo {
+        font-size: 31px;
+    }
+
+    .a-propos-intro h3 {
+        font-size: 19px;
+    }
+
+    .a-propos-intro p,
+    .a-propos-texte {
+        font-size: 12px;
+    }
+
+    .a-propos-mode {
+        grid-template-columns: 36px 1fr;
+        padding: 9px 10px;
+    }
+
+    .a-propos-mode-icone {
+        font-size: 22px;
+    }
+
+    .a-propos-mode strong {
+        font-size: 14px;
+    }
+
+    .a-propos-mode span:not(.a-propos-mode-icone) {
+        font-size: 11px;
+    }
+
+    .a-propos-compatibilite {
+        padding: 10px;
+        font-size: 11px;
+    }
+}
+
+
+/* =========================================================
+   POPUP NOUS CONTACTER
+   ========================================================= */
+.modale-contact {
+    width: min(600px, 100%);
+}
+
+.contact-intro {
+    margin: 0 0 17px;
+    color: #555;
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+.formulaire-contact {
+    display: grid;
+    gap: 13px;
+}
+
+.contact-champ {
+    display: grid;
+    gap: 6px;
+}
+
+.contact-champ label {
+    color: #333;
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.contact-champ label span {
+    color: #888;
+    font-size: 11px;
+    font-weight: 400;
+}
+
+.contact-champ input,
+.contact-champ select,
+.contact-champ textarea {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid #d6d6d6;
+    border-radius: 10px;
+    outline: none;
+    background: #fff;
+    color: #333;
+    font: inherit;
+    font-size: 13px;
+}
+
+.contact-champ textarea {
+    min-height: 115px;
+    resize: vertical;
+    line-height: 1.45;
+}
+
+.contact-champ input:focus,
+.contact-champ select:focus,
+.contact-champ textarea:focus {
+    border-color: #94163a;
+    box-shadow: 0 0 0 3px rgba(148,22,58,.09);
+}
+
+.contact-champ small {
+    color: #888;
+    font-size: 10px;
+    line-height: 1.3;
+}
+
+.contact-compteur {
+    margin-top: -2px;
+    color: #999;
+    font-size: 10px;
+    text-align: right;
+}
+
+.contact-information {
+    margin: 0;
+    padding: 9px 11px;
+    border-radius: 9px;
+    background: #f5f6f8;
+    color: #777;
+    font-size: 11px;
+    line-height: 1.4;
+    text-align: center;
+}
+
+.contact-actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+}
+
+.contact-btn-secondaire,
+.contact-btn-principal {
+    min-height: 42px;
+    padding: 9px 14px;
+    border-radius: 10px;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.contact-btn-secondaire {
+    border: 1px solid #d7d7d7;
+    background: #fff;
+    color: #555;
+}
+
+.contact-btn-principal {
+    border: 0;
+    background: #94163a;
+    color: #fff;
+}
+
+.contact-btn-principal:hover {
+    background: #7f1130;
+}
+
+@media (max-width: 760px) {
+    .contact-intro {
+        margin-bottom: 13px;
+        font-size: 12px;
+    }
+
+    .formulaire-contact {
+        gap: 10px;
+    }
+
+    .contact-champ input,
+    .contact-champ select,
+    .contact-champ textarea {
+        padding: 9px 10px;
+        font-size: 12px;
+    }
+
+    .contact-champ textarea {
+        min-height: 95px;
+    }
+}
+
+
+.contact-fichier-selectionne {
+    min-height: 14px;
+    color: #94163a;
+    font-size: 10px;
+    font-weight: 700;
+    line-height: 1.3;
+}
+
+
+/* =========================================================
+   POPUP MENTIONS LÉGALES
+   ========================================================= */
+.modale-mentions {
+    width: min(680px, 100%);
+}
+
+.mentions-sections {
+    display: grid;
+    gap: 10px;
+}
+
+.mentions-section {
+    padding: 12px 14px;
+    border: 1px solid #e8e8e8;
+    border-radius: 11px;
+    background: #fff;
+}
+
+.mentions-section h3 {
+    margin: 0 0 6px;
+    color: #94163a;
+    font-size: 14px;
+}
+
+.mentions-section p {
+    margin: 0;
+    color: #5f5f5f;
+    font-size: 12px;
+    line-height: 1.5;
+}
+
+.mentions-section p + p {
+    margin-top: 7px;
+}
+
+.mentions-a-completer {
+    color: #888 !important;
+    font-style: italic;
+}
+
+.mentions-btn-fermer {
+    width: 100%;
+    min-height: 42px;
+    margin-top: 14px;
+    border: 0;
+    border-radius: 11px;
+    background: #94163a;
+    color: #fff;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.mentions-btn-fermer:hover {
+    background: #7f1130;
+}
+
+@media (max-width: 760px) {
+    .mentions-section {
+        padding: 10px 11px;
+    }
+
+    .mentions-section h3 {
+        font-size: 13px;
+    }
+
+    .mentions-section p {
+        font-size: 11px;
+    }
+}
+
 </style>
 </head>
 
@@ -1012,6 +1572,17 @@ button {
             </div>
         </div>
     </section>
+
+    <footer class="footer-georail">
+        <div class="footer-georail-liens">
+            <button id="btnAPropos" class="footer-georail-lien" type="button">À propos</button>
+            <span class="footer-georail-separateur">•</span>
+            <button id="btnSignalerErreur" class="footer-georail-lien" type="button">Nous contacter</button>
+            <span class="footer-georail-separateur">•</span>
+            <button id="btnMentionsLegales" class="footer-georail-lien" type="button">Mentions légales</button>
+        </div>
+        <p class="footer-georail-version">Version 1.0 • © 2026 GéoRail</p>
+    </footer>
 </main>
 
 <div id="ecranRegions" class="ecran-modes">
@@ -1124,6 +1695,215 @@ button {
             </div>
         </div>
     </section>
+</div>
+
+
+<div id="modaleAPropos" class="modale-footer" aria-hidden="true">
+    <div class="modale-footer-contenu modale-a-propos" role="dialog" aria-modal="true" aria-labelledby="titreAPropos">
+        <div class="modale-footer-entete">
+            <h2 id="titreAPropos">À propos de GéoRail</h2>
+            <button class="modale-footer-fermer" type="button" aria-label="Fermer">×</button>
+        </div>
+
+        <div class="a-propos-intro">
+            <div class="a-propos-logo">🚆</div>
+            <div>
+                <h3>GéoRail</h3>
+                <p>
+                    GéoRail est un outil d'entraînement à la géographie ferroviaire.
+                </p>
+            </div>
+        </div>
+
+        <p class="a-propos-texte">
+            Il permet d'apprendre et de tester ses connaissances grâce à différentes
+            cartes, au niveau national comme régional.
+        </p>
+
+        <div class="a-propos-modes">
+            <div class="a-propos-mode">
+                <span class="a-propos-mode-icone">🎓</span>
+                <div>
+                    <strong>Apprendre</strong>
+                    <span>Découvrir les villes et leur emplacement sur la carte.</span>
+                </div>
+            </div>
+
+            <div class="a-propos-mode">
+                <span class="a-propos-mode-icone">🎮</span>
+                <div>
+                    <strong>Jouer</strong>
+                    <span>S'entraîner à retrouver les villes avec plusieurs niveaux de difficulté.</span>
+                </div>
+            </div>
+
+            <div class="a-propos-mode">
+                <span class="a-propos-mode-icone">🏆</span>
+                <div>
+                    <strong>Mode Examen</strong>
+                    <span>Tester ses connaissances dans les conditions d'une évaluation.</span>
+                </div>
+            </div>
+        </div>
+
+        <p class="a-propos-compatibilite">
+            GéoRail est conçu pour fonctionner sur
+            <strong>ordinateur (recommandé), tablette et téléphone</strong>.
+        </p>
+
+        <button class="a-propos-btn-fermer" type="button">Fermer</button>
+    </div>
+</div>
+
+<div id="modaleSignalerErreur" class="modale-footer" aria-hidden="true">
+    <div class="modale-footer-contenu modale-contact" role="dialog" aria-modal="true" aria-labelledby="titreNousContacter">
+        <div class="modale-footer-entete">
+            <h2 id="titreNousContacter">Nous contacter</h2>
+            <button class="modale-footer-fermer" type="button" aria-label="Fermer">×</button>
+        </div>
+
+        <p class="contact-intro">
+            Une erreur, un problème, une idée d'amélioration ou simplement une remarque
+            concernant GéoRail ? Tu peux nous écrire ici.
+        </p>
+
+        <form id="formulaireContact" class="formulaire-contact">
+            <div class="contact-champ">
+                <label for="contactMotif">Motif</label>
+                <select id="contactMotif" name="motif" required>
+                    <option value="">Choisir un motif</option>
+                    <option value="erreur">Signaler une erreur</option>
+                    <option value="probleme">Signaler un problème</option>
+                    <option value="amelioration">Proposer une amélioration</option>
+                    <option value="autre">Autre remarque</option>
+                </select>
+            </div>
+
+            <div class="contact-champ">
+                <label for="contactNom">Nom ou prénom <span>(facultatif)</span></label>
+                <input id="contactNom" name="nom" type="text" maxlength="80" autocomplete="name" placeholder="Ton nom ou prénom">
+            </div>
+
+            <div class="contact-champ">
+                <label for="contactEmail">Adresse e-mail <span>(facultatif)</span></label>
+                <input id="contactEmail" name="email" type="email" maxlength="120" autocomplete="email" placeholder="exemple@domaine.fr">
+                <small>À renseigner si tu souhaites pouvoir être recontacté.</small>
+            </div>
+
+            <div class="contact-champ">
+                <label for="contactMessage">Message</label>
+                <textarea id="contactMessage" name="message" rows="5" maxlength="1500" required placeholder="Décris ta remarque, ton problème ou ton idée..."></textarea>
+                <div class="contact-compteur"><span id="contactNombreCaracteres">0</span> / 1500</div>
+            </div>
+
+            <div class="contact-champ">
+                <label for="contactFichier">Fichier joint <span>(facultatif)</span></label>
+                <input
+                    id="contactFichier"
+                    name="fichier"
+                    type="file"
+                    accept=".jpg,.jpeg,.png,.webp,.pdf"
+                >
+                <small>
+                    Capture d'écran, image ou document PDF. Formats acceptés :
+                    JPG, PNG, WEBP et PDF.
+                </small>
+                <div id="contactFichierSelectionne" class="contact-fichier-selectionne"></div>
+            </div>
+
+            <p id="contactInformation" class="contact-information">
+                L'envoi du formulaire sera configuré à l'étape suivante.
+            </p>
+
+            <div class="contact-actions">
+                <button id="btnAnnulerContact" class="contact-btn-secondaire" type="button">Annuler</button>
+                <button class="contact-btn-principal" type="submit">Envoyer</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div id="modaleMentionsLegales" class="modale-footer" aria-hidden="true">
+    <div class="modale-footer-contenu modale-mentions" role="dialog" aria-modal="true" aria-labelledby="titreMentionsLegales">
+        <div class="modale-footer-entete">
+            <h2 id="titreMentionsLegales">Mentions légales</h2>
+            <button class="modale-footer-fermer" type="button" aria-label="Fermer">×</button>
+        </div>
+
+        <div class="mentions-sections">
+            <section class="mentions-section">
+                <h3>Éditeur du site</h3>
+                <p>
+                    GéoRail est un outil d'entraînement à la géographie ferroviaire.
+                </p>
+                <p class="mentions-a-completer">
+                    Les informations relatives à l'éditeur du site seront complétées
+                    avant sa diffusion publique définitive.
+                </p>
+            </section>
+
+            <section class="mentions-section">
+                <h3>Hébergement</h3>
+                <p>
+                    Le site GéoRail est hébergé par GitHub Pages, un service proposé
+                    par GitHub.
+                </p>
+            </section>
+
+            <section class="mentions-section">
+                <h3>Propriété intellectuelle</h3>
+                <p>
+                    Les contenus, textes, éléments graphiques et fonctionnalités propres
+                    à GéoRail ne peuvent pas être reproduits ou réutilisés sans autorisation,
+                    sauf dans les cas prévus par la législation applicable.
+                </p>
+                <p>
+                    Les noms, marques, logos et autres éléments appartenant à des tiers
+                    restent la propriété de leurs titulaires respectifs.
+                </p>
+            </section>
+
+            <section class="mentions-section">
+                <h3>Données et exactitude des informations</h3>
+                <p>
+                    GéoRail est un outil pédagogique et d'entraînement. Malgré le soin
+                    apporté à la réalisation des cartes et au positionnement des villes,
+                    des erreurs ou imprécisions peuvent subsister.
+                </p>
+                <p>
+                    Le lien « Nous contacter » permet de signaler une erreur, un problème
+                    ou de proposer une amélioration.
+                </p>
+            </section>
+
+            <section class="mentions-section">
+                <h3>Données personnelles</h3>
+                <p>
+                    Le formulaire « Nous contacter » peut permettre de transmettre
+                    volontairement un nom ou prénom, une adresse e-mail, un message
+                    et, le cas échéant, un fichier joint.
+                </p>
+                <p>
+                    Les modalités de traitement et de conservation de ces informations
+                    seront précisées lors de la mise en service effective du formulaire.
+                </p>
+            </section>
+
+            <section class="mentions-section">
+                <h3>Cookies</h3>
+                <p>
+                    GéoRail n'utilise pas de cookies publicitaires.
+                </p>
+                <p>
+                    Certaines informations techniques peuvent être conservées localement
+                    dans le navigateur afin d'assurer le fonctionnement de certaines
+                    fonctionnalités de l'application.
+                </p>
+            </section>
+        </div>
+
+        <button class="mentions-btn-fermer" type="button">Fermer</button>
+    </div>
 </div>
 
 <script>
@@ -1316,6 +2096,83 @@ if (
         window.location.pathname + window.location.hash
     );
 }
+
+
+/* ===== PIED DE PAGE : FENÊTRES ===== */
+const btnAPropos=document.getElementById("btnAPropos");
+const btnSignalerErreur=document.getElementById("btnSignalerErreur");
+const btnMentionsLegales=document.getElementById("btnMentionsLegales");
+const modaleAPropos=document.getElementById("modaleAPropos");
+const modaleSignalerErreur=document.getElementById("modaleSignalerErreur");
+const modaleMentionsLegales=document.getElementById("modaleMentionsLegales");
+
+function ouvrirModaleFooter(modale){
+    if(!modale)return;
+    modale.classList.add("visible");
+    modale.setAttribute("aria-hidden","false");
+}
+function fermerModaleFooter(modale){
+    if(!modale)return;
+    modale.classList.remove("visible");
+    modale.setAttribute("aria-hidden","true");
+}
+btnAPropos.addEventListener("click",function(){ouvrirModaleFooter(modaleAPropos);});
+btnSignalerErreur.addEventListener("click",function(){ouvrirModaleFooter(modaleSignalerErreur);});
+btnMentionsLegales.addEventListener("click",function(){ouvrirModaleFooter(modaleMentionsLegales);});
+document.querySelectorAll(".modale-footer").forEach(function(modale){
+    modale.querySelector(".modale-footer-fermer").addEventListener("click",function(){fermerModaleFooter(modale);});
+    modale.addEventListener("click",function(event){if(event.target===modale)fermerModaleFooter(modale);});
+});
+document.addEventListener("keydown",function(event){
+    if(event.key==="Escape")document.querySelectorAll(".modale-footer.visible").forEach(fermerModaleFooter);
+});
+
+
+const btnFermerAPropos = modaleAPropos.querySelector(".a-propos-btn-fermer");
+
+btnFermerAPropos.addEventListener("click", function() {
+    fermerModaleFooter(modaleAPropos);
+});
+
+
+/* ===== POPUP NOUS CONTACTER ===== */
+const formulaireContact = document.getElementById("formulaireContact");
+const contactMessage = document.getElementById("contactMessage");
+const contactNombreCaracteres = document.getElementById("contactNombreCaracteres");
+const btnAnnulerContact = document.getElementById("btnAnnulerContact");
+const contactFichier = document.getElementById("contactFichier");
+const contactFichierSelectionne = document.getElementById("contactFichierSelectionne");
+
+contactFichier.addEventListener("change", function() {
+    const fichier = contactFichier.files[0];
+
+    contactFichierSelectionne.textContent =
+        fichier ? "Fichier sélectionné : " + fichier.name : "";
+});
+
+contactMessage.addEventListener("input", function() {
+    contactNombreCaracteres.textContent = contactMessage.value.length;
+});
+
+btnAnnulerContact.addEventListener("click", function() {
+    fermerModaleFooter(modaleSignalerErreur);
+});
+
+formulaireContact.addEventListener("submit", function(event) {
+    event.preventDefault();
+
+    alert(
+        "Le formulaire est prêt. Nous configurerons maintenant la méthode d'envoi des messages."
+    );
+});
+
+
+/* ===== POPUP MENTIONS LÉGALES ===== */
+const btnFermerMentions = modaleMentionsLegales.querySelector(".mentions-btn-fermer");
+
+btnFermerMentions.addEventListener("click", function() {
+    fermerModaleFooter(modaleMentionsLegales);
+});
 
 </script>
 
