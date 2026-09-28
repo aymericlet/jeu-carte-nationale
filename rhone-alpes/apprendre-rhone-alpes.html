@@ -1352,6 +1352,58 @@
     .navigation-villes { grid-template-columns: 1fr 36px 1fr; gap: 4px; }
     .bouton-navigation { min-height: 29px; padding: 4px 5px; font-size: 8px; }
 }
+
+/* =========================================================
+   TÉLÉPHONE PORTRAIT — APPRENDRE : affichage complet
+   Ajustement visuel uniquement.
+   ========================================================= */
+@media (orientation: portrait) and (max-width: 760px) {
+    .contenu {
+        grid-template-rows: minmax(0, 48%) minmax(0, 52%);
+    }
+
+    .panneau {
+        overflow: hidden;
+        padding: 7px 9px;
+    }
+
+    .panneau h2 {
+        margin: 0 0 2px;
+        font-size: 16px;
+    }
+
+    .panneau p {
+        margin: 1px 0 4px;
+        font-size: 8.5px;
+        line-height: 1.1;
+    }
+
+    .label-champ {
+        margin-bottom: 2px;
+        font-size: 8.5px;
+    }
+
+    .recherche {
+        min-height: 28px;
+        padding: 4px 7px;
+        font-size: 9.5px;
+    }
+
+    .liste-villes {
+        margin-top: 4px;
+    }
+
+    .navigation-villes {
+        gap: 3px;
+    }
+
+    .bouton-navigation {
+        min-height: 27px;
+        padding: 3px 4px;
+        font-size: 8px;
+    }
+}
+
 </style>
 
 </head>
