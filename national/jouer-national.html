@@ -1072,7 +1072,45 @@ html, body {
         margin-top: 6px;
     }
 }
-\n/* =========================================================\n   OPTIMISATION TÉLÉPHONE PORTRAIT\n   CSS uniquement : aucun fonctionnement n'est modifié.\n   ========================================================= */\n@media (orientation: portrait) and (max-width: 760px) {\n    html, body { height: 100%; overflow: hidden; }\n    .page { height: 100dvh; min-height: 0; overflow: hidden; }\n\n    .entete {\n        height: auto; min-height: 0; padding: 6px 10px;\n        display: flex; flex-direction: column; gap: 4px;\n    }\n    .titre-entete { order: 1; width: 100%; text-align: center; }\n    .zone-retour { order: 2; width: 100%; justify-content: center; }\n    .titre-entete h1 { font-size: 21px; line-height: 1.05; white-space: normal; }\n    .titre-entete p { margin-top: 2px; font-size: 10px; line-height: 1.15; }\n    .bouton-retour { min-height: 32px; padding: 4px 11px; font-size: 12px; }\n\n    .contenu {\n        flex: 1; min-height: 0; display: grid;\n        grid-template-columns: 1fr; grid-template-rows: minmax(0, 52%) minmax(0, 48%);\n        gap: 6px; padding: 6px 8px 8px; overflow: hidden;\n    }\n    .zone-carte { min-height: 0; height: 100%; overflow: hidden; }\n    .cadre-carte { width: auto; max-width: 100%; max-height: 100%; }\n    .carte { width: auto; height: auto; max-width: 100%; max-height: 100%; }\n    .panneau { height: 100%; min-height: 0; padding: 10px; border-radius: 13px; overflow-y: auto; }\n    .panneau h2 { font-size: 19px; }\n    .badge-niveau { margin-top: 4px; margin-bottom: 5px; padding: 4px 8px; font-size: 10px; }\n    .texte-aide { margin: 4px 0 7px; font-size: 11px; line-height: 1.2; }\n    .stats { gap: 5px; margin-bottom: 7px; }\n    .stat { padding: 5px 3px; }\n    .stat-valeur { font-size: 16px; }\n    .stat-label { font-size: 8px; }\n    .carte-question { padding: 7px 8px; }\n    .question-label { margin-bottom: 2px; font-size: 9px; }\n    .nom-a-trouver { font-size: 19px; }\n    .message { min-height: 30px; margin-top: 5px; padding: 5px; font-size: 10px; }\n    .progression { height: 6px; margin-top: 5px; }\n\n    .ecran-niveaux { height: 100dvh; min-height: 0; overflow: hidden; }\n    .entete-niveaux { height: auto; min-height: 0; padding: 6px 10px; gap: 4px; }\n    .titre-entete-niveaux h1 { font-size: 21px; }\n    .titre-entete-niveaux p { margin-top: 2px; font-size: 10px; }\n    .bouton-retour-niveaux { min-height: 32px; padding: 4px 11px; font-size: 12px; }\n    .contenu-niveaux { min-height: 0; padding: 6px 8px 8px; overflow-y: auto; }\n    .choix-niveaux { padding: 8px; }\n    .grille-niveaux { gap: 6px; }\n    .carte-niveau { padding: 8px 10px; }\n    .niveau-titre { margin-bottom: 2px; font-size: 16px; }\n    .niveau-description { font-size: 10px; line-height: 1.18; }\n    .niveau-info { margin-top: 3px; font-size: 8px; }\n}\n</style>
+\n/* =========================================================\n   OPTIMISATION TÉLÉPHONE PORTRAIT\n   CSS uniquement : aucun fonctionnement n'est modifié.\n   ========================================================= */\n@media (orientation: portrait) and (max-width: 760px) {\n    html, body { height: 100%; overflow: hidden; }\n    .page { height: 100dvh; min-height: 0; overflow: hidden; }\n\n    .entete {\n        height: auto; min-height: 0; padding: 6px 10px;\n        display: flex; flex-direction: column; gap: 4px;\n    }\n    .titre-entete { order: 1; width: 100%; text-align: center; }\n    .zone-retour { order: 2; width: 100%; justify-content: center; }\n    .titre-entete h1 { font-size: 21px; line-height: 1.05; white-space: normal; }\n    .titre-entete p { margin-top: 2px; font-size: 10px; line-height: 1.15; }\n    .bouton-retour { min-height: 32px; padding: 4px 11px; font-size: 12px; }\n\n    .contenu {\n        flex: 1; min-height: 0; display: grid;\n        grid-template-columns: 1fr; grid-template-rows: minmax(0, 52%) minmax(0, 48%);\n        gap: 6px; padding: 6px 8px 8px; overflow: hidden;\n    }\n    .zone-carte { min-height: 0; height: 100%; overflow: hidden; }\n    .cadre-carte { width: auto; max-width: 100%; max-height: 100%; }\n    .carte { width: auto; height: auto; max-width: 100%; max-height: 100%; }\n    .panneau { height: 100%; min-height: 0; padding: 10px; border-radius: 13px; overflow-y: auto; }\n    .panneau h2 { font-size: 19px; }\n    .badge-niveau { margin-top: 4px; margin-bottom: 5px; padding: 4px 8px; font-size: 10px; }\n    .texte-aide { margin: 4px 0 7px; font-size: 11px; line-height: 1.2; }\n    .stats { gap: 5px; margin-bottom: 7px; }\n    .stat { padding: 5px 3px; }\n    .stat-valeur { font-size: 16px; }\n    .stat-label { font-size: 8px; }\n    .carte-question { padding: 7px 8px; }\n    .question-label { margin-bottom: 2px; font-size: 9px; }\n    .nom-a-trouver { font-size: 19px; }\n    .message { min-height: 30px; margin-top: 5px; padding: 5px; font-size: 10px; }\n    .progression { height: 6px; margin-top: 5px; }\n\n    .ecran-niveaux { height: 100dvh; min-height: 0; overflow: hidden; }\n    .entete-niveaux { height: auto; min-height: 0; padding: 6px 10px; gap: 4px; }\n    .titre-entete-niveaux h1 { font-size: 21px; }\n    .titre-entete-niveaux p { margin-top: 2px; font-size: 10px; }\n    .bouton-retour-niveaux { min-height: 32px; padding: 4px 11px; font-size: 12px; }\n    .contenu-niveaux { min-height: 0; padding: 6px 8px 8px; overflow-y: auto; }\n    .choix-niveaux { padding: 8px; }\n    .grille-niveaux { gap: 6px; }\n    .carte-niveau { padding: 8px 10px; }\n    .niveau-titre { margin-bottom: 2px; font-size: 16px; }\n    .niveau-description { font-size: 10px; line-height: 1.18; }\n    .niveau-info { margin-top: 3px; font-size: 8px; }\n}\n
+/* =========================================================
+   PORTRAIT TELEPHONE — optimisation finale validée
+   Ne modifie ni le paysage ni le fonctionnement du jeu.
+   ========================================================= */
+@media (orientation: portrait) and (max-width: 760px) {
+    html, body { height: 100%; height: 100dvh; overflow: hidden; }
+    .page { height: 100vh; height: 100dvh; min-height: 0; overflow: hidden; }
+
+    .entete { flex: 0 0 auto; padding: 5px 8px 6px; gap: 3px; }
+    .titre-entete h1 { margin: 0; font-size: clamp(18px, 5.2vw, 22px); line-height: 1.02; }
+    .titre-entete p { margin: 2px 0 0; font-size: 9px; line-height: 1.1; }
+    .bouton-retour { min-height: 29px; padding: 3px 10px; font-size: 11px; }
+
+    .contenu {
+        flex: 1 1 auto; min-height: 0;
+        display: grid; grid-template-columns: 1fr;
+        grid-template-rows: minmax(0, 1fr) auto;
+        gap: 5px; padding: 5px 7px 6px; overflow: hidden;
+    }
+    .zone-carte { min-height: 0; height: 100%; overflow: hidden; }
+    .cadre-carte { width: auto; height: auto; max-width: 100%; max-height: 100%; }
+    .carte { width: auto; height: auto; max-width: 100%; max-height: 100%; }
+
+    .panneau { height: auto; min-height: 0; padding: 7px 9px; border-radius: 11px; overflow: hidden; }
+    .panneau h2 { margin: 0; font-size: 17px; line-height: 1.05; }
+    .badge-niveau { margin: 3px 0 4px; padding: 3px 7px; font-size: 9px; }
+    .texte-aide { margin: 3px 0 5px; font-size: 9px; line-height: 1.12; }
+    .stats { gap: 4px; margin-bottom: 5px; }
+    .stat { padding: 3px 2px; border-radius: 8px; }
+    .stat-valeur { font-size: 14px; line-height: 1; }
+    .stat-label { margin-top: 2px; font-size: 7px; }
+    .carte-question { padding: 5px 7px; border-radius: 9px; }
+    .question-label { margin-bottom: 1px; font-size: 8px; }
+    .nom-a-trouver { font-size: 17px; line-height: 1.05; }
+    .message { min-height: 22px; margin-top: 4px; padding: 3px 5px; font-size: 8px; line-height: 1.1; }
+    .progression { height: 4px; margin-top: 4px; }
+}
+</style>
 </head>
 
 <body>

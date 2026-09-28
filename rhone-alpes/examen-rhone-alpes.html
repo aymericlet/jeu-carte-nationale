@@ -542,7 +542,41 @@ button { font: inherit; }
         font-size: 19px;
     }
 }
-\n/* =========================================================\n   OPTIMISATION TÉLÉPHONE PORTRAIT — EXAMEN\n   La carte reste prioritaire. Aucun fonctionnement n'est modifié.\n   ========================================================= */\n@media (orientation: portrait) and (max-width: 520px) {\n    html, body { height: 100%; overflow: hidden; }\n    .page { height: 100dvh; min-height: 0; overflow: hidden; }\n\n    .entete { padding: 6px 8px; gap: 4px; }\n    .titre-entete h1 { font-size: 20px; line-height: 1.05; }\n    .bouton-retour { min-height: 31px; padding: 4px 11px; font-size: 11px; }\n\n    .contenu {\n        flex: 1; min-height: 0; display: grid;\n        grid-template-columns: 1fr;\n        grid-template-rows: minmax(0, 68%) minmax(0, 32%);\n        gap: 6px; padding: 6px 7px 7px; overflow: hidden;\n    }\n    .zone-carte { min-height: 0; height: 100%; overflow: hidden; }\n    .cadre-carte, .carte { max-width: 100%; max-height: 100%; }\n\n    .panneau {\n        min-height: 0; max-height: none; padding: 9px 10px;\n        border-radius: 12px; overflow-y: auto;\n    }\n    .badge-examen { margin-bottom: 5px; padding: 4px 8px; font-size: 10px; }\n    .panneau h2 { margin-bottom: 4px; font-size: 16px; }\n    .texte-intro { margin-bottom: 6px; font-size: 10px; line-height: 1.25; }\n    .regles { margin: 6px 0; padding: 7px; font-size: 10px; line-height: 1.3; }\n    .bouton-principal { min-height: 32px; padding: 5px 8px; font-size: 11px; }\n\n    .progression-ligne { margin-bottom: 4px; font-size: 10px; }\n    .barre { height: 5px; margin-bottom: 7px; }\n    .libelle-trouve { font-size: 10px; }\n    .nom-ville { margin: 3px 0 5px; font-size: 20px; line-height: 1.05; }\n    .instruction { font-size: 10px; line-height: 1.2; }\n}\n</style>
+\n/* =========================================================\n   OPTIMISATION TÉLÉPHONE PORTRAIT — EXAMEN\n   La carte reste prioritaire. Aucun fonctionnement n'est modifié.\n   ========================================================= */\n@media (orientation: portrait) and (max-width: 520px) {\n    html, body { height: 100%; overflow: hidden; }\n    .page { height: 100dvh; min-height: 0; overflow: hidden; }\n\n    .entete { padding: 6px 8px; gap: 4px; }\n    .titre-entete h1 { font-size: 20px; line-height: 1.05; }\n    .bouton-retour { min-height: 31px; padding: 4px 11px; font-size: 11px; }\n\n    .contenu {\n        flex: 1; min-height: 0; display: grid;\n        grid-template-columns: 1fr;\n        grid-template-rows: minmax(0, 68%) minmax(0, 32%);\n        gap: 6px; padding: 6px 7px 7px; overflow: hidden;\n    }\n    .zone-carte { min-height: 0; height: 100%; overflow: hidden; }\n    .cadre-carte, .carte { max-width: 100%; max-height: 100%; }\n\n    .panneau {\n        min-height: 0; max-height: none; padding: 9px 10px;\n        border-radius: 12px; overflow-y: auto;\n    }\n    .badge-examen { margin-bottom: 5px; padding: 4px 8px; font-size: 10px; }\n    .panneau h2 { margin-bottom: 4px; font-size: 16px; }\n    .texte-intro { margin-bottom: 6px; font-size: 10px; line-height: 1.25; }\n    .regles { margin: 6px 0; padding: 7px; font-size: 10px; line-height: 1.3; }\n    .bouton-principal { min-height: 32px; padding: 5px 8px; font-size: 11px; }\n\n    .progression-ligne { margin-bottom: 4px; font-size: 10px; }\n    .barre { height: 5px; margin-bottom: 7px; }\n    .libelle-trouve { font-size: 10px; }\n    .nom-ville { margin: 3px 0 5px; font-size: 20px; line-height: 1.05; }\n    .instruction { font-size: 10px; line-height: 1.2; }\n}\n
+/* =========================================================
+   PORTRAIT TELEPHONE — optimisation finale validée
+   Carte prioritaire pour améliorer la précision du clic.
+   ========================================================= */
+@media (orientation: portrait) and (max-width: 760px) {
+    html, body { height: 100%; height: 100dvh; overflow: hidden; }
+    .page { height: 100vh; height: 100dvh; min-height: 0; overflow: hidden; }
+    .entete { flex: 0 0 auto; padding: 5px 8px 6px; gap: 3px; }
+    .titre-entete h1 { margin: 0; font-size: clamp(18px, 5.1vw, 21px); line-height: 1.02; }
+    .titre-entete p { display: none; }
+    .bouton-retour { min-height: 29px; padding: 3px 10px; font-size: 11px; }
+
+    .contenu {
+        flex: 1 1 auto; min-height: 0;
+        display: grid; grid-template-columns: 1fr;
+        grid-template-rows: minmax(0, 1fr) auto;
+        gap: 5px; padding: 5px 7px 6px; overflow: hidden;
+    }
+    .zone-carte { min-height: 0; height: 100%; overflow: hidden; }
+    .cadre-carte, .carte { width: auto; height: auto; max-width: 100%; max-height: 100%; }
+    .panneau { min-height: 0; max-height: 34dvh; padding: 7px 9px; border-radius: 11px; overflow-y: auto; }
+    .badge-examen { margin-bottom: 4px; padding: 3px 7px; font-size: 9px; }
+    .panneau h2 { margin: 2px 0 3px; font-size: 15px; line-height: 1.05; }
+    .texte-intro { margin: 0 0 4px; font-size: 9px; line-height: 1.15; }
+    .regles { margin: 4px 0; padding: 5px 6px; font-size: 8px; line-height: 1.2; }
+    .bouton-principal { min-height: 29px; padding: 4px 7px; font-size: 10px; }
+
+    .progression-ligne { margin: 0 0 3px; font-size: 9px; line-height: 1.1; }
+    .barre { height: 4px; margin-bottom: 4px; }
+    .libelle-trouve { margin: 0; font-size: 9px; line-height: 1.1; }
+    .nom-ville { margin: 2px 0 3px; font-size: 18px; line-height: 1.02; }
+    .instruction { margin: 0; font-size: 8px; line-height: 1.15; }
+}
+</style>
 </head>
 
 <body>

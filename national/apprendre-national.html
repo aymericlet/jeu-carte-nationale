@@ -1302,7 +1302,34 @@
         overflow-y: auto;
     }
 }
-\n/* =========================================================\n   OPTIMISATION TÉLÉPHONE PORTRAIT\n   CSS uniquement : aucun fonctionnement n'est modifié.\n   ========================================================= */\n@media (orientation: portrait) and (max-width: 760px) {\n    html, body { height: 100%; overflow: hidden; }\n    .page { height: 100dvh; min-height: 0; overflow: hidden; }\n    .entete { height: auto; min-height: 0; padding: 6px 10px; gap: 4px; }\n    .titre-entete h1 { font-size: 21px; line-height: 1.05; }\n    .titre-entete p { margin-top: 2px; font-size: 10px; line-height: 1.15; }\n    .bouton-retour { min-height: 32px; padding: 4px 11px; font-size: 12px; }\n    .contenu {\n        flex: 1; min-height: 0; display: grid;\n        grid-template-columns: 1fr; grid-template-rows: minmax(0, 52%) minmax(0, 48%);\n        gap: 6px; padding: 6px 8px 8px; overflow: hidden;\n    }\n    .zone-carte { height: 100%; min-height: 0; overflow: hidden; }\n    .cadre-carte { width: auto; max-width: 100%; max-height: 100%; }\n    .carte { width: auto; height: auto; max-width: 100%; max-height: 100%; }\n    .panneau { height: 100%; min-height: 0; padding: 11px; border-radius: 13px; overflow-y: auto; }\n    .panneau h2 { margin-bottom: 5px; font-size: 20px; }\n    .panneau p { margin-top: 4px; margin-bottom: 8px; font-size: 11px; line-height: 1.25; }\n    .navigation-villes { grid-template-columns: 1fr 42px 1fr; gap: 5px; }\n    .bouton-navigation { min-height: 32px; padding: 5px 6px; font-size: 9px; }\n}\n</style>
+\n/* =========================================================\n   OPTIMISATION TÉLÉPHONE PORTRAIT\n   CSS uniquement : aucun fonctionnement n'est modifié.\n   ========================================================= */\n@media (orientation: portrait) and (max-width: 760px) {\n    html, body { height: 100%; overflow: hidden; }\n    .page { height: 100dvh; min-height: 0; overflow: hidden; }\n    .entete { height: auto; min-height: 0; padding: 6px 10px; gap: 4px; }\n    .titre-entete h1 { font-size: 21px; line-height: 1.05; }\n    .titre-entete p { margin-top: 2px; font-size: 10px; line-height: 1.15; }\n    .bouton-retour { min-height: 32px; padding: 4px 11px; font-size: 12px; }\n    .contenu {\n        flex: 1; min-height: 0; display: grid;\n        grid-template-columns: 1fr; grid-template-rows: minmax(0, 52%) minmax(0, 48%);\n        gap: 6px; padding: 6px 8px 8px; overflow: hidden;\n    }\n    .zone-carte { height: 100%; min-height: 0; overflow: hidden; }\n    .cadre-carte { width: auto; max-width: 100%; max-height: 100%; }\n    .carte { width: auto; height: auto; max-width: 100%; max-height: 100%; }\n    .panneau { height: 100%; min-height: 0; padding: 11px; border-radius: 13px; overflow-y: auto; }\n    .panneau h2 { margin-bottom: 5px; font-size: 20px; }\n    .panneau p { margin-top: 4px; margin-bottom: 8px; font-size: 11px; line-height: 1.25; }\n    .navigation-villes { grid-template-columns: 1fr 42px 1fr; gap: 5px; }\n    .bouton-navigation { min-height: 32px; padding: 5px 6px; font-size: 9px; }\n}\n
+/* =========================================================
+   PORTRAIT TELEPHONE — optimisation finale validée
+   ========================================================= */
+@media (orientation: portrait) and (max-width: 760px) {
+    html, body { height: 100%; height: 100dvh; overflow: hidden; }
+    .page { height: 100vh; height: 100dvh; min-height: 0; overflow: hidden; }
+    .entete { flex: 0 0 auto; padding: 5px 8px 6px; gap: 3px; }
+    .titre-entete h1 { margin: 0; font-size: clamp(18px, 5.1vw, 21px); line-height: 1.02; }
+    .titre-entete p { margin: 2px 0 0; font-size: 9px; line-height: 1.1; }
+    .bouton-retour { min-height: 29px; padding: 3px 10px; font-size: 11px; }
+    .contenu {
+        flex: 1 1 auto; min-height: 0; display: grid; grid-template-columns: 1fr;
+        grid-template-rows: minmax(0, 58%) minmax(0, 42%);
+        gap: 5px; padding: 5px 7px 6px; overflow: hidden;
+    }
+    .zone-carte { min-height: 0; height: 100%; overflow: hidden; }
+    .cadre-carte, .carte { width: auto; height: auto; max-width: 100%; max-height: 100%; }
+    .panneau { height: 100%; min-height: 0; padding: 8px 9px; border-radius: 11px; overflow-y: auto; }
+    .panneau h2 { margin: 0 0 3px; font-size: 17px; line-height: 1.05; }
+    .panneau p { margin: 2px 0 5px; font-size: 9px; line-height: 1.15; }
+    .label-champ { margin-bottom: 3px; font-size: 9px; }
+    .recherche { min-height: 31px; padding: 5px 7px; font-size: 10px; }
+    .liste-villes { margin-top: 5px; }
+    .navigation-villes { grid-template-columns: 1fr 36px 1fr; gap: 4px; }
+    .bouton-navigation { min-height: 29px; padding: 4px 5px; font-size: 8px; }
+}
+</style>
 
 </head>
 
