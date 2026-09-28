@@ -1516,6 +1516,93 @@ button {
     }
 }
 
+
+/* =========================================================
+   MOBILE — HAUTEUR RÉELLE DU NAVIGATEUR
+   Le footer reste visible quels que soient le navigateur
+   et l'orientation. Seule la zone centrale peut défiler
+   si la hauteur réellement disponible devient insuffisante.
+   ========================================================= */
+@media (max-width: 760px) {
+    html,
+    body {
+        height: 100%;
+        min-height: 0;
+        overflow: hidden;
+    }
+
+    body {
+        height: 100dvh;
+        min-height: 100dvh;
+        max-height: 100dvh;
+    }
+
+    .page {
+        height: 100dvh;
+        min-height: 0;
+        max-height: 100dvh;
+        overflow: hidden;
+    }
+
+    .entete {
+        flex: 0 0 auto;
+    }
+
+    .contenu {
+        flex: 1 1 0;
+        min-height: 0;
+        overflow-x: hidden;
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .footer-georail {
+        flex: 0 0 auto;
+        position: relative;
+        z-index: 20;
+    }
+}
+
+/* Téléphone en paysage : même principe avec la hauteur
+   dynamique réellement disponible. */
+@media (orientation: landscape) and (max-height: 500px) {
+    html,
+    body,
+    .page {
+        height: 100dvh;
+        min-height: 0;
+        max-height: 100dvh;
+    }
+
+    body,
+    .page {
+        overflow: hidden;
+    }
+
+    .contenu {
+        flex: 1 1 0;
+        min-height: 0;
+        overflow-y: auto;
+    }
+
+    .footer-georail {
+        flex: 0 0 auto;
+    }
+}
+
+/* Secours pour les navigateurs mobiles plus anciens qui ne
+   comprennent pas encore correctement l'unité dvh. */
+@supports not (height: 100dvh) {
+    @media (max-width: 760px) {
+        body,
+        .page {
+            height: 100vh;
+            min-height: 0;
+            max-height: 100vh;
+        }
+    }
+}
+
 </style>
 </head>
 
