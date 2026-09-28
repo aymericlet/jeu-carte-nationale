@@ -1449,11 +1449,22 @@ button {
    ========================================================= */
 .modale-mentions {
     width: min(680px, 100%);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+.modale-mentions .modale-footer-entete {
+    flex: 0 0 auto;
 }
 
 .mentions-sections {
     display: grid;
     gap: 10px;
+    min-height: 0;
+    overflow-y: auto;
+    padding-right: 8px;
+    scrollbar-gutter: stable;
 }
 
 .mentions-section {
@@ -1474,6 +1485,8 @@ button {
     color: #5f5f5f;
     font-size: 12px;
     line-height: 1.5;
+    text-align: justify;
+    text-justify: inter-word;
 }
 
 .mentions-section p + p {
@@ -1488,6 +1501,7 @@ button {
 .mentions-btn-fermer {
     width: 100%;
     min-height: 42px;
+    flex: 0 0 auto;
     margin-top: 14px;
     border: 0;
     border-radius: 11px;
@@ -1503,6 +1517,10 @@ button {
 }
 
 @media (max-width: 760px) {
+    .mentions-sections {
+        padding-right: 5px;
+    }
+
     .mentions-section {
         padding: 10px 11px;
     }
@@ -1601,6 +1619,32 @@ button {
             max-height: 100vh;
         }
     }
+}
+
+
+/* ===== ÉTATS D'ENVOI DU FORMULAIRE DE CONTACT ===== */
+.contact-information.contact-succes {
+    background: #edf7ed;
+    color: #107c10;
+    font-weight: 700;
+}
+
+.contact-information.contact-erreur {
+    background: #fdecec;
+    color: #d13438;
+    font-weight: 700;
+}
+
+.contact-information.contact-envoi {
+    background: #f5f6f8;
+    color: #555;
+    font-weight: 700;
+}
+
+.contact-btn-principal:disabled,
+.contact-btn-secondaire:disabled {
+    opacity: .6;
+    cursor: not-allowed;
 }
 
 </style>
@@ -1898,13 +1942,13 @@ button {
                 <div id="contactFichierSelectionne" class="contact-fichier-selectionne"></div>
             </div>
 
-            <p id="contactInformation" class="contact-information">
-                L'envoi du formulaire sera configuré à l'étape suivante.
+            <p id="contactInformation" class="contact-information" aria-live="polite">
+                Les champs marqués comme obligatoires doivent être renseignés.
             </p>
 
             <div class="contact-actions">
                 <button id="btnAnnulerContact" class="contact-btn-secondaire" type="button">Annuler</button>
-                <button class="contact-btn-principal" type="submit">Envoyer</button>
+                <button id="btnEnvoyerContact" class="contact-btn-principal" type="submit">Envoyer</button>
             </div>
         </form>
     </div>
@@ -1921,70 +1965,104 @@ button {
             <section class="mentions-section">
                 <h3>Éditeur du site</h3>
                 <p>
-                    GéoRail est un outil d'entraînement à la géographie ferroviaire.
-                </p>
-                <p class="mentions-a-completer">
-                    Les informations relatives à l'éditeur du site seront complétées
-                    avant sa diffusion publique définitive.
+                    GéoRail est un projet indépendant réalisé à titre personnel.
+                    Pour toute demande concernant le site, le formulaire « Nous contacter » est disponible.
                 </p>
             </section>
 
             <section class="mentions-section">
                 <h3>Hébergement</h3>
                 <p>
-                    Le site GéoRail est hébergé par GitHub Pages, un service proposé
-                    par GitHub.
+                    GéoRail est hébergé à l’aide du service GitHub Pages, proposé par GitHub, Inc.
+                </p>
+                <p>
+                    L’hébergement du site et son accessibilité peuvent dépendre de la disponibilité de ce service tiers.
                 </p>
             </section>
 
             <section class="mentions-section">
                 <h3>Propriété intellectuelle</h3>
                 <p>
-                    Les contenus, textes, éléments graphiques et fonctionnalités propres
-                    à GéoRail ne peuvent pas être reproduits ou réutilisés sans autorisation,
-                    sauf dans les cas prévus par la législation applicable.
+                    La conception, l’organisation, l’interface, les fonctionnalités et les contenus spécifiquement créés pour GéoRail sont réalisés dans le cadre de ce projet.
                 </p>
                 <p>
-                    Les noms, marques, logos et autres éléments appartenant à des tiers
-                    restent la propriété de leurs titulaires respectifs.
+                    Les cartes utilisées dans GéoRail ont été retravaillées à l’aide d’outils d’intelligence artificielle, notamment afin d’en améliorer ou d’en adapter la présentation graphique.
+                </p>
+                <p>
+                    Sauf mention contraire, toute reproduction, représentation, adaptation ou réutilisation des éléments propres à GéoRail, en tout ou partie, est interdite sans autorisation préalable.
+                </p>
+                <p>
+                    Les noms, marques, logos, données, fonds cartographiques ou autres éléments appartenant à des tiers restent la propriété de leurs titulaires respectifs. Leur présence dans GéoRail ne vaut ni affiliation, ni partenariat, ni approbation de leur part.
                 </p>
             </section>
 
             <section class="mentions-section">
-                <h3>Données et exactitude des informations</h3>
+                <h3>Informations et données ferroviaires</h3>
                 <p>
-                    GéoRail est un outil pédagogique et d'entraînement. Malgré le soin
-                    apporté à la réalisation des cartes et au positionnement des villes,
-                    des erreurs ou imprécisions peuvent subsister.
+                    GéoRail est un outil indépendant à vocation pédagogique et d’entraînement. Les cartes, positions de villes et informations proposées sont destinées à l’apprentissage de la géographie ferroviaire.
                 </p>
                 <p>
-                    Le lien « Nous contacter » permet de signaler une erreur, un problème
-                    ou de proposer une amélioration.
+                    Certaines représentations cartographiques ont été retravaillées à l’aide de l’intelligence artificielle. Elles peuvent donc comporter des simplifications, approximations ou différences par rapport aux représentations géographiques ou ferroviaires officielles.
+                </p>
+                <p>
+                    Malgré le soin apporté à leur réalisation, les informations proposées peuvent contenir des erreurs, des approximations ou devenir obsolètes. Elles ne doivent pas être utilisées comme source officielle pour préparer ou réaliser un déplacement.
+                </p>
+                <p>
+                    Toute erreur ou suggestion d’amélioration peut être signalée à l’aide du formulaire « Nous contacter ».
                 </p>
             </section>
 
             <section class="mentions-section">
                 <h3>Données personnelles</h3>
                 <p>
-                    Le formulaire « Nous contacter » peut permettre de transmettre
-                    volontairement un nom ou prénom, une adresse e-mail, un message
-                    et, le cas échéant, un fichier joint.
+                    GéoRail ne nécessite pas la création d’un compte utilisateur.
                 </p>
                 <p>
-                    Les modalités de traitement et de conservation de ces informations
-                    seront précisées lors de la mise en service effective du formulaire.
+                    Lors de l’utilisation du formulaire « Nous contacter », certaines informations peuvent être transmises : le motif de la demande, le contenu du message ainsi que, de manière facultative, le nom et prénom, l’adresse e-mail et une pièce jointe.
+                </p>
+                <p>
+                    Ces informations sont utilisées uniquement afin de prendre connaissance de la demande, d’y répondre lorsque cela est nécessaire et d’assurer le suivi des éventuels signalements concernant GéoRail.
+                </p>
+                <p>
+                    Les informations transmises par le formulaire ne sont ni vendues, ni utilisées à des fins commerciales ou publicitaires.
+                </p>
+                <p>
+                    Les données reçues sont conservées uniquement pendant la durée nécessaire au traitement et au suivi de la demande, puis peuvent être supprimées lorsqu’elles ne sont plus utiles.
+                </p>
+                <p>
+                    Il est recommandé de ne pas transmettre, dans le message ou les pièces jointes, de données personnelles ou confidentielles qui ne seraient pas nécessaires au traitement de la demande.
+                </p>
+                <p>
+                    Pour toute question concernant les informations transmises via GéoRail, le formulaire « Nous contacter » peut être utilisé.
                 </p>
             </section>
 
             <section class="mentions-section">
-                <h3>Cookies</h3>
+                <h3>Cookies et stockage local</h3>
                 <p>
-                    GéoRail n'utilise pas de cookies publicitaires.
+                    GéoRail n’utilise pas de cookies publicitaires ni d’outil de suivi publicitaire.
                 </p>
                 <p>
-                    Certaines informations techniques peuvent être conservées localement
-                    dans le navigateur afin d'assurer le fonctionnement de certaines
-                    fonctionnalités de l'application.
+                    Certaines fonctionnalités peuvent utiliser le stockage local du navigateur (localStorage) afin de mémoriser localement des informations nécessaires au fonctionnement du jeu, par exemple les villes à réviser.
+                </p>
+                <p>
+                    Ces informations restent enregistrées dans le navigateur de l’utilisateur et ne sont pas utilisées à des fins publicitaires.
+                </p>
+            </section>
+
+            <section class="mentions-section">
+                <h3>Responsabilité</h3>
+                <p>
+                    GéoRail est proposé à des fins pédagogiques, d’apprentissage et d’entraînement.
+                </p>
+                <p>
+                    Malgré le soin apporté au développement du site et à la vérification de son contenu, aucune garantie ne peut être donnée quant à l’exactitude, l’exhaustivité ou l’actualisation permanente des informations présentées.
+                </p>
+                <p>
+                    GéoRail ne constitue pas un outil officiel d’information voyageurs, de navigation ou d’exploitation ferroviaire. Les informations, cartes et positions proposées ne doivent pas être utilisées pour organiser un déplacement ou prendre une décision opérationnelle.
+                </p>
+                <p>
+                    L’utilisation de GéoRail s’effectue sous la responsabilité de l’utilisateur. Le fonctionnement du site peut également être interrompu ou perturbé, notamment en raison d’opérations de maintenance, de problèmes techniques ou de services tiers.
                 </p>
             </section>
         </div>
@@ -2245,13 +2323,7 @@ btnAnnulerContact.addEventListener("click", function() {
     fermerModaleFooter(modaleSignalerErreur);
 });
 
-formulaireContact.addEventListener("submit", function(event) {
-    event.preventDefault();
 
-    alert(
-        "Le formulaire est prêt. Nous configurerons maintenant la méthode d'envoi des messages."
-    );
-});
 
 
 /* ===== POPUP MENTIONS LÉGALES ===== */
@@ -2259,6 +2331,154 @@ const btnFermerMentions = modaleMentionsLegales.querySelector(".mentions-btn-fer
 
 btnFermerMentions.addEventListener("click", function() {
     fermerModaleFooter(modaleMentionsLegales);
+});
+
+
+/* ===== ENVOI RÉEL DU FORMULAIRE GÉORAIL ===== */
+const URL_CONTACT_GEORAIL = "https://script.google.com/macros/s/AKfycbz56uKyxvuU4GHi_RIaqJnGIqwuY0VIYnFb2Kd-xstHT7tTcyZ0te-QjCXBxdX74j9HAw/exec";
+const btnEnvoyerContact = document.getElementById("btnEnvoyerContact");
+const contactInformation = document.getElementById("contactInformation");
+const contactMotif = document.getElementById("contactMotif");
+const contactNom = document.getElementById("contactNom");
+const contactEmail = document.getElementById("contactEmail");
+
+function afficherEtatContact(type, message) {
+    contactInformation.classList.remove(
+        "contact-succes",
+        "contact-erreur",
+        "contact-envoi"
+    );
+
+    if (type) {
+        contactInformation.classList.add(type);
+    }
+
+    contactInformation.textContent = message;
+}
+
+function lireFichierContactEnBase64(fichier) {
+    return new Promise(function(resolve, reject) {
+        const lecteur = new FileReader();
+
+        lecteur.onload = function() {
+            resolve(lecteur.result);
+        };
+
+        lecteur.onerror = function() {
+            reject(new Error("Impossible de lire la pièce jointe."));
+        };
+
+        lecteur.readAsDataURL(fichier);
+    });
+}
+
+formulaireContact.addEventListener("submit", async function(event) {
+    event.preventDefault();
+
+    if (!formulaireContact.reportValidity()) {
+        return;
+    }
+
+    const fichier = contactFichier.files[0] || null;
+
+    if (fichier && fichier.size > 5 * 1024 * 1024) {
+        afficherEtatContact(
+            "contact-erreur",
+            "La pièce jointe ne doit pas dépasser 5 Mo."
+        );
+        return;
+    }
+
+    const typesAutorises = [
+        "image/jpeg",
+        "image/png",
+        "image/webp",
+        "application/pdf"
+    ];
+
+    if (fichier && !typesAutorises.includes(fichier.type)) {
+        afficherEtatContact(
+            "contact-erreur",
+            "Format de fichier non autorisé. Utilise JPG, PNG, WEBP ou PDF."
+        );
+        return;
+    }
+
+    btnEnvoyerContact.disabled = true;
+    btnAnnulerContact.disabled = true;
+    btnEnvoyerContact.textContent = "Envoi en cours…";
+
+    afficherEtatContact(
+        "contact-envoi",
+        "Envoi de votre message en cours…"
+    );
+
+    try {
+        let fichierAEnvoyer = null;
+
+        if (fichier) {
+            const contenuBase64 = await lireFichierContactEnBase64(fichier);
+
+            fichierAEnvoyer = {
+                nom: fichier.name,
+                type: fichier.type,
+                contenu: contenuBase64
+            };
+        }
+
+        const donnees = {
+            motif: contactMotif.value,
+            nom: contactNom.value.trim(),
+            email: contactEmail.value.trim(),
+            message: contactMessage.value.trim(),
+            fichier: fichierAEnvoyer
+        };
+
+        /*
+         * Apps Script est appelé sans en-tête Content-Type personnalisé.
+         * Cela évite une requête CORS "preflight" depuis GitHub Pages.
+         * doPost() lit directement e.postData.contents.
+         */
+        const reponse = await fetch(URL_CONTACT_GEORAIL, {
+            method: "POST",
+            body: JSON.stringify(donnees)
+        });
+
+        if (!reponse.ok) {
+            throw new Error("Le service de contact n'a pas répondu correctement.");
+        }
+
+        const resultat = await reponse.json();
+
+        if (!resultat.succes) {
+            throw new Error(
+                resultat.message ||
+                "Une erreur est survenue lors de l'envoi."
+            );
+        }
+
+        formulaireContact.reset();
+        contactNombreCaracteres.textContent = "0";
+        contactFichierSelectionne.textContent = "";
+
+        afficherEtatContact(
+            "contact-succes",
+            "✓ Votre message a bien été envoyé."
+        );
+    }
+    catch (erreur) {
+        console.error(erreur);
+
+        afficherEtatContact(
+            "contact-erreur",
+            "Impossible d'envoyer le message pour le moment. Merci de réessayer."
+        );
+    }
+    finally {
+        btnEnvoyerContact.disabled = false;
+        btnAnnulerContact.disabled = false;
+        btnEnvoyerContact.textContent = "Envoyer";
+    }
 });
 
 </script>
