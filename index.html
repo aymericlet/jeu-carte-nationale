@@ -1769,7 +1769,7 @@ button {
                     </span>
                 </button>
 
-                <div class="carte-choix carte-region-indisponible" aria-label="Bourgogne - bientôt disponible">
+                <button id="btnRegionBourgogne" class="carte-choix" type="button">
                     <span class="zone-image">
                         <img
                             src="images/carte-bourgogne-mini.png"
@@ -1781,11 +1781,11 @@ button {
                     <span class="infos">
                         <span class="nom-carte">🍇 Bourgogne</span>
                         <span class="description">
-                            Entraîne-toi sur la carte ferroviaire de Bourgogne.
+                            Entraîne-toi sur les 79 villes de la carte Bourgogne.
                         </span>
-                        <span class="action action-indisponible">Bientôt disponible</span>
+                        <span class="action">Choisir cette carte →</span>
                     </span>
-                </div>
+                </button>
 
                 <div class="carte-choix carte-region-indisponible" aria-label="Provence-Alpes-Côte d’Azur - bientôt disponible">
                     <span class="zone-image">
@@ -2141,6 +2141,9 @@ const btnRetourAccueilRegions =
 const btnRegionRhoneAlpes =
     document.getElementById("btnRegionRhoneAlpes");
 
+const btnRegionBourgogne =
+    document.getElementById("btnRegionBourgogne");
+
 const ecranModes =
     document.getElementById("ecranModes");
 
@@ -2181,6 +2184,15 @@ const CONFIG_CARTES = {
         apprendre: "rhone-alpes/apprendre-rhone-alpes.html",
         jouer: "rhone-alpes/jouer-rhone-alpes.html",
         examen: "rhone-alpes/examen-rhone-alpes.html"
+    },
+
+    bourgogne: {
+        titre: "🍇 Bourgogne",
+        image: "images/carte-bourgogne-mini.png",
+        alt: "Carte Bourgogne du réseau ferroviaire",
+        apprendre: "bourgogne/apprendre-bourgogne.html",
+        jouer: "bourgogne/jouer-bourgogne.html",
+        examen: "bourgogne/examen-bourgogne.html"
     }
 };
 
@@ -2251,6 +2263,14 @@ btnRegionRhoneAlpes.addEventListener(
     }
 );
 
+btnRegionBourgogne.addEventListener(
+    "click",
+    function() {
+        ecranRegions.classList.remove("visible");
+        ouvrirChoixModes("bourgogne");
+    }
+);
+
 btnRetourCartes.addEventListener(
     "click",
     function() {
@@ -2258,7 +2278,10 @@ btnRetourCartes.addEventListener(
 
         fermerChoixModes();
 
-        if (carteAvantRetour === "rhoneAlpes") {
+        if (
+            carteAvantRetour === "rhoneAlpes" ||
+            carteAvantRetour === "bourgogne"
+        ) {
             ecranRegions.classList.add("visible");
         }
     }

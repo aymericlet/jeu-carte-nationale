@@ -1,0 +1,3131 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Apprendre - Bourgogne</title>
+
+    <style>
+
+        /* =====================================================
+           BASE
+           ===================================================== */
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+
+            width: 100%;
+            height: 100%;
+
+            overflow: hidden;
+
+            font-family:
+                Arial,
+                Helvetica,
+                sans-serif;
+
+            background: #f5f6f8;
+            color: #333333;
+        }
+
+
+        /* =====================================================
+           PAGE
+           ===================================================== */
+
+        .page {
+            width: 100%;
+            height: 100vh;
+
+            display: flex;
+            flex-direction: column;
+
+            overflow: hidden;
+        }
+
+
+        /* =====================================================
+           EN-TÊTE
+           ===================================================== */
+
+        .entete {
+            width: 100%;
+
+            height: 76px;
+            min-height: 76px;
+
+            padding:
+                8px
+                28px;
+
+            display: grid;
+
+            grid-template-columns:
+                180px
+                1fr
+                180px;
+
+            align-items: center;
+
+            background: #ffffff;
+
+            border-bottom:
+                1px solid #dddddd;
+
+            z-index: 100;
+        }
+
+
+        /* =====================================================
+           RETOUR
+           ===================================================== */
+
+        .zone-retour {
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+        }
+
+        .bouton-retour {
+            min-height: 42px;
+
+            padding:
+                8px
+                18px;
+
+            border: none;
+            border-radius: 11px;
+
+            background: #94163a;
+            color: #ffffff;
+
+            font-size: 15px;
+            font-weight: 700;
+
+            cursor: pointer;
+
+            transition:
+                background 0.15s ease,
+                transform 0.15s ease;
+        }
+
+        .bouton-retour:hover {
+            background: #7f1130;
+
+            transform:
+                translateY(-1px);
+        }
+
+
+        /* =====================================================
+           TITRE
+           ===================================================== */
+
+        .titre-entete {
+            text-align: center;
+        }
+
+        .titre-entete h1 {
+            margin: 0;
+
+            color: #94163a;
+
+            font-size:
+                clamp(
+                    28px,
+                    2.4vw,
+                    40px
+                );
+
+            line-height: 1;
+        }
+
+        .titre-entete p {
+            margin: 5px 0 0;
+
+            color: #555555;
+
+            font-size: 14px;
+
+            line-height: normal;
+        }
+
+
+        /* =====================================================
+           CONTENU
+           ===================================================== */
+
+        .contenu {
+            width: 100%;
+
+            flex: 1;
+            min-height: 0;
+
+            display: grid;
+
+            grid-template-columns:
+                minmax(0, 1fr)
+                minmax(320px, 390px);
+
+            gap: 24px;
+
+            padding:
+                16px
+                28px
+                18px;
+
+            overflow: hidden;
+        }
+
+
+        /* =====================================================
+           ZONE CARTE
+           ===================================================== */
+
+        .zone-carte {
+            width: 100%;
+            height: 100%;
+
+            min-width: 0;
+            min-height: 0;
+
+            display: flex;
+
+            justify-content: center;
+            align-items: center;
+
+            overflow: hidden;
+        }
+
+
+        /* =====================================================
+           CADRE CARTE
+           ===================================================== */
+
+        .cadre-carte {
+            position: relative;
+
+            display: inline-block;
+
+            max-width: 100%;
+            max-height: 100%;
+        }
+
+
+        /* =====================================================
+           IMAGE CARTE
+           ===================================================== */
+
+        .carte {
+            display: block;
+
+            width: auto;
+            height: auto;
+
+            max-width: 100%;
+
+            max-height:
+                calc(
+                    100vh - 110px
+                );
+
+            object-fit: contain;
+
+            user-select: none;
+            -webkit-user-drag: none;
+
+            filter:
+                drop-shadow(
+                    0
+                    10px
+                    18px
+                    rgba(0, 0, 0, 0.08)
+                );
+        }
+
+
+        /* =====================================================
+           ZONES CLIQUABLES DES POINTS
+
+           Elles sont transparentes.
+           Elles se placent exactement sur les coordonnées
+           enregistrées dans villes.js.
+
+           On continue donc à voir uniquement les points rouges
+           de la carte d'origine.
+           ===================================================== */
+
+        .point-cliquable {
+            position: absolute;
+
+            width: 18px;
+            height: 18px;
+
+            transform:
+                translate(
+                    -50%,
+                    -50%
+                );
+
+            border: none;
+            border-radius: 50%;
+
+            padding: 0;
+
+            background: transparent;
+
+            cursor: pointer;
+
+            z-index: 15;
+        }
+
+        .point-cliquable::after {
+            content: "";
+
+            position: absolute;
+
+            left: 50%;
+            top: 50%;
+
+            width: 12px;
+            height: 12px;
+
+            transform:
+                translate(
+                    -50%,
+                    -50%
+                );
+
+            border-radius: 50%;
+
+            background:
+                rgba(
+                    148,
+                    22,
+                    58,
+                    0
+                );
+
+            transition:
+                background 0.12s ease,
+                box-shadow 0.12s ease,
+                transform 0.12s ease;
+        }
+
+        .point-cliquable:hover::after {
+            background:
+                rgba(
+                    148,
+                    22,
+                    58,
+                    0.20
+                );
+
+            box-shadow:
+                0
+                0
+                0
+                3px
+                rgba(
+                    148,
+                    22,
+                    58,
+                    0.13
+                );
+
+            transform:
+                translate(
+                    -50%,
+                    -50%
+                )
+                scale(1.15);
+        }
+
+        .point-cliquable:focus-visible {
+            outline:
+                2px solid #94163a;
+
+            outline-offset: 2px;
+        }
+
+
+        /* =====================================================
+           POINT VERT DE LA VILLE SÉLECTIONNÉE
+           ===================================================== */
+
+        .marqueur-ville {
+            position: absolute;
+
+            width: 15px;
+            height: 15px;
+
+            transform:
+                translate(
+                    -50%,
+                    -50%
+                );
+
+            display: none;
+
+            border:
+                3px solid #ffffff;
+
+            border-radius: 50%;
+
+            background: #107c10;
+
+            box-shadow:
+                0
+                2px
+                7px
+                rgba(0, 0, 0, 0.38);
+
+            pointer-events: none;
+
+            z-index: 31;
+        }
+
+
+        /* =====================================================
+           ÉTIQUETTE
+           ===================================================== */
+
+        .etiquette-ville {
+            position: absolute;
+
+            display: none;
+
+            z-index: 30;
+
+            padding:
+                6px
+                10px;
+
+            border-radius: 8px;
+
+            background: #107c10;
+            color: #ffffff;
+
+            font-size: 14px;
+            font-weight: 700;
+
+            line-height: 18px;
+
+            white-space: nowrap;
+
+            box-shadow:
+                0
+                4px
+                10px
+                rgba(0, 0, 0, 0.20);
+
+            pointer-events: none;
+        }
+
+
+        /* =====================================================
+           ÉTIQUETTE AU-DESSUS
+           ===================================================== */
+
+        .etiquette-ville.position-haut {
+            transform:
+                translate(
+                    -50%,
+                    calc(-100% - 14px)
+                );
+        }
+
+        .etiquette-ville.position-haut::after {
+            content: "";
+
+            position: absolute;
+
+            left: 50%;
+            bottom: -14px;
+
+            transform:
+                translateX(-50%);
+
+            width: 0;
+            height: 0;
+
+            border-left:
+                6px solid transparent;
+
+            border-right:
+                6px solid transparent;
+
+            border-top:
+                15px solid #107c10;
+        }
+
+
+        /* =====================================================
+           ÉTIQUETTE EN DESSOUS
+           ===================================================== */
+
+        .etiquette-ville.position-bas {
+            transform:
+                translate(
+                    -50%,
+                    14px
+                );
+        }
+
+        .etiquette-ville.position-bas::after {
+            content: "";
+
+            position: absolute;
+
+            left: 50%;
+            top: -14px;
+
+            transform:
+                translateX(-50%);
+
+            width: 0;
+            height: 0;
+
+            border-left:
+                6px solid transparent;
+
+            border-right:
+                6px solid transparent;
+
+            border-bottom:
+                15px solid #107c10;
+        }
+
+
+        /* =====================================================
+           ÉTIQUETTE À DROITE
+           ===================================================== */
+
+        .etiquette-ville.position-droite {
+            transform:
+                translate(
+                    14px,
+                    -50%
+                );
+        }
+
+        .etiquette-ville.position-droite::after {
+            content: "";
+
+            position: absolute;
+
+            left: -14px;
+            top: 50%;
+
+            transform:
+                translateY(-50%);
+
+            width: 0;
+            height: 0;
+
+            border-top:
+                6px solid transparent;
+
+            border-bottom:
+                6px solid transparent;
+
+            border-right:
+                15px solid #107c10;
+        }
+
+
+        /* =====================================================
+           ÉTIQUETTE À GAUCHE
+           ===================================================== */
+
+        .etiquette-ville.position-gauche {
+            transform:
+                translate(
+                    calc(-100% - 14px),
+                    -50%
+                );
+        }
+
+        .etiquette-ville.position-gauche::after {
+            content: "";
+
+            position: absolute;
+
+            right: -14px;
+            top: 50%;
+
+            transform:
+                translateY(-50%);
+
+            width: 0;
+            height: 0;
+
+            border-top:
+                6px solid transparent;
+
+            border-bottom:
+                6px solid transparent;
+
+            border-left:
+                15px solid #107c10;
+        }
+
+
+        /* =====================================================
+           PANNEAU
+           ===================================================== */
+
+        .panneau {
+            width: 100%;
+            height: 100%;
+
+            min-height: 0;
+
+            display: flex;
+            flex-direction: column;
+
+            padding: 20px;
+
+            background: #ffffff;
+
+            border:
+                1px solid #e1e1e1;
+
+            border-radius: 17px;
+
+            box-shadow:
+                0
+                8px
+                22px
+                rgba(0, 0, 0, 0.06);
+
+            overflow: hidden;
+        }
+
+        .panneau h2 {
+            margin: 0;
+
+            flex-shrink: 0;
+
+            color: #94163a;
+
+            font-size: 24px;
+        }
+
+        .texte-aide {
+            margin:
+                7px
+                0
+                15px;
+
+            flex-shrink: 0;
+
+            color: #666666;
+
+            font-size: 14px;
+
+            line-height: 1.35;
+        }
+
+
+        /* =====================================================
+           RECHERCHE
+           ===================================================== */
+
+        .label-champ {
+            display: block;
+
+            flex-shrink: 0;
+
+            margin-bottom: 6px;
+
+            color: #333333;
+
+            font-size: 14px;
+            font-weight: 700;
+        }
+
+        .recherche {
+            width: 100%;
+
+            height: 44px;
+            min-height: 44px;
+
+            flex-shrink: 0;
+
+            padding:
+                9px
+                12px;
+
+            border:
+                1px solid #cccccc;
+
+            border-radius: 10px;
+
+            background: #ffffff;
+
+            font-size: 15px;
+
+            outline: none;
+        }
+
+        .recherche:focus {
+            border-color: #94163a;
+
+            box-shadow:
+                0
+                0
+                0
+                3px
+                rgba(148, 22, 58, 0.10);
+        }
+
+
+        /* =====================================================
+           LISTE
+           ===================================================== */
+
+        .liste-villes {
+            width: 100%;
+
+            flex: 1;
+            min-height: 80px;
+
+            margin-top: 11px;
+
+            overflow-x: hidden;
+            overflow-y: auto;
+
+            border:
+                1px solid #e1e1e1;
+
+            border-radius: 10px;
+
+            background: #ffffff;
+
+            scrollbar-width: thin;
+        }
+
+        .bouton-ville {
+            width: 100%;
+
+            min-height: 40px;
+
+            padding:
+                9px
+                12px;
+
+            border: none;
+
+            border-bottom:
+                1px solid #eeeeee;
+
+            background: #ffffff;
+            color: #333333;
+
+            text-align: left;
+
+            font-size: 14px;
+
+            cursor: pointer;
+
+            transition:
+                background 0.12s ease,
+                color 0.12s ease;
+        }
+
+        .bouton-ville:last-child {
+            border-bottom: none;
+        }
+
+        .bouton-ville:hover {
+            background: #f7edf0;
+            color: #94163a;
+        }
+
+        .bouton-ville.selectionnee {
+            background: #94163a;
+            color: #ffffff;
+
+            font-weight: 700;
+        }
+
+        .aucun-resultat {
+            padding: 18px;
+
+            color: #777777;
+
+            text-align: center;
+
+            font-size: 14px;
+        }
+
+
+        /* =====================================================
+           VILLE SÉLECTIONNÉE
+           ===================================================== */
+
+        .selection {
+            flex-shrink: 0;
+
+            margin-top: 12px;
+
+            padding: 11px;
+
+            background: #f7f7f7;
+
+            border-radius: 11px;
+
+            text-align: center;
+        }
+
+        .selection-titre {
+            margin:
+                0
+                0
+                4px;
+
+            color: #777777;
+
+            font-size: 11px;
+            font-weight: 700;
+
+            text-transform: uppercase;
+
+            letter-spacing: 0.5px;
+        }
+
+        .selection-nom {
+            margin: 0;
+
+            color: #94163a;
+
+            font-size: 20px;
+            font-weight: 700;
+        }
+
+
+        /* =====================================================
+           NAVIGATION ENTRE LES VILLES
+           ===================================================== */
+
+        .navigation-villes {
+            width: 100%;
+
+            flex-shrink: 0;
+
+            display: grid;
+
+            grid-template-columns:
+                1fr
+                52px
+                1fr;
+
+            gap: 7px;
+
+            margin-top: 10px;
+        }
+
+        .bouton-navigation {
+            min-width: 0;
+            min-height: 40px;
+
+            padding:
+                8px
+                7px;
+
+            border:
+                1px solid #94163a;
+
+            border-radius: 9px;
+
+            background: #ffffff;
+            color: #94163a;
+
+            font-size: 12px;
+            font-weight: 700;
+
+            cursor: pointer;
+
+            transition:
+                background 0.12s ease,
+                color 0.12s ease,
+                transform 0.12s ease;
+        }
+
+        .bouton-navigation:hover {
+            background: #94163a;
+            color: #ffffff;
+
+            transform:
+                translateY(-1px);
+        }
+
+        .bouton-navigation:active {
+            transform:
+                translateY(0);
+        }
+
+        .bouton-aleatoire {
+            padding:
+                8px
+                5px;
+
+            font-size: 18px;
+        }
+
+
+
+        /* =====================================================
+           MODE "ME TESTER"
+           ===================================================== */
+
+        .zone-test {
+            width: 100%;
+            flex-shrink: 0;
+            margin-top: 10px;
+        }
+
+        .bouton-test {
+            width: 100%;
+            min-height: 42px;
+            padding: 9px 12px;
+            border: none;
+            border-radius: 10px;
+            background: #94163a;
+            color: #ffffff;
+            font-size: 13px;
+            font-weight: 700;
+            cursor: pointer;
+            transition:
+                background 0.12s ease,
+                transform 0.12s ease;
+        }
+
+        .bouton-test:hover {
+            background: #7f1130;
+            transform: translateY(-1px);
+        }
+
+        .zone-test-active {
+            display: none;
+            width: 100%;
+            flex-shrink: 0;
+            margin-top: 10px;
+            padding: 10px;
+            border: 1px solid #e1e1e1;
+            border-radius: 11px;
+            background: #f7f7f7;
+            text-align: center;
+        }
+
+        .zone-test-active.visible {
+            display: block;
+        }
+
+        .question-test {
+            margin: 0 0 8px;
+            color: #94163a;
+            font-size: 14px;
+            font-weight: 700;
+        }
+
+        .actions-test {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 7px;
+        }
+
+        .bouton-reponse,
+        .bouton-nouvelle-ville {
+            min-height: 38px;
+            padding: 7px 8px;
+            border-radius: 9px;
+            font-size: 12px;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .bouton-reponse {
+            border: 1px solid #107c10;
+            background: #ffffff;
+            color: #107c10;
+        }
+
+        .bouton-reponse:hover {
+            background: #107c10;
+            color: #ffffff;
+        }
+
+        .bouton-nouvelle-ville {
+            border: 1px solid #94163a;
+            background: #ffffff;
+            color: #94163a;
+        }
+
+        .bouton-nouvelle-ville:hover {
+            background: #94163a;
+            color: #ffffff;
+        }
+
+        .bouton-quitter-test {
+            width: 100%;
+            min-height: 34px;
+            margin-top: 7px;
+            padding: 6px 8px;
+            border: none;
+            border-radius: 8px;
+            background: transparent;
+            color: #777777;
+            font-size: 11px;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .bouton-quitter-test:hover {
+            background: #eeeeee;
+            color: #333333;
+        }
+
+
+        /* =====================================================
+           COMPTEUR
+           ===================================================== */
+
+        .compteur {
+            flex-shrink: 0;
+
+            min-height: 22px;
+
+            padding-top: 8px;
+
+            color: #777777;
+
+            text-align: center;
+
+            font-size: 12px;
+        }
+
+
+        /* =====================================================
+           TABLETTE / PETIT ÉCRAN
+           ===================================================== */
+
+        @media (max-width: 1100px) {
+
+            .entete {
+                grid-template-columns:
+                    145px
+                    1fr
+                    145px;
+
+                padding-left: 18px;
+                padding-right: 18px;
+            }
+
+            .contenu {
+                grid-template-columns:
+                    minmax(0, 1fr)
+                    300px;
+
+                gap: 16px;
+
+                padding:
+                    14px
+                    16px
+                    16px;
+            }
+
+            .panneau {
+                padding: 16px;
+            }
+
+            .navigation-villes {
+                grid-template-columns:
+                    1fr
+                    46px
+                    1fr;
+            }
+
+            .bouton-navigation {
+                font-size: 11px;
+            }
+
+        }
+
+
+        /* =====================================================
+           TÉLÉPHONE
+           ===================================================== */
+
+        @media (max-width: 760px) {
+
+            html,
+            body {
+                height: auto;
+                min-height: 100%;
+
+                overflow-x: hidden;
+                overflow-y: auto;
+            }
+
+            .page {
+                height: auto;
+                min-height: 100vh;
+
+                overflow: visible;
+            }
+
+            .entete {
+                height: auto;
+                min-height: 0;
+
+                grid-template-columns: 1fr;
+
+                gap: 8px;
+
+                padding:
+                    10px
+                    12px;
+            }
+
+            .titre-entete {
+                grid-row: 1;
+            }
+
+            .zone-retour {
+                grid-row: 2;
+
+                justify-content: center;
+            }
+
+            .titre-entete h1 {
+                font-size: 28px;
+            }
+
+            .titre-entete p {
+                margin-top: 4px;
+
+                font-size: 13px;
+            }
+
+            .bouton-retour {
+                min-height: 38px;
+
+                padding:
+                    7px
+                    14px;
+
+                font-size: 14px;
+            }
+
+            .contenu {
+                display: flex;
+                flex-direction: column;
+
+                overflow: visible;
+
+                gap: 14px;
+
+                padding:
+                    12px
+                    12px
+                    20px;
+            }
+
+            .zone-carte {
+                height: auto;
+
+                overflow: visible;
+            }
+
+            .cadre-carte {
+                width: 100%;
+
+                max-height: none;
+            }
+
+            .carte {
+                width: 100%;
+                height: auto;
+
+                max-height: none;
+            }
+
+            .panneau {
+                height: 560px;
+
+                padding: 16px;
+
+                border-radius: 14px;
+            }
+
+            .navigation-villes {
+                grid-template-columns:
+                    1fr
+                    50px
+                    1fr;
+            }
+
+        }
+
+
+        @media (max-width: 420px) {
+
+            .titre-entete h1 {
+                font-size: 25px;
+            }
+
+            .panneau {
+                height: 550px;
+            }
+
+            .bouton-navigation {
+                font-size: 10px;
+            }
+
+        }
+
+    
+
+/* =========================================================
+   AJUSTEMENTS RESPONSIVE TÉLÉPHONE
+   Aucun changement des fonctions de la carte.
+   ========================================================= */
+
+@media (max-width: 760px) {
+    .titre-entete h1 { font-size: 23px; }
+    .titre-entete p { font-size: 11px; }
+
+    .bouton-retour {
+        min-height: 34px;
+        padding: 5px 12px;
+        font-size: 12px;
+    }
+}
+
+@media (orientation: landscape) and (max-height: 500px) {
+    html,
+    body {
+        height: 100%;
+        overflow: hidden;
+    }
+
+    .page {
+        height: 100dvh;
+        min-height: 0;
+        overflow: hidden;
+    }
+
+    .entete {
+        height: 54px;
+        min-height: 54px;
+        padding: 5px 10px;
+        grid-template-columns: 120px 1fr 120px;
+        gap: 0;
+    }
+
+    .titre-entete {
+        grid-row: auto;
+    }
+
+    .zone-retour {
+        grid-row: auto;
+        justify-content: flex-start;
+    }
+
+    .titre-entete h1 {
+        font-size: 19px;
+        white-space: nowrap;
+    }
+
+    .titre-entete p {
+        margin-top: 1px;
+        font-size: 10px;
+        line-height: 1.1;
+    }
+
+    .bouton-retour {
+        min-height: 30px;
+        padding: 4px 10px;
+        font-size: 11px;
+    }
+
+    .contenu {
+        flex: 1;
+        min-height: 0;
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) minmax(260px, 320px);
+        gap: 8px;
+        padding: 8px 10px;
+        overflow: hidden;
+    }
+
+    .zone-carte {
+        height: 100%;
+        min-height: 0;
+        overflow: hidden;
+    }
+
+    .cadre-carte {
+        width: auto;
+        max-width: 100%;
+        max-height: 100%;
+    }
+
+    .carte {
+        width: auto;
+        height: auto;
+        max-width: 100%;
+        max-height: calc(100dvh - 70px);
+    }
+
+    .panneau {
+        height: 100%;
+        min-height: 0;
+        overflow-y: auto;
+    }
+}
+
+/* =========================================================
+   OPTIMISATION TÉLÉPHONE PORTRAIT
+   CSS uniquement : aucun fonctionnement n'est modifié.
+   ========================================================= */
+@media (orientation: portrait) and (max-width: 760px) {
+    html, body { height: 100%; overflow: hidden; }
+    .page { height: 100dvh; min-height: 0; overflow: hidden; }
+    .entete { height: auto; min-height: 0; padding: 6px 10px; gap: 4px; }
+    .titre-entete h1 { font-size: 21px; line-height: 1.05; }
+    .titre-entete p { margin-top: 2px; font-size: 10px; line-height: 1.15; }
+    .bouton-retour { min-height: 32px; padding: 4px 11px; font-size: 12px; }
+    .contenu {
+        flex: 1; min-height: 0; display: grid;
+        grid-template-columns: 1fr; grid-template-rows: minmax(0, 52%) minmax(0, 48%);
+        gap: 6px; padding: 6px 8px 8px; overflow: hidden;
+    }
+    .zone-carte { height: 100%; min-height: 0; overflow: hidden; }
+    .cadre-carte { width: auto; max-width: 100%; max-height: 100%; }
+    .carte { width: auto; height: auto; max-width: 100%; max-height: 100%; }
+    .panneau { height: 100%; min-height: 0; padding: 11px; border-radius: 13px; overflow-y: auto; }
+    .panneau h2 { margin-bottom: 5px; font-size: 20px; }
+    .panneau p { margin-top: 4px; margin-bottom: 8px; font-size: 11px; line-height: 1.25; }
+    .navigation-villes { grid-template-columns: 1fr 42px 1fr; gap: 5px; }
+    .bouton-navigation { min-height: 32px; padding: 5px 6px; font-size: 9px; }
+}
+
+/* =========================================================
+   PORTRAIT TELEPHONE — optimisation finale validée
+   ========================================================= */
+@media (orientation: portrait) and (max-width: 760px) {
+    html, body { height: 100%; height: 100dvh; overflow: hidden; }
+    .page { height: 100vh; height: 100dvh; min-height: 0; overflow: hidden; }
+    .entete { flex: 0 0 auto; padding: 5px 8px 6px; gap: 3px; }
+    .titre-entete h1 { margin: 0; font-size: clamp(18px, 5.1vw, 21px); line-height: 1.02; }
+    .titre-entete p { margin: 2px 0 0; font-size: 9px; line-height: 1.1; }
+    .bouton-retour { min-height: 29px; padding: 3px 10px; font-size: 11px; }
+    .contenu {
+        flex: 1 1 auto; min-height: 0; display: grid; grid-template-columns: 1fr;
+        grid-template-rows: minmax(0, 58%) minmax(0, 42%);
+        gap: 5px; padding: 5px 7px 6px; overflow: hidden;
+    }
+    .zone-carte { min-height: 0; height: 100%; overflow: hidden; }
+    .cadre-carte, .carte { width: auto; height: auto; max-width: 100%; max-height: 100%; }
+    .panneau { height: 100%; min-height: 0; padding: 8px 9px; border-radius: 11px; overflow-y: auto; }
+    .panneau h2 { margin: 0 0 3px; font-size: 17px; line-height: 1.05; }
+    .panneau p { margin: 2px 0 5px; font-size: 9px; line-height: 1.15; }
+    .label-champ { margin-bottom: 3px; font-size: 9px; }
+    .recherche { min-height: 31px; padding: 5px 7px; font-size: 10px; }
+    .liste-villes { margin-top: 5px; }
+    .navigation-villes { grid-template-columns: 1fr 36px 1fr; gap: 4px; }
+    .bouton-navigation { min-height: 29px; padding: 4px 5px; font-size: 8px; }
+}
+
+/* =========================================================
+   TÉLÉPHONE PORTRAIT — APPRENDRE : affichage complet
+   Ajustement visuel uniquement.
+   ========================================================= */
+@media (orientation: portrait) and (max-width: 760px) {
+    .contenu {
+        grid-template-rows: minmax(0, 48%) minmax(0, 52%);
+    }
+
+    .panneau {
+        overflow: hidden;
+        padding: 7px 9px;
+    }
+
+    .panneau h2 {
+        margin: 0 0 2px;
+        font-size: 16px;
+    }
+
+    .panneau p {
+        margin: 1px 0 4px;
+        font-size: 8.5px;
+        line-height: 1.1;
+    }
+
+    .label-champ {
+        margin-bottom: 2px;
+        font-size: 8.5px;
+    }
+
+    .recherche {
+        min-height: 28px;
+        padding: 4px 7px;
+        font-size: 9.5px;
+    }
+
+    .liste-villes {
+        margin-top: 4px;
+    }
+
+    .navigation-villes {
+        gap: 3px;
+    }
+
+    .bouton-navigation {
+        min-height: 27px;
+        padding: 3px 4px;
+        font-size: 8px;
+    }
+}
+
+
+/* =========================================================
+   TÉLÉPHONE PORTRAIT — APPRENDRE : carte entièrement visible
+   Le panneau validé reste inchangé.
+   ========================================================= */
+@media (orientation: portrait) and (max-width: 760px) {
+    .cadre-carte {
+        height: 100%;
+        width: auto;
+        aspect-ratio: 1333 / 1180;
+        max-width: 100%;
+        max-height: 100%;
+    }
+
+    .carte {
+        width: 100%;
+        height: 100%;
+        max-width: 100%;
+        max-height: 100%;
+        object-fit: contain;
+    }
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<main class="page">
+
+
+    <header class="entete">
+
+
+        <div class="zone-retour">
+
+            <button
+                id="btnRetour"
+                class="bouton-retour"
+                type="button"
+            >
+                ← Retour
+            </button>
+
+        </div>
+
+
+        <div class="titre-entete">
+
+            <h1>
+                🎓 Apprendre - Bourgogne
+            </h1>
+
+            <p>
+                Sélectionne une ville dans la liste ou clique directement sur un point de la carte.
+            </p>
+
+        </div>
+
+
+        <div></div>
+
+
+    </header>
+
+
+    <section class="contenu">
+
+
+        <div
+            id="zoneCarte"
+            class="zone-carte"
+        >
+
+
+            <div
+                id="cadreCarte"
+                class="cadre-carte"
+            >
+
+
+                <img
+                    id="carte"
+                    class="carte"
+                    src="../images/carte-bourgogne.png"
+                    alt="Carte Bourgogne du réseau ferroviaire"
+                    draggable="false"
+                >
+
+
+                <!--
+                    Les zones cliquables correspondant aux villes
+                    seront ajoutées ici automatiquement en JavaScript.
+                -->
+
+                <div
+                    id="marqueurVille"
+                    class="marqueur-ville"
+                ></div>
+
+
+                <div
+                    id="etiquetteVille"
+                    class="etiquette-ville position-haut"
+                ></div>
+
+
+            </div>
+
+
+        </div>
+
+
+        <aside class="panneau">
+
+
+            <h2>
+                Les villes
+            </h2>
+
+
+            <p class="texte-aide">
+                Recherche une ville, sélectionne-la dans la liste ou clique directement sur son point sur la carte.
+            </p>
+
+
+            <label
+                class="label-champ"
+                for="rechercheVille"
+            >
+                Rechercher une ville
+            </label>
+
+
+            <input
+                id="rechercheVille"
+                class="recherche"
+                type="text"
+                placeholder="Ex. Lyon, Grenoble, Chambéry..."
+                autocomplete="off"
+            >
+
+
+            <div
+                id="listeVilles"
+                class="liste-villes"
+            ></div>
+
+
+            <div class="selection">
+
+
+                <p class="selection-titre">
+                    Ville sélectionnée
+                </p>
+
+
+                <p
+                    id="nomVilleSelectionnee"
+                    class="selection-nom"
+                >
+                    Aucune
+                </p>
+
+
+            </div>
+
+
+            <!-- =================================================
+                 NAVIGATION
+                 ================================================= -->
+
+            <div class="navigation-villes">
+
+
+                <button
+                    id="btnVillePrecedente"
+                    class="bouton-navigation"
+                    type="button"
+                    title="Ville précédente"
+                >
+                    ← Précédente
+                </button>
+
+
+                <button
+                    id="btnVilleAleatoire"
+                    class="bouton-navigation bouton-aleatoire"
+                    type="button"
+                    title="Choisir une ville au hasard"
+                    aria-label="Choisir une ville au hasard"
+                >
+                    🎲
+                </button>
+
+
+                <button
+                    id="btnVilleSuivante"
+                    class="bouton-navigation"
+                    type="button"
+                    title="Ville suivante"
+                >
+                    Suivante →
+                </button>
+
+
+            </div>
+
+
+            <!-- =================================================
+                 MODE "ME TESTER"
+                 ================================================= -->
+
+            <div
+                id="zoneDemarrerTest"
+                class="zone-test"
+            >
+
+                <button
+                    id="btnDemarrerTest"
+                    class="bouton-test"
+                    type="button"
+                >
+                    🧠 Me tester
+                </button>
+
+            </div>
+
+
+            <div
+                id="zoneTestActive"
+                class="zone-test-active"
+            >
+
+                <p
+                    id="questionTest"
+                    class="question-test"
+                >
+                    Quelle est cette ville ?
+                </p>
+
+
+                <div class="actions-test">
+
+                    <button
+                        id="btnVoirReponse"
+                        class="bouton-reponse"
+                        type="button"
+                    >
+                        👁 Voir la réponse
+                    </button>
+
+
+                    <button
+                        id="btnNouvelleVilleTest"
+                        class="bouton-nouvelle-ville"
+                        type="button"
+                    >
+                        🎲 Nouvelle ville
+                    </button>
+
+                </div>
+
+
+                <button
+                    id="btnQuitterTest"
+                    class="bouton-quitter-test"
+                    type="button"
+                >
+                    Quitter le mode test
+                </button>
+
+            </div>
+
+
+            <div
+                id="compteurVilles"
+                class="compteur"
+            ></div>
+
+
+        </aside>
+
+
+    </section>
+
+
+</main>
+
+
+<script src="../js/villes-bourgogne.js"></script>
+
+
+<script>
+
+    const villes = villesBourgogne;
+
+    /* =========================================================
+       ÉLÉMENTS
+       ========================================================= */
+
+    const btnRetour =
+        document.getElementById(
+            "btnRetour"
+        );
+
+
+    const rechercheVille =
+        document.getElementById(
+            "rechercheVille"
+        );
+
+
+    const listeVilles =
+        document.getElementById(
+            "listeVilles"
+        );
+
+
+    const compteurVilles =
+        document.getElementById(
+            "compteurVilles"
+        );
+
+
+    const nomVilleSelectionnee =
+        document.getElementById(
+            "nomVilleSelectionnee"
+        );
+
+
+    const marqueurVille =
+        document.getElementById(
+            "marqueurVille"
+        );
+
+
+    const etiquetteVille =
+        document.getElementById(
+            "etiquetteVille"
+        );
+
+
+    const zoneCarte =
+        document.getElementById(
+            "zoneCarte"
+        );
+
+
+    const cadreCarte =
+        document.getElementById(
+            "cadreCarte"
+        );
+
+
+    const btnVillePrecedente =
+        document.getElementById(
+            "btnVillePrecedente"
+        );
+
+
+    const btnVilleAleatoire =
+        document.getElementById(
+            "btnVilleAleatoire"
+        );
+
+
+    const btnVilleSuivante =
+        document.getElementById(
+            "btnVilleSuivante"
+        );
+
+
+    const zoneDemarrerTest =
+        document.getElementById(
+            "zoneDemarrerTest"
+        );
+
+
+    const btnDemarrerTest =
+        document.getElementById(
+            "btnDemarrerTest"
+        );
+
+
+    const zoneTestActive =
+        document.getElementById(
+            "zoneTestActive"
+        );
+
+
+    const questionTest =
+        document.getElementById(
+            "questionTest"
+        );
+
+
+    const btnVoirReponse =
+        document.getElementById(
+            "btnVoirReponse"
+        );
+
+
+    const btnNouvelleVilleTest =
+        document.getElementById(
+            "btnNouvelleVilleTest"
+        );
+
+
+    const btnQuitterTest =
+        document.getElementById(
+            "btnQuitterTest"
+        );
+
+
+    /* =========================================================
+       SÉLECTION
+       ========================================================= */
+
+    let indexVilleSelectionnee =
+        null;
+
+
+    let modeTestActif =
+        false;
+
+
+    let reponseTestVisible =
+        false;
+
+
+    /* =========================================================
+       NORMALISATION
+       ========================================================= */
+
+    function normaliserTexte(
+        texte
+    ) {
+
+        return texte
+            .toLowerCase()
+            .normalize("NFD")
+            .replace(
+                /[\u0300-\u036f]/g,
+                ""
+            );
+
+    }
+
+
+    /* =========================================================
+       VÉRIFIER POSITION
+       ========================================================= */
+
+    function villeEstConfiguree(
+        ville
+    ) {
+
+        return (
+            ville !== null &&
+            ville !== undefined &&
+            typeof ville.x === "number" &&
+            typeof ville.y === "number"
+        );
+
+    }
+
+
+    /* =========================================================
+       LISTE ALPHABÉTIQUE DES INDEX CONFIGURÉS
+
+       Elle sert aux boutons précédente / suivante / aléatoire.
+       ========================================================= */
+
+    function obtenirIndexVillesTriees() {
+
+        return villes
+            .map(
+                function(
+                    ville,
+                    index
+                ) {
+
+                    return {
+                        ville: ville,
+                        index: index
+                    };
+
+                }
+            )
+            .filter(
+                function(
+                    element
+                ) {
+
+                    return villeEstConfiguree(
+                        element.ville
+                    );
+
+                }
+            )
+            .sort(
+                function(
+                    a,
+                    b
+                ) {
+
+                    return a.ville.nom.localeCompare(
+                        b.ville.nom,
+                        "fr",
+                        {
+                            sensitivity:
+                                "base"
+                        }
+                    );
+
+                }
+            )
+            .map(
+                function(
+                    element
+                ) {
+
+                    return element.index;
+
+                }
+            );
+
+    }
+
+
+    /* =========================================================
+       RETIRER LES POSITIONS DE L'ÉTIQUETTE
+       ========================================================= */
+
+    function reinitialiserPositionEtiquette() {
+
+        etiquetteVille.classList.remove(
+            "position-haut",
+            "position-bas",
+            "position-gauche",
+            "position-droite"
+        );
+
+    }
+
+
+    /* =========================================================
+       POSITION AUTOMATIQUE DE L'ÉTIQUETTE
+       ========================================================= */
+
+    function ajusterPositionEtiquette() {
+
+
+        if (
+            indexVilleSelectionnee === null
+        ) {
+
+            return;
+
+        }
+
+
+        const margeSecurite =
+            90;
+
+
+        const rectZone =
+            zoneCarte.getBoundingClientRect();
+
+
+        const rectPoint =
+            marqueurVille.getBoundingClientRect();
+
+
+        const centreX =
+            rectPoint.left +
+            rectPoint.width / 2;
+
+
+        const centreY =
+            rectPoint.top +
+            rectPoint.height / 2;
+
+
+        const espaceGauche =
+            centreX -
+            rectZone.left;
+
+
+        const espaceDroite =
+            rectZone.right -
+            centreX;
+
+
+        const espaceHaut =
+            centreY -
+            rectZone.top;
+
+
+        const espaceBas =
+            rectZone.bottom -
+            centreY;
+
+
+        reinitialiserPositionEtiquette();
+
+
+        /* -----------------------------------------------------
+           BORD GAUCHE
+           ----------------------------------------------------- */
+
+        if (
+            espaceGauche <
+            margeSecurite
+        ) {
+
+            etiquetteVille.classList.add(
+                "position-droite"
+            );
+
+            return;
+
+        }
+
+
+        /* -----------------------------------------------------
+           BORD DROIT
+           ----------------------------------------------------- */
+
+        if (
+            espaceDroite <
+            margeSecurite
+        ) {
+
+            etiquetteVille.classList.add(
+                "position-gauche"
+            );
+
+            return;
+
+        }
+
+
+        /* -----------------------------------------------------
+           BORD HAUT
+           ----------------------------------------------------- */
+
+        if (
+            espaceHaut <
+            60
+        ) {
+
+            etiquetteVille.classList.add(
+                "position-bas"
+            );
+
+            return;
+
+        }
+
+
+        /* -----------------------------------------------------
+           BORD BAS
+           ----------------------------------------------------- */
+
+        if (
+            espaceBas <
+            60
+        ) {
+
+            etiquetteVille.classList.add(
+                "position-haut"
+            );
+
+            return;
+
+        }
+
+
+        /* -----------------------------------------------------
+           POSITION NORMALE
+           ----------------------------------------------------- */
+
+        etiquetteVille.classList.add(
+            "position-haut"
+        );
+
+    }
+
+
+    /* =========================================================
+       AFFICHER UNE VILLE
+       ========================================================= */
+
+    function afficherVille(
+        index
+    ) {
+
+
+        const ville =
+            villes[index];
+
+
+        if (
+            !ville ||
+            !villeEstConfiguree(ville)
+        ) {
+
+            return;
+
+        }
+
+
+        indexVilleSelectionnee =
+            index;
+
+
+        /* -----------------------------------------------------
+           POINT VERT
+           ----------------------------------------------------- */
+
+        marqueurVille.style.left =
+            ville.x + "%";
+
+
+        marqueurVille.style.top =
+            ville.y + "%";
+
+
+        marqueurVille.style.display =
+            "block";
+
+
+        /* -----------------------------------------------------
+           ÉTIQUETTE
+           ----------------------------------------------------- */
+
+        etiquetteVille.style.left =
+            ville.x + "%";
+
+
+        etiquetteVille.style.top =
+            ville.y + "%";
+
+
+        etiquetteVille.textContent =
+            ville.nom;
+
+
+        if (
+            modeTestActif &&
+            !reponseTestVisible
+        ) {
+
+            etiquetteVille.style.display =
+                "none";
+
+        } else {
+
+            etiquetteVille.style.display =
+                "block";
+
+        }
+
+
+        /* -----------------------------------------------------
+           NOM DANS LE PANNEAU
+           ----------------------------------------------------- */
+
+        if (
+            modeTestActif &&
+            !reponseTestVisible
+        ) {
+
+            nomVilleSelectionnee.textContent =
+                "???";
+
+        } else {
+
+            nomVilleSelectionnee.textContent =
+                ville.nom;
+
+        }
+
+
+        /* -----------------------------------------------------
+           POSITION AUTOMATIQUE
+           ----------------------------------------------------- */
+
+        requestAnimationFrame(
+            function() {
+
+                ajusterPositionEtiquette();
+
+            }
+        );
+
+
+        /* -----------------------------------------------------
+           RAFRAÎCHIR LA LISTE
+           ----------------------------------------------------- */
+
+        afficherListe();
+
+    }
+
+
+    /* =========================================================
+       CRÉER LES POINTS CLIQUABLES SUR LA CARTE
+       ========================================================= */
+
+    function creerPointsCliquables() {
+
+
+        /* -----------------------------------------------------
+           Supprimer d'anciens points éventuels
+           ----------------------------------------------------- */
+
+        const anciensPoints =
+            cadreCarte.querySelectorAll(
+                ".point-cliquable"
+            );
+
+
+        anciensPoints.forEach(
+            function(
+                point
+            ) {
+
+                point.remove();
+
+            }
+        );
+
+
+        /* -----------------------------------------------------
+           Créer une zone transparente pour chaque ville
+           ----------------------------------------------------- */
+
+        villes.forEach(
+            function(
+                ville,
+                index
+            ) {
+
+
+                if (
+                    !villeEstConfiguree(
+                        ville
+                    )
+                ) {
+
+                    return;
+
+                }
+
+
+                const point =
+                    document.createElement(
+                        "button"
+                    );
+
+
+                point.type =
+                    "button";
+
+
+                point.className =
+                    "point-cliquable";
+
+
+                point.style.left =
+                    ville.x + "%";
+
+
+                point.style.top =
+                    ville.y + "%";
+
+
+                point.setAttribute(
+                    "aria-label",
+                    "Afficher " + ville.nom
+                );
+
+
+                point.addEventListener(
+                    "click",
+                    function(
+                        evenement
+                    ) {
+
+                        evenement.preventDefault();
+
+                        evenement.stopPropagation();
+
+
+                        if (
+                            modeTestActif
+                        ) {
+
+                            quitterModeTest();
+
+                        }
+
+
+                        afficherVille(
+                            index
+                        );
+
+                    }
+                );
+
+
+                /* -------------------------------------------------
+                   Insérer AVANT le marqueur vert.
+
+                   Ainsi :
+                   - zones cliquables = derrière
+                   - point vert = devant
+                   - étiquette = devant
+                   ------------------------------------------------- */
+
+                cadreCarte.insertBefore(
+                    point,
+                    marqueurVille
+                );
+
+            }
+        );
+
+    }
+
+
+    /* =========================================================
+       AFFICHER LA LISTE
+       ========================================================= */
+
+    function afficherListe() {
+
+
+        const recherche =
+            normaliserTexte(
+                rechercheVille
+                    .value
+                    .trim()
+            );
+
+
+        listeVilles.innerHTML =
+            "";
+
+
+        const resultats =
+            villes
+
+                .map(
+                    function(
+                        ville,
+                        index
+                    ) {
+
+                        return {
+                            ville: ville,
+                            index: index
+                        };
+
+                    }
+                )
+
+                .filter(
+                    function(
+                        element
+                    ) {
+
+                        if (
+                            !villeEstConfiguree(
+                                element.ville
+                            )
+                        ) {
+
+                            return false;
+
+                        }
+
+
+                        if (
+                            recherche === ""
+                        ) {
+
+                            return true;
+
+                        }
+
+
+                        return normaliserTexte(
+                            element.ville.nom
+                        ).includes(
+                            recherche
+                        );
+
+                    }
+                )
+
+                .sort(
+                    function(
+                        a,
+                        b
+                    ) {
+
+                        return a.ville.nom.localeCompare(
+                            b.ville.nom,
+                            "fr",
+                            {
+                                sensitivity:
+                                    "base"
+                            }
+                        );
+
+                    }
+                );
+
+
+        /* -----------------------------------------------------
+           AUCUN RÉSULTAT
+           ----------------------------------------------------- */
+
+        if (
+            resultats.length === 0
+        ) {
+
+
+            const message =
+                document.createElement(
+                    "div"
+                );
+
+
+            message.className =
+                "aucun-resultat";
+
+
+            message.textContent =
+                "Aucune ville trouvée.";
+
+
+            listeVilles.appendChild(
+                message
+            );
+
+        }
+
+
+        /* -----------------------------------------------------
+           BOUTONS DES VILLES
+           ----------------------------------------------------- */
+
+        resultats.forEach(
+            function(
+                element
+            ) {
+
+
+                const bouton =
+                    document.createElement(
+                        "button"
+                    );
+
+
+                bouton.type =
+                    "button";
+
+
+                bouton.className =
+                    "bouton-ville";
+
+
+                bouton.textContent =
+                    element.ville.nom;
+
+
+                if (
+                    element.index ===
+                    indexVilleSelectionnee &&
+                    (
+                        !modeTestActif ||
+                        reponseTestVisible
+                    )
+                ) {
+
+                    bouton.classList.add(
+                        "selectionnee"
+                    );
+
+                }
+
+
+                bouton.addEventListener(
+                    "click",
+                    function() {
+
+                        if (
+                            modeTestActif
+                        ) {
+
+                            quitterModeTest();
+
+                        }
+
+
+                        afficherVille(
+                            element.index
+                        );
+
+                    }
+                );
+
+
+                listeVilles.appendChild(
+                    bouton
+                );
+
+            }
+        );
+
+
+        /* -----------------------------------------------------
+           COMPTEUR
+           ----------------------------------------------------- */
+
+        compteurVilles.textContent =
+            resultats.length +
+            " ville" +
+            (
+                resultats.length > 1
+                    ? "s"
+                    : ""
+            ) +
+            " affichée" +
+            (
+                resultats.length > 1
+                    ? "s"
+                    : ""
+            );
+
+    }
+
+
+    /* =========================================================
+       VILLE PRÉCÉDENTE
+       ========================================================= */
+
+    function afficherVillePrecedente() {
+
+
+        const indexTries =
+            obtenirIndexVillesTriees();
+
+
+        if (
+            indexTries.length === 0
+        ) {
+
+            return;
+
+        }
+
+
+        /* -----------------------------------------------------
+           Aucune ville encore sélectionnée :
+           on affiche la dernière.
+           ----------------------------------------------------- */
+
+        if (
+            indexVilleSelectionnee === null
+        ) {
+
+            afficherVille(
+                indexTries[
+                    indexTries.length - 1
+                ]
+            );
+
+            return;
+
+        }
+
+
+        const positionActuelle =
+            indexTries.indexOf(
+                indexVilleSelectionnee
+            );
+
+
+        let nouvellePosition =
+            positionActuelle - 1;
+
+
+        if (
+            nouvellePosition < 0
+        ) {
+
+            nouvellePosition =
+                indexTries.length - 1;
+
+        }
+
+
+        afficherVille(
+            indexTries[
+                nouvellePosition
+            ]
+        );
+
+    }
+
+
+    /* =========================================================
+       VILLE SUIVANTE
+       ========================================================= */
+
+    function afficherVilleSuivante() {
+
+
+        const indexTries =
+            obtenirIndexVillesTriees();
+
+
+        if (
+            indexTries.length === 0
+        ) {
+
+            return;
+
+        }
+
+
+        /* -----------------------------------------------------
+           Aucune ville sélectionnée :
+           on commence par la première.
+           ----------------------------------------------------- */
+
+        if (
+            indexVilleSelectionnee === null
+        ) {
+
+            afficherVille(
+                indexTries[0]
+            );
+
+            return;
+
+        }
+
+
+        const positionActuelle =
+            indexTries.indexOf(
+                indexVilleSelectionnee
+            );
+
+
+        let nouvellePosition =
+            positionActuelle + 1;
+
+
+        if (
+            nouvellePosition >=
+            indexTries.length
+        ) {
+
+            nouvellePosition =
+                0;
+
+        }
+
+
+        afficherVille(
+            indexTries[
+                nouvellePosition
+            ]
+        );
+
+    }
+
+
+    /* =========================================================
+       VILLE ALÉATOIRE
+       ========================================================= */
+
+    function afficherVilleAleatoire() {
+
+
+        const indexTries =
+            obtenirIndexVillesTriees();
+
+
+        if (
+            indexTries.length === 0
+        ) {
+
+            return;
+
+        }
+
+
+        /* -----------------------------------------------------
+           Une seule ville disponible
+           ----------------------------------------------------- */
+
+        if (
+            indexTries.length === 1
+        ) {
+
+            afficherVille(
+                indexTries[0]
+            );
+
+            return;
+
+        }
+
+
+        let nouvelIndex =
+            indexVilleSelectionnee;
+
+
+        /* -----------------------------------------------------
+           Éviter autant que possible de retomber immédiatement
+           sur la même ville.
+           ----------------------------------------------------- */
+
+        while (
+            nouvelIndex ===
+            indexVilleSelectionnee
+        ) {
+
+
+            const positionAleatoire =
+                Math.floor(
+                    Math.random() *
+                    indexTries.length
+                );
+
+
+            nouvelIndex =
+                indexTries[
+                    positionAleatoire
+                ];
+
+        }
+
+
+        afficherVille(
+            nouvelIndex
+        );
+
+    }
+
+
+
+    /* =========================================================
+       MODE "ME TESTER"
+       ========================================================= */
+
+    function choisirNouvelleVilleTest() {
+
+        const indexTries =
+            obtenirIndexVillesTriees();
+
+
+        if (
+            indexTries.length === 0
+        ) {
+
+            return;
+
+        }
+
+
+        let nouvelIndex =
+            indexVilleSelectionnee;
+
+
+        if (
+            indexTries.length === 1
+        ) {
+
+            nouvelIndex =
+                indexTries[0];
+
+        } else {
+
+            while (
+                nouvelIndex ===
+                indexVilleSelectionnee
+            ) {
+
+                const positionAleatoire =
+                    Math.floor(
+                        Math.random() *
+                        indexTries.length
+                    );
+
+
+                nouvelIndex =
+                    indexTries[
+                        positionAleatoire
+                    ];
+
+            }
+
+        }
+
+
+        reponseTestVisible =
+            false;
+
+
+        questionTest.textContent =
+            "Quelle est cette ville ?";
+
+
+        btnVoirReponse.textContent =
+            "👁 Voir la réponse";
+
+
+        btnVoirReponse.disabled =
+            false;
+
+
+        afficherVille(
+            nouvelIndex
+        );
+
+    }
+
+
+    function demarrerModeTest() {
+
+        modeTestActif =
+            true;
+
+
+        reponseTestVisible =
+            false;
+
+
+        zoneDemarrerTest.style.display =
+            "none";
+
+
+        zoneTestActive.classList.add(
+            "visible"
+        );
+
+
+        rechercheVille.value =
+            "";
+
+
+        choisirNouvelleVilleTest();
+
+    }
+
+
+    function voirReponseTest() {
+
+        if (
+            !modeTestActif ||
+            indexVilleSelectionnee === null
+        ) {
+
+            return;
+
+        }
+
+
+        reponseTestVisible =
+            true;
+
+
+        const ville =
+            villes[
+                indexVilleSelectionnee
+            ];
+
+
+        etiquetteVille.textContent =
+            ville.nom;
+
+
+        etiquetteVille.style.display =
+            "block";
+
+
+        nomVilleSelectionnee.textContent =
+            ville.nom;
+
+
+        questionTest.textContent =
+            "Réponse : " + ville.nom;
+
+
+        btnVoirReponse.textContent =
+            "✓ Réponse affichée";
+
+
+        btnVoirReponse.disabled =
+            true;
+
+
+        requestAnimationFrame(
+            function() {
+
+                ajusterPositionEtiquette();
+
+            }
+        );
+
+
+        afficherListe();
+
+    }
+
+
+    function quitterModeTest() {
+
+        modeTestActif =
+            false;
+
+
+        reponseTestVisible =
+            false;
+
+
+        zoneTestActive.classList.remove(
+            "visible"
+        );
+
+
+        zoneDemarrerTest.style.display =
+            "block";
+
+
+        questionTest.textContent =
+            "Quelle est cette ville ?";
+
+
+        btnVoirReponse.textContent =
+            "👁 Voir la réponse";
+
+
+        btnVoirReponse.disabled =
+            false;
+
+
+        if (
+            indexVilleSelectionnee !== null
+        ) {
+
+            afficherVille(
+                indexVilleSelectionnee
+            );
+
+        } else {
+
+            afficherListe();
+
+        }
+
+    }
+
+
+    /* =========================================================
+       RECHERCHE
+       ========================================================= */
+
+    rechercheVille.addEventListener(
+        "input",
+        function() {
+
+            afficherListe();
+
+        }
+    );
+
+
+    /* =========================================================
+       BOUTONS DE NAVIGATION
+       ========================================================= */
+
+    btnVillePrecedente.addEventListener(
+        "click",
+        function() {
+
+            afficherVillePrecedente();
+
+        }
+    );
+
+
+    btnVilleAleatoire.addEventListener(
+        "click",
+        function() {
+
+            afficherVilleAleatoire();
+
+        }
+    );
+
+
+    btnVilleSuivante.addEventListener(
+        "click",
+        function() {
+
+            afficherVilleSuivante();
+
+        }
+    );
+
+
+
+    /* =========================================================
+       COMMANDES DU MODE TEST
+       ========================================================= */
+
+    btnDemarrerTest.addEventListener(
+        "click",
+        function() {
+
+            demarrerModeTest();
+
+        }
+    );
+
+
+    btnVoirReponse.addEventListener(
+        "click",
+        function() {
+
+            voirReponseTest();
+
+        }
+    );
+
+
+    btnNouvelleVilleTest.addEventListener(
+        "click",
+        function() {
+
+            choisirNouvelleVilleTest();
+
+        }
+    );
+
+
+    btnQuitterTest.addEventListener(
+        "click",
+        function() {
+
+            quitterModeTest();
+
+        }
+    );
+
+
+    /* =========================================================
+       REDIMENSIONNEMENT
+       ========================================================= */
+
+    window.addEventListener(
+        "resize",
+        function() {
+
+            if (
+                indexVilleSelectionnee !== null
+            ) {
+
+                requestAnimationFrame(
+                    function() {
+
+                        ajusterPositionEtiquette();
+
+                    }
+                );
+
+            }
+
+        }
+    );
+
+
+    /* =========================================================
+       RETOUR ACCUEIL
+       ========================================================= */
+
+    btnRetour.addEventListener(
+        "click",
+        function() {
+
+            window.location.href =
+                "../index.html?ecran=modes&carte=bourgogne";
+
+        }
+    );
+
+
+    /* =========================================================
+       INITIALISATION
+       ========================================================= */
+
+    afficherListe();
+
+    creerPointsCliquables();
+
+
+</script>
+
+
+</body>
+
+</html>
