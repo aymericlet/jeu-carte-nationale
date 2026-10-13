@@ -1917,6 +1917,18 @@ button {
     }
 }
 
+
+/* =========================================================
+   TABLETTES — ESPACE BAS ÉCRAN DES CARTES RÉGIONALES
+   Uniformise Safari / Chrome sans modifier les cartouches.
+   ========================================================= */
+@media (min-width: 761px) and (max-width: 1366px) {
+    #ecranRegions .contenu-modes {
+        box-sizing: border-box;
+        padding-bottom: max(24px, env(safe-area-inset-bottom)) !important;
+    }
+}
+
 </style>
 </head>
 <body>
