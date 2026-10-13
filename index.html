@@ -1992,6 +1992,156 @@ button {
     }
 }
 
+
+/* =========================================================
+   CORRECTION FINALE — ÉCRAN DE SÉLECTION DES RÉGIONS
+   6 cartouches = 3 rangées x 2 colonnes, toujours contenus
+   dans la hauteur visible, sans ascenseur.
+   ========================================================= */
+
+/* Tous les écrans à partir de la tablette jusqu'à l'ordinateur */
+@media (min-width: 761px) {
+    #ecranRegions {
+        overflow: hidden !important;
+    }
+
+    #ecranRegions .contenu-modes {
+        flex: 1 1 0 !important;
+        min-height: 0 !important;
+        height: auto !important;
+        overflow: hidden !important;
+        align-items: stretch !important;
+        box-sizing: border-box !important;
+    }
+
+    #ecranRegions .bloc-choix {
+        width: min(1050px, 100%) !important;
+        height: 100% !important;
+        min-height: 0 !important;
+        margin: 0 auto !important;
+        padding: 0 !important;
+        display: flex !important;
+        flex-direction: column !important;
+        box-sizing: border-box !important;
+    }
+
+    #ecranRegions .bloc-choix::after {
+        content: "" !important;
+        display: block !important;
+        flex: 0 0 18px !important;
+        width: 100% !important;
+        pointer-events: none !important;
+    }
+
+    #ecranRegions .grille-cartes {
+        flex: 1 1 0 !important;
+        min-height: 0 !important;
+        height: auto !important;
+        display: grid !important;
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+        grid-template-rows: repeat(3, minmax(0, 1fr)) !important;
+    }
+
+    #ecranRegions .carte-choix {
+        min-height: 0 !important;
+        height: 100% !important;
+    }
+
+    #ecranRegions .carte-choix .zone-image {
+        min-height: 0 !important;
+        height: 100% !important;
+    }
+}
+
+/* Tablettes : on utilise la hauteur réellement visible du navigateur */
+@media (min-width: 761px) and (max-width: 1366px) {
+    #ecranRegions {
+        height: 100dvh !important;
+        min-height: 100dvh !important;
+        max-height: 100dvh !important;
+    }
+
+    #ecranRegions .contenu-modes {
+        padding:
+            clamp(8px, 1.25dvh, 14px)
+            clamp(18px, 2.5vw, 28px)
+            0 !important;
+    }
+
+    #ecranRegions .grille-cartes {
+        gap: clamp(10px, 1.5dvh, 18px) clamp(14px, 2vw, 24px) !important;
+    }
+
+    #ecranRegions .bloc-choix::after {
+        flex-basis: max(18px, env(safe-area-inset-bottom)) !important;
+    }
+}
+
+/* Paysage tablette / Chrome : compactage vertical contrôlé */
+@media (min-width: 761px) and (max-width: 1366px) and
+       (orientation: landscape) {
+    #ecranRegions .contenu-modes {
+        padding-top: 8px !important;
+    }
+
+    #ecranRegions .grille-cartes {
+        row-gap: 10px !important;
+    }
+
+    #ecranRegions .carte-choix .zone-image {
+        padding: 8px 12px !important;
+    }
+
+    #ecranRegions .carte-choix .infos {
+        padding: 8px 16px !important;
+    }
+
+    #ecranRegions .carte-choix .nom-carte {
+        margin-bottom: 3px !important;
+    }
+
+    #ecranRegions .carte-choix .description {
+        margin-top: 0 !important;
+    }
+
+    #ecranRegions .carte-choix .action {
+        margin-top: 4px !important;
+    }
+}
+
+/* Ordinateur : les 6 cartouches tiennent également sur une page */
+@media (min-width: 1367px) {
+    #ecranRegions .contenu-modes {
+        padding: 18px 28px 0 !important;
+    }
+
+    #ecranRegions .grille-cartes {
+        gap: 18px 24px !important;
+    }
+
+    #ecranRegions .bloc-choix::after {
+        flex-basis: 22px !important;
+    }
+
+    #ecranRegions .carte-choix .zone-image {
+        padding: 14px 18px !important;
+    }
+
+    #ecranRegions .carte-choix .infos {
+        padding: 12px 22px !important;
+    }
+}
+
+@supports not (height: 100dvh) {
+    @media (min-width: 761px) and (max-width: 1366px) {
+        #ecranRegions {
+            height: 100vh !important;
+            min-height: 100vh !important;
+            max-height: 100vh !important;
+        }
+    }
+}
+
 </style>
 </head>
 <body>
