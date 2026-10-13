@@ -1697,6 +1697,226 @@ button {
         justify-content: center;
     }
 }
+
+/* =========================================================
+   TABLETTES / ÉCRANS TACTILES — HAUTEUR RÉELLEMENT VISIBLE
+   Objectif : accueil complet sans ascenseur en portrait/paysage.
+   L'iPad A16 sert de test, mais ces règles sont génériques.
+   ========================================================= */
+@media (min-width: 761px) and (max-width: 1366px) {
+    html,
+    body {
+        width: 100%;
+        height: 100dvh;
+        min-height: 0;
+        max-height: 100dvh;
+        overflow: hidden;
+    }
+
+    body {
+        height: 100dvh;
+    }
+
+    .page {
+        width: 100%;
+        height: 100dvh;
+        min-height: 0;
+        max-height: 100dvh;
+        overflow: hidden;
+    }
+
+    .entete {
+        flex: 0 0 auto;
+        padding-top: clamp(12px, 1.8dvh, 24px);
+        padding-bottom: clamp(10px, 1.4dvh, 18px);
+    }
+
+    .entete h1 {
+        font-size: clamp(30px, 3.2dvh, 42px);
+    }
+
+    .entete p {
+        margin-top: clamp(5px, .8dvh, 9px);
+        font-size: clamp(12px, 1.25dvh, 15px);
+    }
+
+    .contenu {
+        flex: 1 1 0;
+        min-height: 0;
+        height: auto;
+        padding: clamp(10px, 1.7dvh, 22px) clamp(18px, 2.5vw, 28px);
+        overflow: hidden;
+        align-items: stretch;
+    }
+
+    .bloc-choix {
+        width: min(1050px, 100%);
+        height: 100%;
+        min-height: 0;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .titre-choix {
+        flex: 0 0 auto;
+        margin: 0 0 clamp(8px, 1.3dvh, 16px);
+        font-size: clamp(21px, 2.3dvh, 25px);
+        line-height: 1.1;
+    }
+
+    .grille-cartes {
+        flex: 1 1 0;
+        min-height: 0;
+        height: auto;
+        gap: clamp(14px, 2vw, 24px);
+    }
+
+    .carte-choix {
+        height: 100%;
+        min-height: 0;
+        grid-template-rows: minmax(0, 1fr) auto;
+    }
+
+    .zone-image {
+        min-height: 0;
+        height: 100%;
+        padding: clamp(10px, 1.5dvh, 18px);
+    }
+
+    .zone-image img {
+        width: auto;
+        height: auto;
+        max-width: 100%;
+        max-height: 100%;
+        object-fit: contain;
+    }
+
+    .infos {
+        min-height: 0;
+        padding: clamp(10px, 1.35dvh, 16px) clamp(16px, 2vw, 22px)
+                 clamp(11px, 1.5dvh, 18px);
+    }
+
+    .nom-carte {
+        margin-bottom: clamp(3px, .5dvh, 5px);
+        font-size: clamp(18px, 2dvh, 22px);
+    }
+
+    .description {
+        font-size: clamp(11px, 1.25dvh, 13px);
+        line-height: 1.25;
+    }
+
+    .action {
+        margin-top: clamp(5px, .8dvh, 10px);
+        padding-top: 0;
+        font-size: clamp(11px, 1.2dvh, 13px);
+    }
+
+    .footer-georail {
+        flex: 0 0 auto;
+        padding: clamp(4px, .6dvh, 6px) 20px;
+    }
+
+    .footer-georail-liens {
+        font-size: clamp(10px, 1.05dvh, 11px);
+    }
+
+    .footer-georail-version {
+        margin-top: 2px;
+        font-size: clamp(8px, .9dvh, 9px);
+    }
+}
+
+/* Tablette en portrait : on conserve les deux choix côte à côte,
+   mais toute leur hauteur est calculée dans l'espace réellement visible. */
+@media (min-width: 761px) and (max-width: 1100px) and (orientation: portrait) {
+    .contenu {
+        padding-left: 24px;
+        padding-right: 24px;
+    }
+
+    .grille-cartes {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .zone-image {
+        padding: 12px;
+    }
+
+    .infos {
+        padding-left: 16px;
+        padding-right: 16px;
+    }
+}
+
+/* Tablette en paysage de faible hauteur : priorité absolue à la
+   visibilité intégrale de la page et du footer. */
+@media (min-width: 761px) and (max-width: 1366px) and
+       (orientation: landscape) and (max-height: 900px) {
+    .entete {
+        padding-top: 8px;
+        padding-bottom: 7px;
+    }
+
+    .entete h1 {
+        font-size: clamp(28px, 4.2dvh, 38px);
+    }
+
+    .entete p {
+        margin-top: 4px;
+        font-size: clamp(11px, 1.8dvh, 14px);
+    }
+
+    .contenu {
+        padding-top: 8px;
+        padding-bottom: 8px;
+    }
+
+    .titre-choix {
+        margin-bottom: 7px;
+        font-size: clamp(20px, 3.2dvh, 24px);
+    }
+
+    .zone-image {
+        padding: 8px 12px;
+    }
+
+    .infos {
+        padding-top: 8px;
+        padding-bottom: 9px;
+    }
+
+    .nom-carte {
+        font-size: clamp(17px, 2.7dvh, 21px);
+    }
+
+    .description,
+    .action {
+        font-size: clamp(10px, 1.65dvh, 12px);
+    }
+
+    .action {
+        margin-top: 4px;
+    }
+
+    .footer-georail {
+        padding-top: 3px;
+        padding-bottom: 3px;
+    }
+}
+
+@supports not (height: 100dvh) {
+    @media (min-width: 761px) and (max-width: 1366px) {
+        html,
+        body,
+        .page {
+            height: 100vh;
+            max-height: 100vh;
+        }
+    }
+}
+
 </style>
 </head>
 <body>
