@@ -1919,13 +1919,76 @@ button {
 
 
 /* =========================================================
-   TABLETTES — ESPACE BAS ÉCRAN DES CARTES RÉGIONALES
-   Uniformise Safari / Chrome sans modifier les cartouches.
+   CORRECTION TABLETTE — SÉLECTION DES RÉGIONS
+   - même espace sous la dernière rangée sur Safari et Chrome ;
+   - pas de vignette qui reste agrandie sur écran tactile ;
+   - mini saut uniquement pendant l'appui ;
+   - hauteur d'écran stable pendant les changements d'écran.
    ========================================================= */
 @media (min-width: 761px) and (max-width: 1366px) {
+    .ecran-modes {
+        height: 100dvh;
+        min-height: 100dvh;
+        max-height: 100dvh;
+    }
+
     #ecranRegions .contenu-modes {
+        padding-bottom: 0;
+    }
+
+    #ecranRegions .bloc-choix {
         box-sizing: border-box;
-        padding-bottom: max(24px, env(safe-area-inset-bottom)) !important;
+        height: 100%;
+        min-height: 0;
+        padding-bottom: 0;
+    }
+
+    /* L'espace est réservé DANS la hauteur disponible :
+       il ne dépend donc plus de la façon dont Safari/Chrome
+       interprètent le padding d'une zone défilable. */
+    #ecranRegions .bloc-choix::after {
+        content: "";
+        display: block;
+        flex: 0 0 max(22px, env(safe-area-inset-bottom));
+        width: 100%;
+        pointer-events: none;
+    }
+
+    #ecranRegions .grille-cartes {
+        flex: 1 1 0;
+        min-height: 0;
+    }
+}
+
+/* Sur tactile, on neutralise le :hover persistant de Chrome.
+   Le clic garde seulement le petit saut voulu. */
+@media (hover: none) and (pointer: coarse) {
+    .carte-choix:hover {
+        transform: none;
+        border-color: #dedede;
+        box-shadow: 0 10px 28px rgba(0,0,0,.07);
+    }
+
+    .carte-choix:active {
+        transform: translateY(-2px);
+        border-color: #94163a;
+        box-shadow: 0 12px 30px rgba(0,0,0,.09);
+    }
+
+    .carte-region-indisponible:active {
+        transform: none;
+        border-color: #dedede;
+        box-shadow: 0 10px 28px rgba(0,0,0,.07);
+    }
+}
+
+@supports not (height: 100dvh) {
+    @media (min-width: 761px) and (max-width: 1366px) {
+        .ecran-modes {
+            height: 100vh;
+            min-height: 100vh;
+            max-height: 100vh;
+        }
     }
 }
 
