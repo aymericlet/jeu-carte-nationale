@@ -10,7 +10,7 @@
         content="width=device-width, initial-scale=1.0"
     >
 
-    <title>Apprendre - PACA</title>
+    <title>Apprendre - Provence-Alpes-Côte d’Azur</title>
 
     <style>
 
@@ -1427,6 +1427,160 @@
     }
 }
 
+
+/* =========================================================
+   TABLETTES — PROVENCE-ALPES-CÔTE D'AZUR
+   Modèle validé National + Rhône-Alpes + Bourgogne :
+   - page sans ascenseur ;
+   - carte entière portrait/paysage ;
+   - cadreCarte = dimensions exactes de l'image affichée ;
+   - alignement des points/coordonnées conservé.
+   ========================================================= */
+@media (min-width: 761px) and (max-width: 1366px) {
+    html, body {
+        width: 100%;
+        height: 100dvh;
+        min-height: 0;
+        max-height: 100dvh;
+        overflow: hidden;
+    }
+
+    .page {
+        width: 100%;
+        height: 100dvh;
+        min-height: 0;
+        max-height: 100dvh;
+        overflow: hidden;
+    }
+
+    .entete {
+        height: 76px;
+        min-height: 76px;
+        flex: 0 0 76px;
+    }
+
+    .contenu {
+        flex: 1 1 0;
+        height: calc(100dvh - 76px);
+        min-height: 0;
+        overflow: hidden;
+    }
+
+    .zone-carte {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        min-width: 0;
+        min-height: 0;
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .cadre-carte {
+        position: relative;
+        flex: 0 0 auto !important;
+        width: auto !important;
+        height: auto !important;
+        max-width: 100% !important;
+        max-height: 100% !important;
+        overflow: visible !important;
+    }
+
+    .carte {
+        display: block !important;
+        width: 100% !important;
+        height: 100% !important;
+        max-width: none !important;
+        max-height: none !important;
+        object-fit: fill !important;
+    }
+
+    .panneau {
+        min-height: 0;
+        overflow: hidden;
+    }
+}
+
+@supports not (height: 100dvh) {
+    @media (min-width: 761px) and (max-width: 1366px) {
+        html, body, .page {
+            height: 100vh;
+            max-height: 100vh;
+        }
+
+        .contenu {
+            height: calc(100vh - 76px);
+        }
+    }
+}
+
+@media (min-width: 761px) and (max-width: 1100px) and (orientation: portrait) {
+    .contenu {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr);
+        grid-template-rows: minmax(0, 1fr) auto;
+        gap: 8px;
+        padding: 8px 12px 10px;
+    }
+
+    .panneau {
+        height: auto;
+        max-height: none;
+        padding: 8px 12px;
+        border-radius: 13px;
+    }
+
+    .panneau h2 { margin: 0 0 2px; font-size: 18px; line-height: 1; }
+    .panneau p { margin: 2px 0 5px; font-size: 9px; line-height: 1.1; }
+    .label-champ { margin-bottom: 2px; font-size: 9px; line-height: 1.1; }
+    .recherche { min-height: 29px; padding: 4px 8px; font-size: 10px; }
+
+    .liste-villes {
+        flex: none;
+        height: 68px;
+        min-height: 68px;
+        max-height: 68px;
+        margin-top: 5px;
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .selection,
+    .ville-selectionnee {
+        margin-top: 5px;
+        padding-top: 5px;
+        padding-bottom: 5px;
+    }
+
+    .navigation-villes {
+        margin-top: 5px;
+        grid-template-columns: 1fr 40px 1fr;
+        gap: 5px;
+    }
+
+    .bouton-navigation { min-height: 29px; padding: 3px 6px; font-size: 9px; }
+    .bouton-test { margin-top: 5px; min-height: 31px; padding-top: 5px; padding-bottom: 5px; }
+    .compteur { margin-top: 3px; line-height: 1; }
+}
+
+@media (min-width: 761px) and (max-width: 1366px) and (orientation: landscape) {
+    .contenu {
+        height: calc(100dvh - 76px);
+        min-height: 0;
+        overflow: hidden;
+        align-items: stretch;
+    }
+
+    .panneau {
+        height: 100%;
+        min-height: 0;
+        max-height: 100%;
+        overflow: hidden;
+    }
+}
+
 </style>
 
 </head>
@@ -1457,7 +1611,7 @@
         <div class="titre-entete">
 
             <h1>
-                🎓 Apprendre - PACA
+                🎓 Apprendre - Provence-Alpes-Côte d’Azur
             </h1>
 
             <p>
@@ -3125,6 +3279,94 @@
 
 </script>
 
+
+
+<script>
+/* =========================================================
+   TABLETTES — SYNCHRONISATION EXACTE CADRE / CARTE PACA
+   ========================================================= */
+(function () {
+    const carteTablette = document.getElementById("carte");
+    const cadreCarteTablette = document.getElementById("cadreCarte");
+
+    if (!carteTablette || !cadreCarteTablette) return;
+
+    const zoneCarteTablette =
+        cadreCarteTablette.closest(".zone-carte");
+
+    if (!zoneCarteTablette) return;
+
+    function estFormatTablette() {
+        return window.innerWidth >= 761 &&
+               window.innerWidth <= 1366;
+    }
+
+    function ajusterCadreCarteTablette() {
+        if (!estFormatTablette()) {
+            cadreCarteTablette.style.removeProperty("width");
+            cadreCarteTablette.style.removeProperty("height");
+            return;
+        }
+
+        const largeurDisponible = zoneCarteTablette.clientWidth;
+        const hauteurDisponible = zoneCarteTablette.clientHeight;
+        const largeurNaturelle = carteTablette.naturalWidth;
+        const hauteurNaturelle = carteTablette.naturalHeight;
+
+        if (
+            largeurDisponible <= 0 ||
+            hauteurDisponible <= 0 ||
+            largeurNaturelle <= 0 ||
+            hauteurNaturelle <= 0
+        ) return;
+
+        const ratio = largeurNaturelle / hauteurNaturelle;
+
+        let largeur = largeurDisponible;
+        let hauteur = largeur / ratio;
+
+        if (hauteur > hauteurDisponible) {
+            hauteur = hauteurDisponible;
+            largeur = hauteur * ratio;
+        }
+
+        cadreCarteTablette.style.setProperty(
+            "width", largeur + "px", "important"
+        );
+        cadreCarteTablette.style.setProperty(
+            "height", hauteur + "px", "important"
+        );
+    }
+
+    if (carteTablette.complete && carteTablette.naturalWidth > 0) {
+        requestAnimationFrame(ajusterCadreCarteTablette);
+    } else {
+        carteTablette.addEventListener(
+            "load",
+            ajusterCadreCarteTablette
+        );
+    }
+
+    window.addEventListener("resize", function () {
+        requestAnimationFrame(ajusterCadreCarteTablette);
+    });
+
+    window.addEventListener("orientationchange", function () {
+        setTimeout(ajusterCadreCarteTablette, 100);
+    });
+
+    if ("ResizeObserver" in window) {
+        const observateurCarteTablette =
+            new ResizeObserver(function () {
+                requestAnimationFrame(
+                    ajusterCadreCarteTablette
+                );
+            });
+
+        observateurCarteTablette.observe(zoneCarteTablette);
+    }
+})();
+</script>
 
 </body>
 
