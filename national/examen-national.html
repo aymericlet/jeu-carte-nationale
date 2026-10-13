@@ -886,6 +886,34 @@ button { font: inherit; }
     }
 }
 
+
+/* =========================================================
+   CORRECTION ALIGNEMENT CARTE / POINTS — TABLETTES
+   IMPORTANT :
+   Les coordonnées des villes sont en pourcentage du cadreCarte.
+   Le cadre doit donc avoir EXACTEMENT la même taille que l'image
+   affichée. Il ne doit jamais remplir artificiellement zone-carte.
+   ========================================================= */
+@media (min-width: 761px) and (max-width: 1366px) {
+    .cadre-carte {
+        flex: 0 0 auto !important;
+        width: auto !important;
+        height: auto !important;
+        max-width: 100% !important;
+        max-height: 100% !important;
+        overflow: visible !important;
+    }
+
+    .carte {
+        display: block !important;
+        width: 100% !important;
+        height: 100% !important;
+        max-width: none !important;
+        max-height: none !important;
+        object-fit: fill !important;
+    }
+}
+
 </style>
 </head>
 
@@ -1312,6 +1340,146 @@ cadreCarte.addEventListener("mouseleave", retirerTousLesHalos);
 cadreCarte.addEventListener("click", gererClicCarte);
 
 creerPointsCliquables();
+</script>
+
+
+<script>
+/* =========================================================
+   TABLETTES — SYNCHRONISATION EXACTE DU CADRE ET DE LA CARTE
+
+   Les points cliquables utilisent left/top en % dans #cadreCarte.
+   On dimensionne donc #cadreCarte avec le ratio naturel exact
+   de l'image, à l'intérieur de l'espace réellement disponible.
+   Ainsi :
+   - la carte reste entière ;
+   - aucun rognage ;
+   - les points restent exactement sur les points rouges.
+   ========================================================= */
+(function () {
+    const carteTablette = document.getElementById("carte");
+    const cadreCarteTablette = document.getElementById("cadreCarte");
+
+    if (!carteTablette || !cadreCarteTablette) {
+        return;
+    }
+
+    const zoneCarteTablette =
+        cadreCarteTablette.closest(".zone-carte");
+
+    if (!zoneCarteTablette) {
+        return;
+    }
+
+    function estFormatTablette() {
+        return (
+            window.innerWidth >= 761 &&
+            window.innerWidth <= 1366
+        );
+    }
+
+    function ajusterCadreCarteTablette() {
+        if (!estFormatTablette()) {
+            cadreCarteTablette.style.removeProperty("width");
+            cadreCarteTablette.style.removeProperty("height");
+            return;
+        }
+
+        const largeurDisponible =
+            zoneCarteTablette.clientWidth;
+
+        const hauteurDisponible =
+            zoneCarteTablette.clientHeight;
+
+        const largeurNaturelle =
+            carteTablette.naturalWidth || 1313;
+
+        const hauteurNaturelle =
+            carteTablette.naturalHeight || 1198;
+
+        if (
+            largeurDisponible <= 0 ||
+            hauteurDisponible <= 0 ||
+            largeurNaturelle <= 0 ||
+            hauteurNaturelle <= 0
+        ) {
+            return;
+        }
+
+        const ratio =
+            largeurNaturelle / hauteurNaturelle;
+
+        let largeur =
+            largeurDisponible;
+
+        let hauteur =
+            largeur / ratio;
+
+        if (hauteur > hauteurDisponible) {
+            hauteur =
+                hauteurDisponible;
+
+            largeur =
+                hauteur * ratio;
+        }
+
+        cadreCarteTablette.style.setProperty(
+            "width",
+            largeur + "px",
+            "important"
+        );
+
+        cadreCarteTablette.style.setProperty(
+            "height",
+            hauteur + "px",
+            "important"
+        );
+    }
+
+    if (carteTablette.complete) {
+        requestAnimationFrame(
+            ajusterCadreCarteTablette
+        );
+    } else {
+        carteTablette.addEventListener(
+            "load",
+            ajusterCadreCarteTablette
+        );
+    }
+
+    window.addEventListener(
+        "resize",
+        function () {
+            requestAnimationFrame(
+                ajusterCadreCarteTablette
+            );
+        }
+    );
+
+    window.addEventListener(
+        "orientationchange",
+        function () {
+            setTimeout(
+                ajusterCadreCarteTablette,
+                100
+            );
+        }
+    );
+
+    if ("ResizeObserver" in window) {
+        const observateurCarteTablette =
+            new ResizeObserver(
+                function () {
+                    requestAnimationFrame(
+                        ajusterCadreCarteTablette
+                    );
+                }
+            );
+
+        observateurCarteTablette.observe(
+            zoneCarteTablette
+        );
+    }
+})();
 </script>
 
 </body>
