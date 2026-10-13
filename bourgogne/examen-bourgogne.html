@@ -614,6 +614,163 @@ button { font: inherit; }
     .nom-ville { margin: 2px 0 3px; font-size: 18px; line-height: 1.02; }
     .instruction { margin: 0; font-size: 8px; line-height: 1.15; }
 }
+
+/* =========================================================
+   TABLETTES — BOURGOGNE
+   Modèle validé National + Rhône-Alpes :
+   - page sans ascenseur ;
+   - carte entière portrait/paysage ;
+   - cadreCarte = dimensions exactes de l'image affichée ;
+   - alignement des points/coordonnées conservé.
+   ========================================================= */
+@media (min-width: 761px) and (max-width: 1366px) {
+    html, body {
+        width: 100%;
+        height: 100dvh;
+        min-height: 0;
+        max-height: 100dvh;
+        overflow: hidden;
+    }
+
+    .page {
+        width: 100%;
+        height: 100dvh;
+        min-height: 0;
+        max-height: 100dvh;
+        overflow: hidden;
+    }
+
+    .entete {
+        height: 76px;
+        min-height: 76px;
+        flex: 0 0 76px;
+    }
+
+    .contenu {
+        flex: 1 1 0;
+        height: calc(100dvh - 76px);
+        min-height: 0;
+        overflow: hidden;
+    }
+
+    .zone-carte {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        min-width: 0;
+        min-height: 0;
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .cadre-carte {
+        position: relative;
+        flex: 0 0 auto !important;
+        width: auto !important;
+        height: auto !important;
+        max-width: 100% !important;
+        max-height: 100% !important;
+        overflow: visible !important;
+    }
+
+    .carte {
+        display: block !important;
+        width: 100% !important;
+        height: 100% !important;
+        max-width: none !important;
+        max-height: none !important;
+        object-fit: fill !important;
+    }
+
+    .panneau {
+        min-height: 0;
+        overflow: hidden;
+    }
+}
+
+@supports not (height: 100dvh) {
+    @media (min-width: 761px) and (max-width: 1366px) {
+        html, body, .page {
+            height: 100vh;
+            max-height: 100vh;
+        }
+
+        .contenu {
+            height: calc(100vh - 76px);
+        }
+    }
+}
+
+@media (min-width: 761px) and (max-width: 1100px) and (orientation: portrait) {
+    .contenu {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr);
+        grid-template-rows: minmax(0, 1fr) auto;
+        gap: 8px;
+        padding: 8px 12px 10px;
+    }
+
+    .panneau {
+        height: auto;
+        max-height: none;
+        padding: 9px 12px;
+        border-radius: 13px;
+    }
+
+    .badge-examen { padding: 3px 7px; font-size: 9px; }
+    .panneau h2 { margin: 4px 0; font-size: 18px; line-height: 1.05; }
+    .texte-intro { margin: 3px 0 5px; font-size: 9px; line-height: 1.15; }
+    .regles { margin: 5px 0; padding: 6px 8px; font-size: 9px; line-height: 1.25; border-radius: 9px; }
+
+    .bouton-principal,
+    .bouton-secondaire {
+        min-height: 31px;
+        margin-top: 5px;
+        padding: 5px 8px;
+        font-size: 10px;
+    }
+
+    .progression-ligne { margin-top: 5px; font-size: 9px; }
+    .barre { height: 6px; margin-top: 4px; }
+    .libelle-trouve { margin-top: 6px; margin-bottom: 2px; font-size: 9px; }
+    .nom-ville { margin: 2px 0 5px; font-size: 20px; line-height: 1.05; }
+    .instruction { margin: 3px 0; font-size: 9px; line-height: 1.15; }
+    .resultat-statut { margin-top: 5px; font-size: 16px; }
+    .resultat-score { margin-top: 3px; font-size: 22px; }
+    .resultat-pourcentage, .seuil { margin-top: 3px; font-size: 9px; line-height: 1.15; }
+}
+
+@media (min-width: 761px) and (max-width: 1366px) and (orientation: landscape) {
+    .contenu {
+        grid-template-columns: minmax(0, 1fr) minmax(300px, 35vw);
+        gap: clamp(10px, 1.5vw, 18px);
+        padding: 10px 16px 12px;
+        align-items: stretch;
+    }
+
+    .panneau { height: 100%; max-height: 100%; padding: 12px; }
+    .badge-examen { padding: 3px 7px; font-size: clamp(8px, 1.2dvh, 10px); }
+    .panneau h2 { margin: 6px 0 5px; font-size: clamp(18px, 2.5dvh, 22px); }
+    .texte-intro { margin: 4px 0 7px; font-size: clamp(9px, 1.4dvh, 11px); line-height: 1.2; }
+    .regles { margin: 7px 0; padding: 7px 8px; font-size: clamp(8px, 1.3dvh, 10px); line-height: 1.25; }
+
+    .bouton-principal,
+    .bouton-secondaire {
+        min-height: 32px;
+        margin-top: 6px;
+        padding: 5px 8px;
+        font-size: clamp(9px, 1.35dvh, 11px);
+    }
+
+    .progression-ligne { margin-top: 6px; font-size: clamp(8px, 1.25dvh, 10px); }
+    .barre { height: 6px; margin-top: 5px; }
+    .libelle-trouve { margin-top: 8px; margin-bottom: 2px; font-size: clamp(8px, 1.2dvh, 10px); }
+    .nom-ville { margin: 3px 0 7px; font-size: clamp(20px, 3dvh, 25px); }
+    .instruction { margin: 4px 0; font-size: clamp(8px, 1.3dvh, 10px); line-height: 1.2; }
+}
+
 </style>
 </head>
 
@@ -1042,6 +1199,97 @@ cadreCarte.addEventListener("mouseleave", retirerTousLesHalos);
 cadreCarte.addEventListener("click", gererClicCarte);
 
 creerPointsCliquables();
+</script>
+
+
+<script>
+/* =========================================================
+   TABLETTES — SYNCHRONISATION EXACTE CADRE / CARTE BOURGOGNE
+   Les coordonnées des villes sont en % de #cadreCarte.
+   Le cadre prend exactement le ratio naturel de l'image affichée.
+   ========================================================= */
+(function () {
+    const carteTablette = document.getElementById("carte");
+    const cadreCarteTablette = document.getElementById("cadreCarte");
+
+    if (!carteTablette || !cadreCarteTablette) return;
+
+    const zoneCarteTablette =
+        cadreCarteTablette.closest(".zone-carte");
+
+    if (!zoneCarteTablette) return;
+
+    function estFormatTablette() {
+        return window.innerWidth >= 761 &&
+               window.innerWidth <= 1366;
+    }
+
+    function ajusterCadreCarteTablette() {
+        if (!estFormatTablette()) {
+            cadreCarteTablette.style.removeProperty("width");
+            cadreCarteTablette.style.removeProperty("height");
+            return;
+        }
+
+        const largeurDisponible = zoneCarteTablette.clientWidth;
+        const hauteurDisponible = zoneCarteTablette.clientHeight;
+        const largeurNaturelle = carteTablette.naturalWidth;
+        const hauteurNaturelle = carteTablette.naturalHeight;
+
+        if (
+            largeurDisponible <= 0 ||
+            hauteurDisponible <= 0 ||
+            largeurNaturelle <= 0 ||
+            hauteurNaturelle <= 0
+        ) return;
+
+        const ratio = largeurNaturelle / hauteurNaturelle;
+
+        let largeur = largeurDisponible;
+        let hauteur = largeur / ratio;
+
+        if (hauteur > hauteurDisponible) {
+            hauteur = hauteurDisponible;
+            largeur = hauteur * ratio;
+        }
+
+        cadreCarteTablette.style.setProperty(
+            "width", largeur + "px", "important"
+        );
+
+        cadreCarteTablette.style.setProperty(
+            "height", hauteur + "px", "important"
+        );
+    }
+
+    if (carteTablette.complete && carteTablette.naturalWidth > 0) {
+        requestAnimationFrame(ajusterCadreCarteTablette);
+    } else {
+        carteTablette.addEventListener(
+            "load",
+            ajusterCadreCarteTablette
+        );
+    }
+
+    window.addEventListener("resize", function () {
+        requestAnimationFrame(ajusterCadreCarteTablette);
+    });
+
+    window.addEventListener("orientationchange", function () {
+        setTimeout(ajusterCadreCarteTablette, 100);
+    });
+
+    if ("ResizeObserver" in window) {
+        const observateurCarteTablette =
+            new ResizeObserver(function () {
+                requestAnimationFrame(
+                    ajusterCadreCarteTablette
+                );
+            });
+
+        observateurCarteTablette.observe(zoneCarteTablette);
+    }
+})();
 </script>
 
 </body>
