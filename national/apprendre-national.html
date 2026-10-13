@@ -1430,6 +1430,210 @@
     }
 }
 
+
+/* =========================================================
+   TABLETTES — APPRENDRE
+   Responsive générique : iPad / Galaxy Tab / Surface / Lenovo...
+   Objectif : en-tête + carte + panneau entièrement visibles,
+   sans ascenseur de page. Les fonctions et le téléphone restent inchangés.
+   ========================================================= */
+@media (min-width: 761px) and (max-width: 1366px) {
+    html,
+    body {
+        width: 100%;
+        height: 100dvh;
+        min-height: 0;
+        max-height: 100dvh;
+        overflow: hidden;
+    }
+
+    .page {
+        width: 100%;
+        height: 100dvh;
+        min-height: 0;
+        max-height: 100dvh;
+        overflow: hidden;
+    }
+
+    /* En-tête validé : hauteur conservée à 76 px */
+    .entete {
+        height: 76px;
+        min-height: 76px;
+        flex: 0 0 76px;
+    }
+
+    .contenu {
+        flex: 1 1 0;
+        min-height: 0;
+        height: calc(100dvh - 76px);
+        overflow: hidden;
+    }
+
+    .zone-carte {
+        width: 100%;
+        height: 100%;
+        min-width: 0;
+        min-height: 0;
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .cadre-carte {
+        width: auto;
+        height: auto;
+        max-width: 100%;
+        max-height: 100%;
+    }
+
+    .carte {
+        display: block;
+        width: auto;
+        height: auto;
+        max-width: 100%;
+        max-height: 100%;
+        object-fit: contain;
+    }
+
+    .panneau {
+        height: 100%;
+        min-height: 0;
+        overflow: hidden;
+    }
+
+    .liste-villes {
+        flex: 1 1 0;
+        min-height: 0;
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+}
+
+/* Tablettes en portrait :
+   la carte reste prioritaire en haut, le panneau compact en bas. */
+@media (min-width: 761px) and (max-width: 1100px) and (orientation: portrait) {
+    .contenu {
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-template-rows: minmax(0, 58%) minmax(0, 42%);
+        gap: 8px;
+        padding: 8px 12px 10px;
+    }
+
+    .panneau {
+        padding: 10px 12px;
+        border-radius: 13px;
+    }
+
+    .panneau h2 {
+        margin: 0 0 3px;
+        font-size: 19px;
+        line-height: 1.05;
+    }
+
+    .panneau p {
+        margin: 2px 0 6px;
+        font-size: 10px;
+        line-height: 1.15;
+    }
+
+    .label-champ {
+        margin-bottom: 3px;
+        font-size: 10px;
+    }
+
+    .recherche {
+        min-height: 32px;
+        padding: 5px 8px;
+        font-size: 11px;
+    }
+
+    .liste-villes {
+        margin-top: 5px;
+        min-height: 0;
+    }
+
+    .navigation-villes {
+        grid-template-columns: 1fr 40px 1fr;
+        gap: 5px;
+    }
+
+    .bouton-navigation {
+        min-height: 31px;
+        padding: 4px 6px;
+        font-size: 9px;
+    }
+}
+
+/* Tablettes en paysage :
+   carte à gauche + panneau à droite, tous deux strictement limités
+   à la hauteur réellement visible du navigateur. */
+@media (min-width: 761px) and (max-width: 1366px) and
+       (orientation: landscape) {
+    .contenu {
+        grid-template-columns: minmax(0, 1fr) minmax(280px, 34vw);
+        gap: clamp(10px, 1.5vw, 18px);
+        padding: 10px 16px 12px;
+    }
+
+    .panneau {
+        padding: 12px;
+    }
+
+    .panneau h2 {
+        font-size: clamp(19px, 2.2dvh, 23px);
+    }
+
+    .panneau p {
+        margin-top: 4px;
+        margin-bottom: 7px;
+        font-size: clamp(10px, 1.35dvh, 12px);
+        line-height: 1.2;
+    }
+
+    .label-champ {
+        margin-bottom: 3px;
+        font-size: clamp(10px, 1.3dvh, 12px);
+    }
+
+    .recherche {
+        min-height: 34px;
+        padding: 6px 8px;
+        font-size: clamp(10px, 1.35dvh, 12px);
+    }
+
+    .liste-villes {
+        margin-top: 6px;
+    }
+
+    .navigation-villes {
+        grid-template-columns: 1fr 42px 1fr;
+        gap: 5px;
+    }
+
+    .bouton-navigation {
+        min-height: 32px;
+        padding: 5px 6px;
+        font-size: clamp(9px, 1.2dvh, 11px);
+    }
+}
+
+@supports not (height: 100dvh) {
+    @media (min-width: 761px) and (max-width: 1366px) {
+        html,
+        body,
+        .page {
+            height: 100vh;
+            max-height: 100vh;
+        }
+
+        .contenu {
+            height: calc(100vh - 76px);
+        }
+    }
+}
+
 </style>
 
 </head>
