@@ -1,7 +1,6 @@
 /* =====================================================
    BASE OFFICIELLE — CARTE RHÔNE-ALPES
-   82 villes positionnées depuis l'éditeur Rhône-Alpes.
-   Coordonnées conservées exactement telles qu'exportées.
+   84 villes positionnées depuis l'éditeur Rhône-Alpes.
    ===================================================== */
 
 const villesRhoneAlpes = [
@@ -414,5 +413,15 @@ const villesRhoneAlpes = [
         "nom": "Brignoud",
         "x": 64.0326,
         "y": 52.6422
+    },
+    {
+        "nom": "Veynes",
+        "x": 62.3693,
+        "y": 80.8646
+    },
+    {
+        "nom": "Gap",
+        "x": 70.1203,
+        "y": 80.8646
     }
 ];
