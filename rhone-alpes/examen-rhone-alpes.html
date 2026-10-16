@@ -616,13 +616,12 @@ button { font: inherit; }
 }
 
 /* =========================================================
-   TABLETTES — EXAMEN RHÔNE-ALPES
-   Modèle validé :
-   - aucun ascenseur de page ;
-   - carte entière en portrait et paysage ;
-   - panneau Examen entièrement visible ;
-   - cadreCarte exactement dimensionné comme l'image pour
-     préserver l'alignement des coordonnées et des points rouges.
+   TABLETTES — BOURGOGNE
+   Modèle validé National + Rhône-Alpes :
+   - page sans ascenseur ;
+   - carte entière portrait/paysage ;
+   - cadreCarte = dimensions exactes de l'image affichée ;
+   - alignement des points/coordonnées conservé.
    ========================================================= */
 @media (min-width: 761px) and (max-width: 1366px) {
     html, body {
@@ -691,6 +690,19 @@ button { font: inherit; }
     }
 }
 
+@supports not (height: 100dvh) {
+    @media (min-width: 761px) and (max-width: 1366px) {
+        html, body, .page {
+            height: 100vh;
+            max-height: 100vh;
+        }
+
+        .contenu {
+            height: calc(100vh - 76px);
+        }
+    }
+}
+
 @media (min-width: 761px) and (max-width: 1100px) and (orientation: portrait) {
     .contenu {
         display: grid;
@@ -707,30 +719,10 @@ button { font: inherit; }
         border-radius: 13px;
     }
 
-    .badge-examen {
-        padding: 3px 7px;
-        font-size: 9px;
-    }
-
-    .panneau h2 {
-        margin: 4px 0;
-        font-size: 18px;
-        line-height: 1.05;
-    }
-
-    .texte-intro {
-        margin: 3px 0 5px;
-        font-size: 9px;
-        line-height: 1.15;
-    }
-
-    .regles {
-        margin: 5px 0;
-        padding: 6px 8px;
-        font-size: 9px;
-        line-height: 1.25;
-        border-radius: 9px;
-    }
+    .badge-examen { padding: 3px 7px; font-size: 9px; }
+    .panneau h2 { margin: 4px 0; font-size: 18px; line-height: 1.05; }
+    .texte-intro { margin: 3px 0 5px; font-size: 9px; line-height: 1.15; }
+    .regles { margin: 5px 0; padding: 6px 8px; font-size: 9px; line-height: 1.25; border-radius: 9px; }
 
     .bouton-principal,
     .bouton-secondaire {
@@ -740,50 +732,14 @@ button { font: inherit; }
         font-size: 10px;
     }
 
-    .progression-ligne {
-        margin-top: 5px;
-        font-size: 9px;
-    }
-
-    .barre {
-        height: 6px;
-        margin-top: 4px;
-    }
-
-    .libelle-trouve {
-        margin-top: 6px;
-        margin-bottom: 2px;
-        font-size: 9px;
-    }
-
-    .nom-ville {
-        margin: 2px 0 5px;
-        font-size: 20px;
-        line-height: 1.05;
-    }
-
-    .instruction {
-        margin: 3px 0;
-        font-size: 9px;
-        line-height: 1.15;
-    }
-
-    .resultat-statut {
-        margin-top: 5px;
-        font-size: 16px;
-    }
-
-    .resultat-score {
-        margin-top: 3px;
-        font-size: 22px;
-    }
-
-    .resultat-pourcentage,
-    .seuil {
-        margin-top: 3px;
-        font-size: 9px;
-        line-height: 1.15;
-    }
+    .progression-ligne { margin-top: 5px; font-size: 9px; }
+    .barre { height: 6px; margin-top: 4px; }
+    .libelle-trouve { margin-top: 6px; margin-bottom: 2px; font-size: 9px; }
+    .nom-ville { margin: 2px 0 5px; font-size: 20px; line-height: 1.05; }
+    .instruction { margin: 3px 0; font-size: 9px; line-height: 1.15; }
+    .resultat-statut { margin-top: 5px; font-size: 16px; }
+    .resultat-score { margin-top: 3px; font-size: 22px; }
+    .resultat-pourcentage, .seuil { margin-top: 3px; font-size: 9px; line-height: 1.15; }
 }
 
 @media (min-width: 761px) and (max-width: 1366px) and (orientation: landscape) {
@@ -794,34 +750,11 @@ button { font: inherit; }
         align-items: stretch;
     }
 
-    .panneau {
-        height: 100%;
-        max-height: 100%;
-        padding: 12px;
-    }
-
-    .badge-examen {
-        padding: 3px 7px;
-        font-size: clamp(8px, 1.2dvh, 10px);
-    }
-
-    .panneau h2 {
-        margin: 6px 0 5px;
-        font-size: clamp(18px, 2.5dvh, 22px);
-    }
-
-    .texte-intro {
-        margin: 4px 0 7px;
-        font-size: clamp(9px, 1.4dvh, 11px);
-        line-height: 1.2;
-    }
-
-    .regles {
-        margin: 7px 0;
-        padding: 7px 8px;
-        font-size: clamp(8px, 1.3dvh, 10px);
-        line-height: 1.25;
-    }
+    .panneau { height: 100%; max-height: 100%; padding: 12px; }
+    .badge-examen { padding: 3px 7px; font-size: clamp(8px, 1.2dvh, 10px); }
+    .panneau h2 { margin: 6px 0 5px; font-size: clamp(18px, 2.5dvh, 22px); }
+    .texte-intro { margin: 4px 0 7px; font-size: clamp(9px, 1.4dvh, 11px); line-height: 1.2; }
+    .regles { margin: 7px 0; padding: 7px 8px; font-size: clamp(8px, 1.3dvh, 10px); line-height: 1.25; }
 
     .bouton-principal,
     .bouton-secondaire {
@@ -831,45 +764,11 @@ button { font: inherit; }
         font-size: clamp(9px, 1.35dvh, 11px);
     }
 
-    .progression-ligne {
-        margin-top: 6px;
-        font-size: clamp(8px, 1.25dvh, 10px);
-    }
-
-    .barre {
-        height: 6px;
-        margin-top: 5px;
-    }
-
-    .libelle-trouve {
-        margin-top: 8px;
-        margin-bottom: 2px;
-        font-size: clamp(8px, 1.2dvh, 10px);
-    }
-
-    .nom-ville {
-        margin: 3px 0 7px;
-        font-size: clamp(20px, 3dvh, 25px);
-    }
-
-    .instruction {
-        margin: 4px 0;
-        font-size: clamp(8px, 1.3dvh, 10px);
-        line-height: 1.2;
-    }
-}
-
-@supports not (height: 100dvh) {
-    @media (min-width: 761px) and (max-width: 1366px) {
-        html, body, .page {
-            height: 100vh;
-            max-height: 100vh;
-        }
-
-        .contenu {
-            height: calc(100vh - 76px);
-        }
-    }
+    .progression-ligne { margin-top: 6px; font-size: clamp(8px, 1.25dvh, 10px); }
+    .barre { height: 6px; margin-top: 5px; }
+    .libelle-trouve { margin-top: 8px; margin-bottom: 2px; font-size: clamp(8px, 1.2dvh, 10px); }
+    .nom-ville { margin: 3px 0 7px; font-size: clamp(20px, 3dvh, 25px); }
+    .instruction { margin: 4px 0; font-size: clamp(8px, 1.3dvh, 10px); line-height: 1.2; }
 }
 
 </style>
@@ -1288,11 +1187,11 @@ btnCommencer.addEventListener("click", commencerExamen);
 btnRecommencer.addEventListener("click", commencerExamen);
 
 btnRetour.addEventListener("click", function() {
-    window.location.href = "../index.html?ecran=modes&carte=rhoneAlpes";
+    window.location.href = "../index.html?ecran=modes&carte=rhone-alpes";
 });
 
 btnAccueilResultat.addEventListener("click", function() {
-    window.location.href = "../index.html?ecran=modes&carte=rhoneAlpes";
+    window.location.href = "../index.html?ecran=modes&carte=rhone-alpes";
 });
 
 cadreCarte.addEventListener("mousemove", mettreAJourHalo);
@@ -1305,7 +1204,9 @@ creerPointsCliquables();
 
 <script>
 /* =========================================================
-   TABLETTES — SYNCHRONISATION EXACTE CADRE / CARTE RHÔNE-ALPES
+   TABLETTES — SYNCHRONISATION EXACTE CADRE / CARTE BOURGOGNE
+   Les coordonnées des villes sont en % de #cadreCarte.
+   Le cadre prend exactement le ratio naturel de l'image affichée.
    ========================================================= */
 (function () {
     const carteTablette = document.getElementById("carte");
@@ -1355,6 +1256,7 @@ creerPointsCliquables();
         cadreCarteTablette.style.setProperty(
             "width", largeur + "px", "important"
         );
+
         cadreCarteTablette.style.setProperty(
             "height", hauteur + "px", "important"
         );
